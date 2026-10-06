@@ -17,32 +17,31 @@ type Project = {
 function availableScreenshot(path: string) {
   return existsSync(new URL('../../public' + path, import.meta.url)) ? path : undefined;
 }
-const projects: Project[] = [
-  {
-    title: 'イッツコム｜総合開業相談窓口 LP',
-    description:
-      '開業支援サービスを紹介するLP。ページ全体のコーディング、レスポンシブ対応、GSAPを使用したアニメーション実装を担当しました。',
-    responsibilities: 'コーディング／レスポンシブ対応／アニメーション実装',
-    technologies: 'HTML／CSS／JavaScript／GSAP',
-    url: 'https://www.itscom.co.jp/lp/open_support.html',
-    screenshot: availableScreenshot('/images/projects/itscom-open-support.webp'),
-  },
-  {
-    title: 'イッツコム｜スマホ教室潜入レポート',
-    description:
-      'スマホ教室の内容や雰囲気を伝えるレポートページ。ページ全体のコーディング、レスポンシブ対応、GSAPを使用したアニメーション実装を担当しました。',
-    responsibilities: 'コーディング／レスポンシブ対応／アニメーション実装',
-    technologies: 'HTML／CSS／JavaScript／GSAP',
-    url: 'https://www.itscom.co.jp/service/mobile/lecture/smartphone-school-report.html',
-  },
-];
 const categories = [
   {
     id: 'telecom',
-    name: '通信サービス',
+    name: '通信キャリアクライアント',
     description:
-      '通信事業者のサービス紹介LPやコンテンツページを制作。コーディングからレスポンシブ対応、アニメーション実装まで担当しました。',
-    projects,
+      '通信キャリアのサービス紹介LPやコンテンツページを制作。コーディングからレスポンシブ対応、アニメーション実装まで担当しました。',
+    projects: [
+      {
+        title: 'イッツコム｜総合開業相談窓口 LP',
+        description:
+          '開業支援サービスを紹介するLP。ページ全体のコーディング、レスポンシブ対応、GSAPを使用したアニメーション実装を担当しました。',
+        responsibilities: 'コーディング／レスポンシブ対応／アニメーション実装',
+        technologies: 'HTML／CSS／JavaScript／GSAP',
+        url: 'https://www.itscom.co.jp/lp/open_support.html',
+        screenshot: availableScreenshot('/images/projects/itscom-open-support.webp'),
+      },
+      {
+        title: 'イッツコム｜スマホ教室潜入レポート',
+        description:
+          'スマホ教室の内容や雰囲気を伝えるレポートページ。ページ全体のコーディング、レスポンシブ対応、GSAPを使用したアニメーション実装を担当しました。',
+        responsibilities: 'コーディング／レスポンシブ対応／アニメーション実装',
+        technologies: 'HTML／CSS／JavaScript',
+        url: 'https://www.itscom.co.jp/service/mobile/lecture/smartphone-school-report.html',
+      },
+    ] as Project[],
   },
   {
     id: 'fashion-lifestyle',
