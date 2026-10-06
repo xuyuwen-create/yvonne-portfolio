@@ -18,6 +18,8 @@ npm run preview
 
 ## 文件与调整
 
+导航图标现在使用剪纸 PNG：`SceneMenu.astro` 中 `iconSrc` 指向 `/images/icons/{id}.png`，图片使用空 `alt`，由旁边名称提供说明。统一容器采用 `object-fit: contain`，各入口的 `--icon-scale` 调视觉大小。原始 1254px 素材保留在 `public/images/`；优化版位于 `public/images/icons/`，裁去多余透明留白、保留边缘余量并缩为 128 × 128 全色透明 PNG。手机沿用 22px 容器，位置、弹出动画与点击逻辑不变。
+
 首页采用海报式不对称布局：桌面左侧 40% 为两行粗体标题和简介，彩色人像在 71% 的横向位置贴底，导航分布在右侧区域。`--home-copy-width`、`--home-title-size`、`--home-portrait-x` 集中控制构图。900px 以下改为上方标题、下方人像与导航；窄而矮的窗口使用独立紧凑布局，通过容器单位限制人像尺寸，保留文字可读性。菜单弹出、人像跟随和场景切换逻辑不变。
 
 人像只在鼠标进入 `.scene-menu` 区域时绑定移动监听，离开后移除监听并平滑回正；标题区和菜单区域外不会驱动跟随。跟随幅度、平滑参数和场景切换保持原有设置。
@@ -26,9 +28,9 @@ npm run preview
 
 Header 的上下细边线位于 `global.css` 的 `.app__header`；`--header-border-width` 控制线宽，`--header-padding-block` 控制上下内边距，颜色复用 `--color-border`。矮屏会减小内边距。
 
-首页当前采用“彩色拼贴人像＋黑白线稿导航”：白色背景、黑白小盒子导航，无宇宙装饰。首页主题通过 `.app:has(#home-scene:not([hidden]))` 限定，内页保留原配色。菜单变量 `--menu-*` 调间距、位置和字体，`--icon-stroke` 统一线稿笔触；图标在左、名称在右；悬停或键盘聚焦时内容向上弹出，盒子和点击范围固定。`--menu-pop-distance` 和 `--menu-pop-duration` 控制弹出距离与时间；触屏保持默认，减少动态效果模式关闭弹出。`UniverseBackdrop.astro` 保留为未使用的旧装饰组件。
+首页当前采用“彩色拼贴人像＋黑白剪纸导航”：白色背景、黑白小盒子导航，无宇宙装饰。首页主题通过 `.app:has(#home-scene:not([hidden]))` 限定，内页保留原配色。菜单变量 `--menu-*` 调间距、位置和字体，`--icon-scale` 调整各图标的视觉大小；图标在左、名称在右；悬停或键盘聚焦时内容向上弹出，盒子和点击范围固定。`--menu-pop-distance` 和 `--menu-pop-duration` 控制弹出距离与时间；触屏保持默认，减少动态效果模式关闭弹出。`UniverseBackdrop.astro` 保留为未使用的旧装饰组件。
 
-菜单使用原生 SVG 线条图标，不依赖图标库。`global.css` 中 `--portrait-scale: 1.728` 控制人像放大比例。窄屏与矮屏使用独立基准尺寸，再应用同一个比例。人像跟随参数、校准和场景动画不受这些样式调整影响。
+菜单使用透明剪纸 PNG 图标，不依赖图标库。`global.css` 中 `--portrait-scale: 1.728` 控制人像放大比例。窄屏与矮屏使用独立基准尺寸，再应用同一个比例。人像跟随参数、校准和场景动画不受这些样式调整影响。
 
 代码格式化使用 Prettier 和 Astro 插件。VS Code 中安装推荐扩展 `Prettier - Code formatter` 和 `Astro` 后，保存文件会自动格式化。
 

@@ -4,37 +4,37 @@ const entries = [
     id: 'experience',
     name: '个人经历',
     number: '01',
-    icon: 'M5 6Q10 4 16 7Q22 4 27 6V25Q22 23 16 26Q10 23 5 25ZM16 7V26M8 11L12 12M20 12L24 11',
+    iconSrc: '/images/icons/experience.png',
   },
   {
     id: 'skills',
     name: '个人技能',
     number: '02',
-    icon: 'M7 25L23 9M20 5L27 12M5 7L9 11M7 5L7 13M3 9L11 9M23 21L23 27M20 24L26 24',
+    iconSrc: '/images/icons/skills.png',
   },
   {
     id: 'interests',
     name: '个人兴趣',
     number: '03',
-    icon: 'M16 27V15M16 20Q4 20 6 8Q18 8 16 20ZM16 15Q16 4 27 5Q27 17 16 15',
+    iconSrc: '/images/icons/interests.png',
   },
   {
     id: 'projects',
     name: '工作项目',
     number: '04',
-    icon: 'M5 10H27V25H5ZM11 10V6H21V10M5 16Q16 21 27 16M14 17V21H18V17',
+    iconSrc: '/images/icons/projects.png',
   },
   {
     id: 'misc',
     name: '杂项',
     number: '05',
-    icon: 'M16 4L19 12L27 15L19 18L16 27L13 18L5 15L13 12ZM26 4V9M23.5 6.5H28.5',
+    iconSrc: '/images/icons/misc.png',
   },
 ];
 ---
 
 <nav class="scene-menu" aria-label="作品集场景入口">
-  {entries.map(({ id, name, number, icon }) => (
+  {entries.map(({ id, name, number, iconSrc }) => (
     <button
       class={`scene-menu__entry scene-menu__entry--${id}`}
       type="button"
@@ -44,9 +44,7 @@ const entries = [
     >
       <span class="scene-menu__content">
         <span class="scene-menu__icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32" fill="none">
-            <path d={icon} />
-          </svg>
+          <img src={iconSrc} alt="" width="28" height="28" decoding="async" draggable="false" />
         </span>
         <span class="scene-menu__name">{name}</span>
       </span>
@@ -115,6 +113,7 @@ const entries = [
     outline-offset: 5px;
   }
   .scene-menu__entry--experience {
+    --icon-scale: 0.94;
     left: var(--menu-left);
     top: var(--menu-upper);
   }
@@ -127,10 +126,12 @@ const entries = [
     top: var(--menu-top);
   }
   .scene-menu__entry--projects {
+    --icon-scale: 0.92;
     left: var(--menu-right);
     top: calc(var(--menu-upper) + 3%);
   }
   .scene-menu__entry--misc {
+    --icon-scale: 0.96;
     left: calc(var(--menu-right) - 2%);
     top: calc(var(--menu-lower) + 3%);
   }
@@ -141,13 +142,11 @@ const entries = [
     width: var(--icon-size);
     height: var(--icon-size);
   }
-  .scene-menu__icon svg {
-    width: 100%;
-    height: 100%;
-    stroke: currentColor;
-    stroke-width: var(--icon-stroke);
-    stroke-linecap: round;
-    stroke-linejoin: round;
+  .scene-menu__icon img {
+    display: block;
+    width: calc(100% * var(--icon-scale, 1));
+    height: calc(100% * var(--icon-scale, 1));
+    object-fit: contain;
   }
   .scene-menu__name {
     font-family: inherit;
