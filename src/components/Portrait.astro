@@ -1,0 +1,283 @@
+---
+// 所有参数都使用母版素材坐标（1086 × 1448），不是屏幕 CSS 像素。
+// 调整 alignment 即可，不要为手机另设对齐参数；SVG 会统一缩放所有层。
+// 素材实际在 public/images/，保留原文件与路径，不裁剪或重画。
+const assets = '/images';
+const canvas = { width: 1086, height: 1448 };
+// 跟随参数：位移为素材像素，倾斜为角度，smoothMs 为平滑时间常数。
+// 头颈已有约 10px 重叠，保守限制幅度以始终保留接缝覆盖。
+const tracking = {
+  headX: 4,
+  headY: 2,
+  headTilt: 0.45,
+  pupilX: 9,
+  pupilY: 6,
+  smoothMs: 110,
+  pivot: [565, 650],
+  lookCenter: [565, 428],
+  lookRadius: 420,
+};
+const clipId = `portrait-${crypto.randomUUID()}`;
+const alignment = {
+  // 底边不动，纵向补偿 2%，让脖子与下巴重叠，遮住透明缝。
+  body: { x: 0, y: -28.96, scaleX: 1, scaleY: 1.02 },
+  head: { x: 137, y: 12, scale: 0.746 },
+  // sourceCenter/sourceWidth 为 PNG 中可见瞳孔的位置和宽度。
+  // center/width 为目标母版坐标；left/right 指画面左右。
+  pupilLeft: { sourceCenter: [471.5, 430], sourceWidth: 69, center: [471, 428], width: 50 },
+  pupilRight: { sourceCenter: [657.5, 438], sourceWidth: 63, center: [655, 428], width: 49 },
+};
+function pupilTransform(pupil: typeof alignment.pupilLeft) {
+  return `translate(${pupil.center.join(' ')}) scale(${pupil.width / pupil.sourceWidth}) translate(${-pupil.sourceCenter[0]} ${-pupil.sourceCenter[1]})`;
+}
+// npm run dev 才显示开关；生产构建不输出开关或母版引用。
+const showComparison = import.meta.env.DEV;
+---
+
+<div class="portrait" data-portrait-tracking={JSON.stringify(tracking)}>
+  {showComparison && (
+    <label class="portrait__compare">
+      <input type="checkbox" />
+      母版对照
+    </label>
+  )}
+  <!-- slice 保持原组件 object-fit: cover 的显示方式；所有层共享同一次缩放。 -->
+  <svg
+    class="portrait__canvas"
+    viewBox={`0 0 ${canvas.width} ${canvas.height}`}
+    preserveAspectRatio="xMidYMid slice"
+    role="img"
+    aria-label="Yvonne 的人像"
+  >
+    <defs>
+      <!-- 眼白边界使用 head.png 原始坐标，应用与头部完全相同的校准。 -->
+      <clipPath id={`${clipId}-left`} clipPathUnits="userSpaceOnUse">
+        <path
+          d="M380 558 C405 514 468 515 490 553 Q497 568 498 581 Q431 616 380 558Z"
+          transform={`translate(${alignment.head.x} ${alignment.head.y}) scale(${alignment.head.scale})`}
+        />
+      </clipPath>
+      <clipPath id={`${clipId}-right`} clipPathUnits="userSpaceOnUse">
+        <path
+          d="M644 578 C650 542 684 520 716 522 Q745 524 763 550 Q721 611 644 578Z"
+          transform={`translate(${alignment.head.x} ${alignment.head.y}) scale(${alignment.head.scale})`}
+        />
+      </clipPath>
+    </defs>
+    <g class="portrait__layers">
+      <image
+        href={`${assets}/body.png`}
+        width={canvas.width}
+        height={canvas.height}
+        transform={`translate(${alignment.body.x} ${alignment.body.y}) scale(${alignment.body.scaleX} ${alignment.body.scaleY})`}
+      />
+      <!-- headGroup 使用母版坐标；后续只移动此组即可一起移动头和瞳孔。 -->
+      <g class="portrait__head-group" data-head-group>
+        <image
+          href={`${assets}/head.png`}
+          width={canvas.width}
+          height={canvas.height}
+          transform={`translate(${alignment.head.x} ${alignment.head.y}) scale(${alignment.head.scale})`}
+        />
+        <g clip-path={`url(#${clipId}-left)`}>
+          <g data-pupil>
+            <image
+              href={`${assets}/pupil-left.png`}
+              width={canvas.width}
+              height={canvas.height}
+              transform={pupilTransform(alignment.pupilLeft)}
+            />
+          </g>
+        </g>
+        <g clip-path={`url(#${clipId}-right)`}>
+          <g data-pupil>
+            <image
+              href={`${assets}/pupil-right.png`}
+              width={canvas.width}
+              height={canvas.height}
+              transform={pupilTransform(alignment.pupilRight)}
+            />
+          </g>
+        </g>
+      </g>
+    </g>
+    {showComparison && (
+      <image
+        class="portrait__master"
+        href={`${assets}/portrait-master.png`}
+        width={canvas.width}
+        height={canvas.height}
+      />
+    )}
+  </svg>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-portrait-tracking]').forEach((portrait) => {
+    const config = JSON.parse(portrait.dataset.portraitTracking!);
+    const svg = portrait.querySelector<SVGSVGElement>('svg')!;
+    const head = portrait.querySelector<SVGGElement>('[data-head-group]')!;
+    const pupils = portrait.querySelectorAll<SVGGElement>('[data-pupil]');
+    const compare = portrait.querySelector<HTMLInputElement>('input');
+    const scene = portrait.closest('section');
+    const trackingArea = scene?.querySelector<HTMLElement>('.scene-menu');
+    const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    let target = { x: 0, y: 0 };
+    let current = { x: 0, y: 0 };
+    let frame = 0;
+    let lastTime = 0;
+
+    const enabled = () =>
+      finePointer.matches &&
+      !reducedMotion.matches &&
+      !compare?.checked &&
+      !scene?.hidden &&
+      !scene?.inert &&
+      !document.hidden;
+
+    function render() {
+      // 枢轴靠近下巴；幅度设安全上限，避免调参时拉开头颈接缝。
+      const x = current.x * Math.min(Math.abs(config.headX), 4);
+      const y = current.y * Math.min(Math.abs(config.headY), 2);
+      const tilt = current.x * Math.min(Math.abs(config.headTilt), 0.45);
+      const [px, py] = config.pivot;
+      head.setAttribute('transform', `translate(${x} ${y}) rotate(${tilt} ${px} ${py})`);
+      pupils.forEach((pupil) =>
+        pupil.setAttribute(
+          'transform',
+          `translate(${current.x * config.pupilX} ${current.y * config.pupilY})`,
+        ),
+      );
+    }
+
+    function tick(time: number) {
+      const dt = lastTime ? Math.min(time - lastTime, 50) : 16.67;
+      lastTime = time;
+      // 时间相关的指数平滑，在不同刷新率下保持相近速度。
+      const blend = 1 - Math.exp(-dt / Math.max(1, config.smoothMs));
+      current.x += (target.x - current.x) * blend;
+      current.y += (target.y - current.y) * blend;
+      const settled = Math.hypot(target.x - current.x, target.y - current.y) < 0.001;
+      if (settled) current = { ...target };
+      render();
+      frame = settled ? 0 : requestAnimationFrame(tick);
+    }
+
+    function schedule() {
+      if (!frame) {
+        lastTime = 0;
+        frame = requestAnimationFrame(tick);
+      }
+    }
+
+    function reset(immediate = false) {
+      target = { x: 0, y: 0 };
+      if (immediate) {
+        cancelAnimationFrame(frame);
+        frame = 0;
+        current = { ...target };
+        render();
+      } else schedule();
+    }
+
+    function trackPointer(event: PointerEvent) {
+      if (event.pointerType !== 'mouse' || !enabled()) {
+        reset(true);
+        return;
+      }
+      // 使用移动后的头部矩阵，正确处理响应式 cover 缩放和倾斜。
+      const matrix = head.getScreenCTM();
+      if (!matrix) {
+        reset(true);
+        return;
+      }
+      const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse());
+      let x = (point.x - config.lookCenter[0]) / config.lookRadius;
+      let y = (point.y - config.lookCenter[1]) / config.lookRadius;
+      const length = Math.max(1, Math.hypot(x, y));
+      target = { x: x / length, y: y / length };
+      schedule();
+    }
+    function stopTracking(immediate = false) {
+      trackingArea?.removeEventListener('pointermove', trackPointer);
+      reset(immediate);
+    }
+    function syncTracking() {
+      stopTracking(true);
+      if (enabled() && trackingArea?.matches(':hover')) {
+        trackingArea.addEventListener('pointermove', trackPointer, { passive: true });
+      }
+    }
+    trackingArea?.addEventListener('pointerenter', (event) => {
+      if (event.pointerType !== 'mouse' || !enabled()) return;
+      trackingArea.addEventListener('pointermove', trackPointer, { passive: true });
+      trackPointer(event);
+    });
+    trackingArea?.addEventListener('pointerleave', () => stopTracking());
+    window.addEventListener('blur', () => stopTracking(true));
+    window.addEventListener('focus', syncTracking);
+    window.addEventListener('resize', syncTracking);
+    document.addEventListener('visibilitychange', syncTracking);
+    finePointer.addEventListener('change', syncTracking);
+    reducedMotion.addEventListener('change', syncTracking);
+    compare?.addEventListener('change', syncTracking);
+    // 场景离开时回正，不干预已有切换逻辑。
+    if (scene)
+      new MutationObserver(() => {
+        syncTracking();
+      }).observe(scene, { attributes: true, attributeFilter: ['hidden', 'inert'] });
+  });
+</script>
+
+<style>
+  .portrait {
+    position: relative;
+    width: var(--portrait-width);
+    height: var(--portrait-height);
+    border-radius: var(--portrait-radius);
+  }
+  .portrait__canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .portrait__master {
+    display: none;
+  }
+  .portrait__compare {
+    position: absolute;
+    /* 人像贴底后，开发对照开关放在内部底边，保持可访问。 */
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    /* 菜单 nav 覆盖整个舞台，开发开关需置于它上方才能点击。 */
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    background: var(--color-background);
+    color: var(--color-muted);
+    font-size: 0.625rem;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .portrait__compare input {
+    margin: 0;
+    accent-color: var(--color-accent);
+  }
+  .portrait__compare:focus-within {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .portrait__compare:has(input:checked) ~ .portrait__canvas .portrait__layers {
+    display: none;
+  }
+  .portrait__compare:has(input:checked) ~ .portrait__canvas .portrait__master {
+    display: inline;
+  }
+</style>

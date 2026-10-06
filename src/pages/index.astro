@@ -1,0 +1,57 @@
+---
+import Portrait from '../components/Portrait.astro';
+import SceneMenu from '../components/SceneMenu.astro';
+import ProjectsScene from '../components/ProjectsScene.astro';
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Yvonne 的个人作品集：经历、技能、兴趣与工作项目。" />
+    <title>Yvonne · 个人作品集</title>
+  </head>
+  <body>
+    <main class="app">
+      <header class="app__header">
+        <p class="app__brand">
+          YVONNE<span>个人作品集</span>
+        </p>
+        <span class="app__edition">PORTFOLIO / 01</span>
+      </header>
+      <div class="scenes">
+        <section id="home-scene" class="home scene" aria-label="作品集首页">
+          <div class="home__stage">
+            <div class="home__copy">
+              <p class="home__eyebrow">个人作品集 / PORTFOLIO</p>
+              <h1 class="home__title">
+                <span>YVONNE</span>
+                <span>的个人世界</span>
+              </h1>
+              <p class="home__intro">
+                关于我的经历、技能与兴趣，
+                <br />
+                还有工作中的项目与创作。
+              </p>
+            </div>
+            <div class="home__portrait">
+              <Portrait />
+            </div>
+            <SceneMenu />
+          </div>
+        </section>
+        <ProjectsScene />
+      </div>
+      <footer class="app__footer">
+        <span>经历 · 想法 · 创作</span>
+        <span id="menu-note">工作项目可预览 · 其他场景待加入</span>
+      </footer>
+    </main>
+  </body>
+</html>
+
+<script>
+  import '../scripts/scenes';
+</script>

@@ -1,0 +1,83 @@
+<!-- 纯装饰：静态原生 SVG，不参与焦点、点击或鼠标跟随。 -->
+<div class="universe-backdrop" aria-hidden="true">
+  <svg viewBox="0 0 1000 740" fill="none" preserveAspectRatio="xMidYMid meet">
+    <g class="universe-backdrop__orbit">
+      <ellipse cx="505" cy="410" rx="365" ry="235" transform="rotate(-13 505 410)" />
+      <path d="M214 209Q371 131 572 179M761 508Q699 611 551 637" />
+    </g>
+    <g class="universe-backdrop__paper">
+      <path d="M78 228L124 201L174 219L169 266L130 282L86 268Z" />
+      <path d="M809 169L866 159L897 196L876 239L821 232L796 201Z" />
+      <path d="M735 552L789 534L820 553L810 596L767 606L739 581Z" />
+    </g>
+    <g class="universe-backdrop__ink">
+      <path d="M257 119L261 131L274 135L261 139L257 151L253 139L241 135L253 131Z" />
+      <path d="M719 287L723 300L736 304L723 309L719 322L715 309L702 304L715 300Z" />
+      <path d="M151 455L151 469M144 462L158 462M855 358L855 370M849 364L861 364" />
+      <path d="M322 547Q331 526 340 545Q348 562 357 543" />
+      <path d="M813 96Q794 101 801 118Q811 132 824 118Q810 121 813 96Z" />
+      <path d="M120 234Q128 223 138 236Q147 245 154 234M119 248L150 247" />
+      <circle cx="864" cy="200" r="11" />
+      <ellipse cx="864" cy="200" rx="23" ry="6" transform="rotate(-25 864 200)" />
+      <path d="M763 565L769 573L786 558" />
+      <circle cx="348" cy="202" r="3" />
+      <circle cx="650" cy="118" r="2" />
+      <circle cx="846" cy="492" r="3" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .universe-backdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .universe-backdrop__orbit {
+    stroke: var(--color-accent);
+    stroke-width: 1;
+    stroke-dasharray: 3 11;
+    opacity: 0.22;
+  }
+  .universe-backdrop__paper {
+    fill: var(--wash-lilac);
+    opacity: 0.36;
+  }
+  .universe-backdrop__paper path:nth-child(2) {
+    fill: var(--wash-peach);
+  }
+  .universe-backdrop__paper path:nth-child(3) {
+    fill: var(--wash-sage);
+  }
+  .universe-backdrop__ink {
+    stroke: var(--color-accent);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.5;
+  }
+  @media (max-width: 600px) {
+    .universe-backdrop {
+      inset: 5% -8% 12%;
+    }
+    .universe-backdrop__paper {
+      opacity: 0.22;
+    }
+    .universe-backdrop__ink {
+      opacity: 0.35;
+    }
+  }
+  @media (max-height: 520px) {
+    .universe-backdrop__paper {
+      display: none;
+    }
+    .universe-backdrop__ink {
+      opacity: 0.25;
+    }
+  }
+</style>

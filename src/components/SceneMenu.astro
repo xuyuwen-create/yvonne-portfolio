@@ -1,0 +1,161 @@
+---
+const entries = [
+  {
+    id: 'experience',
+    name: '个人经历',
+    number: '01',
+    icon: 'M5 6Q10 4 16 7Q22 4 27 6V25Q22 23 16 26Q10 23 5 25ZM16 7V26M8 11L12 12M20 12L24 11',
+  },
+  {
+    id: 'skills',
+    name: '个人技能',
+    number: '02',
+    icon: 'M7 25L23 9M20 5L27 12M5 7L9 11M7 5L7 13M3 9L11 9M23 21L23 27M20 24L26 24',
+  },
+  {
+    id: 'interests',
+    name: '个人兴趣',
+    number: '03',
+    icon: 'M16 27V15M16 20Q4 20 6 8Q18 8 16 20ZM16 15Q16 4 27 5Q27 17 16 15',
+  },
+  {
+    id: 'projects',
+    name: '工作项目',
+    number: '04',
+    icon: 'M5 10H27V25H5ZM11 10V6H21V10M5 16Q16 21 27 16M14 17V21H18V17',
+  },
+  {
+    id: 'misc',
+    name: '杂项',
+    number: '05',
+    icon: 'M16 4L19 12L27 15L19 18L16 27L13 18L5 15L13 12ZM26 4V9M23.5 6.5H28.5',
+  },
+];
+---
+
+<nav class="scene-menu" aria-label="作品集场景入口">
+  {entries.map(({ id, name, number, icon }) => (
+    <button
+      class={`scene-menu__entry scene-menu__entry--${id}`}
+      type="button"
+      data-scene={id}
+      aria-controls={id === 'projects' ? 'projects-scene' : undefined}
+      aria-describedby="menu-note"
+    >
+      <span class="scene-menu__content">
+        <span class="scene-menu__icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d={icon} />
+          </svg>
+        </span>
+        <span class="scene-menu__name">{name}</span>
+      </span>
+      <span class="scene-menu__number" aria-hidden="true">
+        {number}
+      </span>
+    </button>
+  ))}
+</nav>
+
+<style>
+  .scene-menu {
+    position: absolute;
+    inset: 0;
+  }
+  .scene-menu__entry {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: var(--menu-width);
+    min-height: 44px;
+    justify-content: center;
+    padding: 10px 8px;
+    color: var(--color-text);
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+  }
+  .scene-menu__content {
+    display: flex;
+    align-items: center;
+    gap: var(--menu-gap);
+    padding: 3px 2px;
+    background: #fff;
+    border-radius: 3px;
+    pointer-events: none;
+    transition: transform var(--menu-pop-duration) cubic-bezier(0.22, 1.35, 0.36, 1);
+  }
+  /* 按钮盒子和点击范围固定，内容层弹出，避免悬停反复触发。 */
+  @media (hover: hover) and (pointer: fine) {
+    .scene-menu__entry:hover .scene-menu__content {
+      transform: translateY(calc(-1 * var(--menu-pop-distance)));
+    }
+  }
+  .scene-menu__entry:focus-visible .scene-menu__content {
+    transform: translateY(calc(-1 * var(--menu-pop-distance)));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scene-menu__content {
+      transition: none;
+    }
+    .scene-menu__entry:hover .scene-menu__content,
+    .scene-menu__entry:focus-visible .scene-menu__content {
+      transform: none;
+    }
+    .scene-menu__entry:hover {
+      border-color: #555;
+    }
+  }
+  .scene-menu__entry:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 5px;
+  }
+  .scene-menu__entry--experience {
+    left: var(--menu-left);
+    top: var(--menu-upper);
+  }
+  .scene-menu__entry--skills {
+    left: calc(var(--menu-left) + 2%);
+    top: var(--menu-lower);
+  }
+  .scene-menu__entry--interests {
+    left: var(--menu-center, 50%);
+    top: var(--menu-top);
+  }
+  .scene-menu__entry--projects {
+    left: var(--menu-right);
+    top: calc(var(--menu-upper) + 3%);
+  }
+  .scene-menu__entry--misc {
+    left: calc(var(--menu-right) - 2%);
+    top: calc(var(--menu-lower) + 3%);
+  }
+  .scene-menu__icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: var(--icon-size);
+    height: var(--icon-size);
+  }
+  .scene-menu__icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+    stroke-width: var(--icon-stroke);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .scene-menu__name {
+    font-family: inherit;
+    font-size: var(--menu-font-size);
+    letter-spacing: 0.025em;
+    white-space: nowrap;
+  }
+  .scene-menu__number {
+    display: none;
+  }
+</style>

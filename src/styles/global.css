@@ -1,0 +1,424 @@
+:root {
+  color-scheme: light;
+  --color-background: #f8f4fb;
+  --color-surface: #eee3f6;
+  --color-text: #483655;
+  --color-muted: #84728f;
+  --color-accent: #805aa0;
+  --color-border: #d9c8e4;
+  --wash-lilac: #d8bde9;
+  --wash-peach: #edd3da;
+  --wash-sage: #d9d8ec;
+  --paper-tint: #fcf9ff;
+  --font-art: 'Kaiti SC', 'STKaiti', 'KaiTi', 'Yu Mincho', serif;
+  --color-silhouette: #566353;
+  --space-sm: 0.75rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --header-border-width: 1px;
+  --header-padding-block: 0.75rem;
+  --page-padding: clamp(1rem, 4vw, 3.5rem);
+  --stage-width: 960px;
+  --stage-height: 580px;
+  /* 在上一版 1.44 倍基础上再放大 20%。 */
+  --portrait-scale: 1.728;
+  --footer-height: 1rem;
+  --portrait-width: calc(clamp(150px, 22vw, 250px) * var(--portrait-scale));
+  --portrait-height: calc(clamp(210px, 30vw, 340px) * var(--portrait-scale));
+  --portrait-radius: 46% 46% 1rem 1rem;
+  --menu-width: 144px;
+  --menu-gap: 0.75rem;
+  --menu-font-size: 0.875rem;
+  --icon-size: 38px;
+  --icon-stroke: 1.6;
+  --menu-pop-distance: 24px;
+  --menu-pop-duration: 320ms;
+  --menu-left: 12%;
+  --menu-right: 88%;
+  --menu-top: 9%;
+  --menu-upper: 34%;
+  --menu-lower: 62%;
+  --scene-duration: 360ms;
+  --scene-distance: 32px;
+  --scene-easing: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  background: var(--color-background);
+  color: var(--color-text);
+}
+.app {
+  position: relative;
+  isolation: isolate;
+  height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) var(--footer-height);
+  padding: var(--page-padding);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 12% 32%, #e5cee866, transparent 33%),
+    radial-gradient(ellipse at 82% 16%, #d4b6e566, transparent 32%),
+    radial-gradient(ellipse at 56% 84%, #d9c5eb77, transparent 43%),
+    radial-gradient(ellipse at 27% 72%, #edd3da44, transparent 25%), var(--color-background);
+}
+/* 静态纸纹与柔和色块：装饰层不拦截菜单或鼠标事件。 */
+.app::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cpath fill='%239b897a' filter='url(%23paper)' d='M0 0h240v240H0z'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+/* 仅首页使用黑白主题；切换后恢复既有内页配色和样式。 */
+.app:has(#home-scene:not([hidden])) {
+  --color-background: #fff;
+  --color-text: #252525;
+  --color-muted: #777;
+  --color-accent: #333;
+  --color-border: #ddd;
+  background: var(--color-background);
+}
+.app:has(#home-scene:not([hidden]))::before {
+  display: none;
+}
+.app:has(#home-scene:not([hidden])) .app__brand {
+  font-family: inherit;
+}
+.app__header,
+.app__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+}
+.app__header {
+  grid-area: 1 / 1;
+  border-top: var(--header-border-width) solid var(--color-border);
+  border-bottom: var(--header-border-width) solid var(--color-border);
+  padding-block: var(--header-padding-block);
+}
+.app__footer {
+  grid-area: 3 / 1;
+  position: relative;
+  z-index: 2;
+}
+.app__footer > span {
+  background: color-mix(in srgb, var(--color-background), transparent 12%);
+  border-radius: 3px;
+}
+.app__brand {
+  margin: 0;
+  border-right: var(--header-border-width) solid var(--color-border);
+  padding-right: var(--space-md);
+  font-size: 1rem;
+  font-family: var(--font-art);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+}
+.app__brand span {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--color-muted);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+}
+.app__edition,
+.app__footer {
+  color: var(--color-muted);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+}
+.home {
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+.scenes {
+  /* 首页延伸至视窗底边，仍由原场景容器裁切和切换。 */
+  grid-area: 2 / 1 / 4 / 2;
+  margin-bottom: calc(-1 * var(--page-padding));
+  display: grid;
+  min-height: 0;
+  overflow: hidden;
+}
+.projects {
+  /* 工作项目保留原本的内容区域，不被叠放的页脚遮挡。 */
+  margin-bottom: calc(var(--page-padding) + var(--footer-height));
+}
+.scene {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+.scene[hidden] {
+  display: none;
+}
+.home__stage {
+  --home-copy-width: 40%;
+  --home-portrait-x: 71%;
+  --home-title-size: clamp(56px, 7.1vw, 112px);
+  position: relative;
+  width: min(100%, 1440px);
+  height: 100%;
+}
+.home__copy {
+  position: absolute;
+  top: 22%;
+  left: 0;
+  width: var(--home-copy-width);
+}
+.home__eyebrow {
+  margin: 0 0 1.5rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: var(--color-muted);
+}
+.home__title {
+  margin: 0;
+  font-size: var(--home-title-size);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+.home__title span {
+  display: block;
+  white-space: nowrap;
+}
+.home__intro {
+  margin: 2rem 0 0;
+  font-size: clamp(14px, 1.15vw, 17px);
+  line-height: 1.85;
+  color: #666;
+}
+.home .scene-menu {
+  left: 43%;
+}
+.home {
+  --menu-width: 136px;
+  --menu-gap: 8px;
+  --icon-size: 28px;
+  --menu-left: 10%;
+  --menu-right: 85%;
+  --menu-top: 10%;
+  --menu-upper: 30%;
+  --menu-lower: 59%;
+}
+.home .scene-menu__entry {
+  flex-direction: row;
+}
+.home__portrait {
+  position: absolute;
+  left: var(--home-portrait-x);
+  bottom: 0;
+  transform: translateX(-50%);
+}
+.home__portrait::before {
+  content: none;
+  position: absolute;
+  inset: 18% -18% -5%;
+  border-radius: 48% 55% 43% 58%;
+  background: radial-gradient(ellipse, #d8c5e64d, transparent 70%);
+  pointer-events: none;
+}
+.project-card {
+  background: color-mix(in srgb, var(--paper-tint), transparent 15%);
+  box-shadow: 3px 5px 18px #72558e0a;
+}
+.project-card__visual {
+  clip-path: polygon(
+    0 1%,
+    20% 0,
+    44% 2%,
+    72% 0,
+    100% 2%,
+    99% 34%,
+    100% 67%,
+    98% 100%,
+    72% 98%,
+    43% 100%,
+    18% 99%,
+    0 100%
+  );
+}
+
+/* 窄屏保留左 / 上 / 右分布，入口改为竖向以给人像留出空间。 */
+@media (max-width: 600px) {
+  :root {
+    --portrait-width: calc(clamp(105px, 32vw, 180px) * var(--portrait-scale));
+    --portrait-height: calc(clamp(160px, 46vw, 260px) * var(--portrait-scale));
+    --menu-width: 64px;
+    --menu-gap: 0.5rem;
+    --menu-font-size: 0.8125rem;
+    --icon-size: 36px;
+    --menu-left: 12%;
+    --menu-right: 88%;
+    --menu-top: 7%;
+    --menu-upper: 32%;
+    --menu-lower: 55%;
+  }
+  .scene-menu__entry {
+    flex-direction: row;
+  }
+  .scene-menu__number {
+    display: none;
+  }
+  .app__edition {
+    display: none;
+  }
+  .app__footer {
+    font-size: 0.5625rem;
+    letter-spacing: 0;
+    gap: var(--space-sm);
+  }
+}
+
+/* 宽而矮的窗口先收紧基准尺寸，避免放大后头顶被裁切。 */
+@media (min-width: 601px) and (min-height: 521px) and (max-height: 740px) {
+  :root {
+    --portrait-width: calc(190px * var(--portrait-scale));
+    --portrait-height: calc(260px * var(--portrait-scale));
+    --menu-top: 4%;
+  }
+}
+
+/* 横屏或较矮窗口压缩尺寸，仍然只展示一个全屏场景。 */
+@media (max-height: 520px) {
+  :root {
+    --header-padding-block: 0.375rem;
+    --page-padding: 0.75rem;
+    --portrait-width: calc(95px * var(--portrait-scale));
+    --portrait-height: calc(135px * var(--portrait-scale));
+    --icon-size: 28px;
+    --menu-top: 12%;
+    --menu-upper: 44%;
+    --menu-lower: 78%;
+  }
+  .app__brand span {
+    display: none;
+  }
+  .portrait__caption {
+    font-size: 0.5rem;
+  }
+}
+
+/* 手机与平板重排为上下两块，不缩放整张桌面海报。 */
+@media (max-width: 900px) and (min-height: 521px) {
+  .home__stage {
+    --home-copy-width: 100%;
+    --home-portrait-x: 53%;
+    --home-title-size: clamp(36px, 6.8vw, 60px);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    container-type: size;
+  }
+  .home__copy {
+    position: relative;
+    top: auto;
+    padding-top: 1.5rem;
+  }
+  .home__eyebrow {
+    margin-bottom: 0.75rem;
+  }
+  .home__intro {
+    margin-top: 1rem;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .home .scene-menu {
+    inset: 45% 0 0;
+  }
+  .home {
+    --menu-width: 108px;
+    --menu-left: 20%;
+    --menu-right: 80%;
+    --menu-upper: 28%;
+    --menu-lower: 65%;
+    --menu-top: 8%;
+    --icon-size: 22px;
+    --menu-gap: 0.375rem;
+    --menu-font-size: 0.75rem;
+  }
+  /* 给标题留空间，并按同一比例约束人像宽高。 */
+  .home .portrait {
+    width: min(var(--portrait-width), 44cqw, 38cqh);
+    height: min(var(--portrait-height), 60cqw, 51cqh);
+  }
+}
+
+@media (max-height: 520px) {
+  .home__stage {
+    --home-title-size: clamp(30px, 5.6vw, 64px);
+  }
+  .home__copy {
+    top: 14%;
+  }
+  .home__eyebrow {
+    margin-bottom: 0.5rem;
+    font-size: 9px;
+  }
+  .home__intro {
+    margin-top: 0.75rem;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  .home {
+    --icon-size: 26px;
+    --menu-gap: 4px;
+    --menu-font-size: 11px;
+  }
+  .home .scene-menu {
+    left: 44%;
+  }
+}
+
+/* 窄而矮的窗口仍用上下布局，标题保持可读字号。 */
+@media (max-width: 600px) and (max-height: 520px) {
+  .home__stage {
+    --home-copy-width: 100%;
+    --home-portrait-x: 53%;
+    --home-title-size: 28px;
+    container-type: size;
+  }
+  .home__copy {
+    top: 0;
+  }
+  .home__eyebrow {
+    margin-bottom: 0.375rem;
+  }
+  .home__intro {
+    margin-top: 0.5rem;
+  }
+  .home .scene-menu {
+    inset: 43% 0 0;
+  }
+  .home {
+    --menu-width: 108px;
+    --menu-left: 20%;
+    --menu-right: 80%;
+    --menu-upper: 28%;
+    --menu-lower: 65%;
+    --menu-top: 0%;
+  }
+  .home .portrait {
+    width: min(var(--portrait-width), 44cqw, 38cqh);
+    height: min(var(--portrait-height), 60cqw, 51cqh);
+  }
+}

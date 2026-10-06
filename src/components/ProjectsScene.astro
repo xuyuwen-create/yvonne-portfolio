@@ -1,0 +1,105 @@
+<section id="projects-scene" class="projects scene" aria-labelledby="projects-title" hidden inert>
+  <div class="projects__content">
+    <button class="projects__back" type="button" data-back-home>
+      ← 返回首页
+    </button>
+    <p class="projects__eyebrow">SELECTED WORK / 01</p>
+    <h2 id="projects-title" tabindex="-1">
+      工作项目
+    </h2>
+    <article class="project-card">
+      <div class="project-card__visual" aria-hidden="true">
+        PROJECT / 01
+      </div>
+      <div class="project-card__copy">
+        <span class="projects__eyebrow">示例项目 · 内容占位</span>
+        <h3>个人作品集设计</h3>
+        <p>
+          用一个清晰的全屏界面，展示个人经历与创作。这里将来可以介绍项目背景、负责的工作和最终成果。
+        </p>
+        <span class="project-card__tag">界面设计 / 前端开发</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  .projects {
+    min-height: 0;
+    overflow: auto;
+    padding-block: var(--space-md);
+  }
+  .projects__content {
+    width: min(100%, var(--stage-width));
+    margin: auto;
+  }
+  .projects__back {
+    padding: var(--space-sm) 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-accent);
+    font: inherit;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  .projects__back:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  .projects__eyebrow {
+    color: var(--color-muted);
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+  }
+  h2 {
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 500;
+  }
+  h2:focus {
+    outline: none;
+  }
+  .project-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--color-border);
+    border-radius: var(--space-sm);
+    overflow: hidden;
+  }
+  .project-card__visual {
+    display: grid;
+    place-items: center;
+    min-height: 220px;
+    background: var(--color-surface);
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+  }
+  .project-card__copy {
+    padding: var(--space-lg);
+  }
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+  .project-card__copy p {
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    line-height: 1.8;
+  }
+  .project-card__tag {
+    color: var(--color-accent);
+    font-size: 0.625rem;
+  }
+  @media (max-width: 600px) {
+    .project-card {
+      grid-template-columns: 1fr;
+    }
+    .project-card__visual {
+      min-height: 120px;
+    }
+    .project-card__copy {
+      padding: var(--space-md);
+    }
+  }
+</style>
