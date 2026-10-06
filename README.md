@@ -18,6 +18,8 @@ npm run preview
 
 ## 文件与调整
 
+截图存在性从构建工作目录的 `public/` 检查，避免 Astro 打包后 `import.meta.url` 改变造成 CI 把已有图片误判为缺失；输出 URL 仍通过 `withBase()` 加仓库前缀。
+
 所有类别的项目数据直接放在 `categories` 内对应的 `projects` 数组中，通信类别不再引用单独的顶层 projects 变量。
 
 自主制作追加「WordPress・ACF 学習制作」，状态为「制作中・近日公開」。文案区分已有 WordPress 制作经验与正在学习 ACF，不列未确认技术成果或公开链接；`status` 为可选字段，现有完成项目不显示制作中状态。

@@ -1,5 +1,6 @@
 ---
 import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { withBase } from '../utils/paths';
 
 type Project = {
@@ -15,7 +16,7 @@ type Project = {
   status?: string;
 };
 function availableScreenshot(path: string) {
-  return existsSync(new URL('../../public' + path, import.meta.url)) ? path : undefined;
+  return existsSync(resolve(process.cwd(), 'public', path.replace(/^\//, ''))) ? path : undefined;
 }
 const categories = [
   {
