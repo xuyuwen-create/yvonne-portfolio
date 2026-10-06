@@ -12,6 +12,7 @@ type Project = {
   process?: string;
   screenshot?: string;
   imageAlt?: string;
+  status?: string;
 };
 function availableScreenshot(path: string) {
   return existsSync(new URL('../../public' + path, import.meta.url)) ? path : undefined;
@@ -133,6 +134,15 @@ const categories = [
           'Codexを活用して実装を進め、画像生成AIで制作した素材を使用しています。構成や表現の方向性を決め、動作確認と調整を行いました。',
         screenshot: availableScreenshot('/images/projects/personal-portfolio.webp'),
       },
+      {
+        title: 'WordPress・ACF 学習制作',
+        status: '制作中・近日公開',
+        description:
+          'WordPressでの制作経験をもとに、Advanced Custom Fields（ACF）を使ったコンテンツ管理を学んでいます。学習内容を反映したサイトを制作し、こちらで紹介する予定です。',
+        responsibilities: '自主学習・制作',
+        process:
+          'WordPressでの制作経験があり、現在はACFの使い方を学習しています。制作内容や学習の過程は、公開時にご紹介します。',
+      },
     ] as Project[],
   },
 ];
@@ -191,10 +201,11 @@ const categories = [
                     decoding="async"
                   />
                 ) : (
-                  <span>スクリーンショット未掲載</span>
+                  <span>{project.status ?? 'スクリーンショット未掲載'}</span>
                 )}
               </div>
               <div class="project-card__copy">
+                {project.status && <p class="project-card__status">{project.status}</p>}
                 <h3 id={`project-heading-${category.id}-${index}`}>{project.title}</h3>
                 <p>{project.description}</p>
                 <dl class="project-card__details">
@@ -482,6 +493,12 @@ const categories = [
     font-size: 0.875rem;
     line-height: 1.8;
     margin-block: var(--space-md);
+  }
+  .project-card__copy .project-card__status {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-accent);
+    font-size: 0.875rem;
+    font-weight: 600;
   }
   .project-card__notes {
     margin-block: var(--space-md);

@@ -18,6 +18,8 @@ npm run preview
 
 ## 文件与调整
 
+自主制作追加「WordPress・ACF 学習制作」，状态为「制作中・近日公開」。文案区分已有 WordPress 制作经验与正在学习 ACF，不列未确认技术成果或公开链接；`status` 为可选字段，现有完成项目不显示制作中状态。
+
 GitHub Pages 部署：仓库 `xuyuwen-create/yvonne-portfolio`，站点地址 `https://xuyuwen-create.github.io/yvonne-portfolio/`。Astro 使用静态输出，`site` 和 `base` 已配置；`.github/workflows/deploy.yml` 按 Astro 官方文档使用官方 Action 构建、上传并部署，推送到 `main` 或手动运行时触发。GitHub Settings → Pages → Source 选择 GitHub Actions。提交时包含 `package-lock.json`；无需提交 dist。配置本身不会推送或部署。
 
 本地运行 `npm run dev` 或构建后 `npm run preview`，访问终端地址下的 `/yvonne-portfolio/`。当前功能分支需先合入 main 才会触发自动部署。
