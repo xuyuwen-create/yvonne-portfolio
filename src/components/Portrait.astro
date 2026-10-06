@@ -1,8 +1,9 @@
 ---
+import { withBase } from '../utils/paths';
 // 所有参数都使用母版素材坐标（1086 × 1448），不是屏幕 CSS 像素。
 // 调整 alignment 即可，不要为手机另设对齐参数；SVG 会统一缩放所有层。
 // 素材实际在 public/images/，保留原文件与路径，不裁剪或重画。
-const assets = '/images';
+const assets = withBase('/images');
 const canvas = { width: 1086, height: 1448 };
 // 跟随参数：位移为素材像素，倾斜为角度，smoothMs 为平滑时间常数。
 // 头颈已有约 10px 重叠，保守限制幅度以始终保留接缝覆盖。
@@ -35,19 +36,19 @@ const showComparison = import.meta.env.DEV;
 ---
 
 <div class="portrait" data-portrait-tracking={JSON.stringify(tracking)}>
-  {showComparison && (
+  <!-- {showComparison && (
     <label class="portrait__compare">
       <input type="checkbox" />
       母版对照
     </label>
-  )}
+  )} -->
   <!-- slice 保持原组件 object-fit: cover 的显示方式；所有层共享同一次缩放。 -->
   <svg
     class="portrait__canvas"
     viewBox={`0 0 ${canvas.width} ${canvas.height}`}
     preserveAspectRatio="xMidYMid slice"
     role="img"
-    aria-label="Yvonne 的人像"
+    aria-label="Yvonneのポートレート"
   >
     <defs>
       <!-- 眼白边界使用 head.png 原始坐标，应用与头部完全相同的校准。 -->

@@ -1,15 +1,27 @@
 :root {
   color-scheme: light;
-  --color-background: #f8f4fb;
-  --color-surface: #eee3f6;
-  --color-text: #483655;
-  --color-muted: #84728f;
-  --color-accent: #805aa0;
-  --color-border: #d9c8e4;
+  --color-background: #fff;
+  --color-surface: #f5f5f5;
+  --color-text: #252525;
+  --color-muted: #777;
+  --color-accent: #333;
+  --color-border: #ddd;
+  --glow-lilac: #c5c1d2;
+  --glow-rose: #e0d6d4;
+  --glow-aqua: #c3d0d5;
+  --glow-gold: #e5dfd2;
+  --glow-opacity: 0.65;
+  --glow-duration: 18s;
+  --paper-texture-opacity: 0.12;
+  --title-purple-deep: #29133f;
+  --title-purple-mid: #563074;
+  --title-purple-light: #9974b5;
+  --title-shimmer-duration: 9s;
+  --title-welcome-scale: 0.65;
   --wash-lilac: #d8bde9;
   --wash-peach: #edd3da;
   --wash-sage: #d9d8ec;
-  --paper-tint: #fcf9ff;
+  --paper-tint: #fff;
   --font-art: 'Kaiti SC', 'STKaiti', 'KaiTi', 'Yu Mincho', serif;
   --color-silhouette: #566353;
   --space-sm: 0.75rem;
@@ -22,6 +34,7 @@
   --stage-height: 580px;
   /* 在上一版 1.44 倍基础上再放大 20%。 */
   --portrait-scale: 1.728;
+  --portrait-mobile-height: 75svh;
   --footer-height: 1rem;
   --portrait-width: calc(clamp(150px, 22vw, 250px) * var(--portrait-scale));
   --portrait-height: calc(clamp(210px, 30vw, 340px) * var(--portrait-scale));
@@ -31,11 +44,11 @@
   --menu-font-size: 0.875rem;
   --icon-size: 38px;
   --icon-stroke: 1.6;
-  --menu-pop-distance: 24px;
+  --menu-pop-distance: 34px;
   --menu-pop-duration: 320ms;
-  --menu-left: 12%;
-  --menu-right: 88%;
-  --menu-top: 9%;
+  --menu-left: 15%;
+  --menu-right: 85%;
+  --menu-top: 8%;
   --menu-upper: 34%;
   --menu-lower: 62%;
   --scene-duration: 360ms;
@@ -71,37 +84,55 @@ body {
   grid-template-rows: auto minmax(0, 1fr) var(--footer-height);
   padding: var(--page-padding);
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 12% 32%, #e5cee866, transparent 33%),
-    radial-gradient(ellipse at 82% 16%, #d4b6e566, transparent 32%),
-    radial-gradient(ellipse at 56% 84%, #d9c5eb77, transparent 43%),
-    radial-gradient(ellipse at 27% 72%, #edd3da44, transparent 25%), var(--color-background);
+  background: var(--color-background);
 }
-/* 静态纸纹与柔和色块：装饰层不拦截菜单或鼠标事件。 */
 .app::before {
+  content: '';
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--glow-opacity);
+  background:
+    radial-gradient(ellipse at 12% 22%, var(--glow-lilac), transparent 48%),
+    radial-gradient(ellipse at 88% 24%, var(--glow-rose), transparent 45%),
+    radial-gradient(ellipse at 72% 88%, var(--glow-aqua), transparent 48%),
+    radial-gradient(ellipse at 20% 80%, var(--glow-gold), transparent 42%);
+  animation: background-glow var(--glow-duration) ease-in-out infinite alternate;
+}
+@keyframes background-glow {
+  from {
+    transform: translate(-5%, -3%) rotate(-8deg) scale(1.08);
+    background-position:
+      -30px 10px,
+      20px -25px,
+      -15px 20px,
+      20px 0;
+  }
+  to {
+    transform: translate(5%, 4%) rotate(9deg) scale(1.18);
+    background-position:
+      40px -20px,
+      -35px 30px,
+      30px -35px,
+      -25px 25px;
+  }
+}
+.app::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.12;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cpath fill='%239b897a' filter='url(%23paper)' d='M0 0h240v240H0z'/%3E%3C/svg%3E");
+  opacity: var(--paper-texture-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.58' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cpath fill='%23968d82' filter='url(%23paper)' d='M0 0h256v256H0z'/%3E%3C/svg%3E");
   mix-blend-mode: multiply;
 }
-/* 仅首页使用黑白主题；切换后恢复既有内页配色和样式。 */
-.app:has(#home-scene:not([hidden])) {
-  --color-background: #fff;
-  --color-text: #252525;
-  --color-muted: #777;
-  --color-accent: #333;
-  --color-border: #ddd;
-  background: var(--color-background);
-}
-.app:has(#home-scene:not([hidden]))::before {
-  display: none;
-}
-.app:has(#home-scene:not([hidden])) .app__brand {
-  font-family: inherit;
+@media (prefers-reduced-motion: reduce) {
+  .app::before {
+    animation: none;
+    translate: none;
+  }
 }
 .app__header,
 .app__footer {
@@ -127,12 +158,23 @@ body {
 }
 .app__brand {
   margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  line-height: inherit;
   border-right: var(--header-border-width) solid var(--color-border);
   padding-right: var(--space-md);
   font-size: 1rem;
-  font-family: var(--font-art);
+  font-family: inherit;
   font-weight: 500;
   letter-spacing: 0.18em;
+}
+.app__brand:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
 }
 .app__brand span {
   display: block;
@@ -193,6 +235,7 @@ body {
 }
 .home__title {
   margin: 0;
+  color: var(--title-purple-deep);
   font-size: var(--home-title-size);
   font-weight: 900;
   line-height: 1.08;
@@ -201,6 +244,87 @@ body {
 .home__title span {
   display: block;
   white-space: nowrap;
+}
+.home__title span:not(:first-child) {
+  font-size: calc(var(--home-title-size) * var(--title-welcome-scale));
+}
+.app__brand,
+.app__brand span {
+  color: var(--title-purple-deep);
+}
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .home__title,
+  .app__brand,
+  .app__brand span {
+    background-image:
+      radial-gradient(circle at 18% 24%, #fff 0 0.8px, #e7d7ff99 1px, transparent 2.8px),
+      radial-gradient(circle at 72% 68%, #f4eaff 0 1.2px, #bca0ef88 1.8px, transparent 4px),
+      radial-gradient(circle at 45% 38%, #e8d7ff 0 0.6px, transparent 1.7px),
+      linear-gradient(
+        110deg,
+        var(--title-purple-deep) 0%,
+        var(--title-purple-mid) 28%,
+        var(--title-purple-light) 44%,
+        var(--title-purple-mid) 58%,
+        var(--title-purple-deep) 75%,
+        var(--title-purple-mid) 100%
+      );
+    background-size:
+      67px 53px,
+      113px 89px,
+      43px 71px,
+      250% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation:
+      title-shimmer var(--title-shimmer-duration) ease-in-out infinite alternate,
+      title-twinkle 3.6s ease-in-out infinite alternate;
+  }
+}
+@keyframes title-shimmer {
+  from {
+    background-position:
+      0 0,
+      20px 10px,
+      8px 24px,
+      0% 50%;
+  }
+  to {
+    background-position:
+      36px -18px,
+      -24px 30px,
+      26px -12px,
+      100% 50%;
+  }
+}
+@keyframes title-twinkle {
+  from {
+    background-size:
+      67px 53px,
+      113px 89px,
+      43px 71px,
+      250% 100%;
+  }
+  to {
+    background-size:
+      69px 55px,
+      110px 86px,
+      45px 73px,
+      250% 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home__title,
+  .app__brand,
+  .app__brand span {
+    animation: none;
+    background-position:
+      0 0,
+      20px 10px,
+      8px 24px,
+      50% 50%;
+  }
 }
 .home__intro {
   margin: 2rem 0 0;
@@ -212,12 +336,12 @@ body {
   left: 43%;
 }
 .home {
-  --menu-width: 136px;
+  --menu-width: 180px;
   --menu-gap: 8px;
   --icon-size: 28px;
   --menu-left: 10%;
   --menu-right: 85%;
-  --menu-top: 10%;
+  --menu-top: 15%;
   --menu-upper: 30%;
   --menu-lower: 59%;
 }
@@ -230,6 +354,17 @@ body {
   bottom: 0;
   transform: translateX(-50%);
 }
+/* 左右排版共用导航上沿；盒子按顶部定位，不再按中心定位。 */
+@media (min-width: 901px), (min-width: 601px) and (max-height: 520px) {
+  .home__copy {
+    top: var(--menu-top);
+  }
+  .home .scene-menu__entry--experience,
+  .home .scene-menu__entry--interests,
+  .home .scene-menu__entry--projects {
+    transform: translateX(-50%);
+  }
+}
 .home__portrait::before {
   content: none;
   position: absolute;
@@ -237,26 +372,6 @@ body {
   border-radius: 48% 55% 43% 58%;
   background: radial-gradient(ellipse, #d8c5e64d, transparent 70%);
   pointer-events: none;
-}
-.project-card {
-  background: color-mix(in srgb, var(--paper-tint), transparent 15%);
-  box-shadow: 3px 5px 18px #72558e0a;
-}
-.project-card__visual {
-  clip-path: polygon(
-    0 1%,
-    20% 0,
-    44% 2%,
-    72% 0,
-    100% 2%,
-    99% 34%,
-    100% 67%,
-    98% 100%,
-    72% 98%,
-    43% 100%,
-    18% 99%,
-    0 100%
-  );
 }
 
 /* 窄屏保留左 / 上 / 右分布，入口改为竖向以给人像留出空间。 */
@@ -351,7 +466,7 @@ body {
     --menu-right: 80%;
     --menu-upper: 28%;
     --menu-lower: 65%;
-    --menu-top: 8%;
+    --menu-top: 47%;
     --icon-size: 22px;
     --menu-gap: 0.375rem;
     --menu-font-size: 0.75rem;
@@ -368,7 +483,7 @@ body {
     --home-title-size: clamp(30px, 5.6vw, 64px);
   }
   .home__copy {
-    top: 14%;
+    top: var(--menu-top);
   }
   .home__eyebrow {
     margin-bottom: 0.5rem;
@@ -420,5 +535,16 @@ body {
   .home .portrait {
     width: min(var(--portrait-width), 44cqw, 38cqh);
     height: min(var(--portrait-height), 60cqw, 51cqh);
+  }
+}
+
+/* 手机及指定的平板区间以屏幕高度定尺寸，保留贴底定位。 */
+@media (max-width: 600px), (max-width: 900px) and (min-height: 521px) {
+  .home__stage {
+    --home-portrait-x: 50%;
+  }
+  .home .portrait {
+    width: min(calc(var(--portrait-mobile-height) * 0.75), 100cqw);
+    height: var(--portrait-mobile-height);
   }
 }

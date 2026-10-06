@@ -1,27 +1,343 @@
+---
+import { existsSync } from 'node:fs';
+import { withBase } from '../utils/paths';
+
+type Project = {
+  title: string;
+  description: string;
+  responsibilities: string;
+  technologies?: string;
+  url?: string;
+  points?: string[];
+  process?: string;
+  screenshot?: string;
+  imageAlt?: string;
+};
+function availableScreenshot(path: string) {
+  return existsSync(new URL('../../public' + path, import.meta.url)) ? path : undefined;
+}
+const projects: Project[] = [
+  {
+    title: 'イッツコム｜総合開業相談窓口 LP',
+    description:
+      '開業支援サービスを紹介するLP。ページ全体のコーディング、レスポンシブ対応、GSAPを使用したアニメーション実装を担当しました。',
+    responsibilities: 'コーディング／レスポンシブ対応／アニメーション実装',
+    technologies: 'HTML／CSS／JavaScript／GSAP',
+    url: 'https://www.itscom.co.jp/lp/open_support.html',
+    screenshot: availableScreenshot('/images/projects/itscom-open-support.webp'),
+  },
+  {
+    title: 'イッツコム｜スマホ教室潜入レポート',
+    description:
+      'スマホ教室の内容や雰囲気を伝えるレポートページ。ページ全体のコーディング、レスポンシブ対応、GSAPを使用したアニメーション実装を担当しました。',
+    responsibilities: 'コーディング／レスポンシブ対応／アニメーション実装',
+    technologies: 'HTML／CSS／JavaScript／GSAP',
+    url: 'https://www.itscom.co.jp/service/mobile/lecture/smartphone-school-report.html',
+  },
+];
+const categories = [
+  {
+    id: 'telecom',
+    name: '通信サービス',
+    description:
+      '通信事業者のサービス紹介LPやコンテンツページを制作。コーディングからレスポンシブ対応、アニメーション実装まで担当しました。',
+    projects,
+  },
+  {
+    id: 'fashion-lifestyle',
+    name: 'ファッション・ライフスタイル',
+    description: 'ファッションや暮らしに関わる商品の特設ページ制作。',
+    projects: [
+      {
+        title: 'Zoff｜かんたん美支度メガネ 特設ページ',
+        description:
+          'メガネのフレームやレンズを紹介する特設ページです。ページ全体のコーディングを担当し、複数のスライダーを実装しました。',
+        responsibilities: 'ページ全体のコーディング／スライダー実装',
+        technologies: 'HTML／CSS／JavaScript',
+        url: 'https://www.zoff.co.jp/shop/contents/beautyprep.aspx',
+        screenshot: availableScreenshot('/images/projects/zoff-beautyprep.webp'),
+        imageAlt: 'Zoff「かんたん美支度メガネ」特設ページの紹介画像',
+      },
+      {
+        title: 'une nana cool｜my custom 特設ページ',
+        description:
+          'カスタムブラの組み合わせや商品を紹介する特設ページ。ページのコーディングを担当しました。',
+        responsibilities: 'コーディング',
+        url: 'https://store.wacoal.jp/brand/unenanacool/topics/unenanacool_mycustom.html',
+        screenshot: availableScreenshot('/images/projects/unenanacool-mycustom.webp'),
+        imageAlt: 'une nana cool「my custom」特設ページの紹介画像',
+      },
+      {
+        title: 'ワコール｜マタニティアイテムランキング',
+        description:
+          'マタニティ商品のランキングを紹介するページ。ページのコーディングを担当しました。',
+        responsibilities: 'コーディング',
+        url: 'https://store.wacoal.jp/topics/brand/maternity_ranking.html',
+        screenshot: availableScreenshot('/images/projects/wacoal-maternity-ranking.webp'),
+        imageAlt: 'ワコール「マタニティアイテムランキング」ページの紹介画像',
+      },
+      {
+        title: 'ワコール｜GOCOCi ブランド紹介ページ',
+        description: 'GOCOCiの商品を紹介するブランドページ。ページのコーディングを担当しました。',
+        responsibilities: 'コーディング',
+        url: 'https://store.wacoal.jp/brand/gococi/topics/gococi.html',
+        screenshot: availableScreenshot('/images/projects/wacoal-gococi.webp'),
+        imageAlt: 'ワコール「GOCOCi」ブランドページの紹介画像',
+      },
+      {
+        title: 'ワコール｜ポイントバックキャンペーン LP',
+        description:
+          'ワコールウェブストアのポイントバックキャンペーンを紹介するLPです。キャンペーン概要や参加方法、注意事項を掲載し、ページ全体のコーディングを担当しました。',
+        responsibilities: 'ページ全体のコーディング',
+        technologies: 'HTML／CSS／JavaScript',
+        url: 'https://store.wacoal.jp/topics/campaign/pointback.html',
+        screenshot: availableScreenshot('/images/projects/wacoal-pointback.webp'),
+        imageAlt: 'ワコール「ポイントバックキャンペーン」LPの紹介画像',
+      },
+    ] as Project[],
+  },
+  {
+    id: 'pets-travel',
+    name: 'ペット・旅行',
+    description: '愛犬と泊まれる宿泊施設を紹介する特集LPです。',
+    projects: [
+      {
+        title: 'ワンコnowa｜わんわんパラダイス 特集LP',
+        description:
+          '愛犬と泊まれる宿泊施設を紹介する特集LPです。実装を主に担当し、施設紹介コンポーネントは別のメンバーと分担して制作しました。後半は不具合修正や、デザイナーから追加されたインタラクションの実装にも対応しました。',
+        responsibilities: '主要部分のコーディング／不具合修正／追加インタラクションの実装',
+        url: 'https://wankonowa.com/lp/wanwanparadise/',
+        screenshot: availableScreenshot('/images/projects/wanwanparadise.webp'),
+        imageAlt: 'ワンコnowa「わんわんパラダイス」特集LPの紹介画像',
+      },
+    ] as Project[],
+  },
+  {
+    id: 'independent',
+    name: '自主制作',
+    description: '自分で企画し、制作したウェブサイトです。',
+    projects: [
+      {
+        title: 'パーソナルポートフォリオサイト',
+        description:
+          '制作実績やこれまでの歩みを紹介する、自主制作のポートフォリオサイトです。水彩・切り絵風の人物イラストとモノクロのアイコンを組み合わせ、クリックで各画面を切り替える構成にしました。マウスに合わせて人物の顔や視線が動くインタラクションも実装しています。',
+        responsibilities: '企画／ビジュアルディレクション／フロントエンド実装',
+        technologies: 'Astro／HTML／CSS／JavaScript／TypeScript',
+        points: [
+          '人物イラストとアイコンの質感を統一したビジュアル',
+          'クリックによる全画面の切り替え',
+          '顔と視線がマウスに追従するインタラクション',
+          'カテゴリー別に整理した制作実績',
+        ],
+        process:
+          'Codexを活用して実装を進め、画像生成AIで制作した素材を使用しています。構成や表現の方向性を決め、動作確認と調整を行いました。',
+        screenshot: availableScreenshot('/images/projects/personal-portfolio.webp'),
+      },
+    ] as Project[],
+  },
+];
+---
+
 <section id="projects-scene" class="projects scene" aria-labelledby="projects-title" hidden inert>
   <div class="projects__content">
     <button class="projects__back" type="button" data-back-home>
-      ← 返回首页
+      ← ホームへ
     </button>
-    <p class="projects__eyebrow">SELECTED WORK / 01</p>
+    <p class="projects__eyebrow">コーディング実績 一部</p>
     <h2 id="projects-title" tabindex="-1">
-      工作项目
+      制作実績
     </h2>
-    <article class="project-card">
-      <div class="project-card__visual" aria-hidden="true">
-        PROJECT / 01
+    <div data-category-list>
+      {categories.map((category, index) => (
+        <button
+          class="projects__category"
+          type="button"
+          data-category={category.id}
+          aria-controls={`category-${category.id}`}
+        >
+          <span class="projects__category-number" aria-hidden="true">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span class="projects__category-name">{category.name}</span>
+          <span class="projects__category-description">{category.description}</span>
+          <span class="projects__category-arrow" aria-hidden="true">
+            ↗
+          </span>
+        </button>
+      ))}
+    </div>
+    {categories.map((category) => (
+      <div id={`category-${category.id}`} data-category-panel={category.id} hidden>
+        <button class="projects__back" type="button" data-back-category>
+          ← カテゴリ一覧へ
+        </button>
+        <h3 class="projects__category-title" tabindex="-1">
+          {category.name}
+        </h3>
+        <div id={`project-cards-${category.id}`}>
+          {category.projects.map((project, index) => (
+            <article
+              class="project-card"
+              data-project-card
+              hidden={index !== 0}
+              aria-labelledby={`project-heading-${category.id}-${index}`}
+            >
+              <div class="project-card__visual">
+                {project.screenshot ? (
+                  <img
+                    src={withBase(project.screenshot)}
+                    alt={project.imageAlt ?? `${project.title}のスクリーンショット`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <span>スクリーンショット未掲載</span>
+                )}
+              </div>
+              <div class="project-card__copy">
+                <h3 id={`project-heading-${category.id}-${index}`}>{project.title}</h3>
+                <p>{project.description}</p>
+                <dl class="project-card__details">
+                  <dt>担当範囲</dt>
+                  <dd>{project.responsibilities}</dd>
+                  {project.technologies && (
+                    <>
+                      <dt>使用技術</dt>
+                      <dd>{project.technologies}</dd>
+                    </>
+                  )}
+                </dl>
+                {project.points && (
+                  <div class="project-card__notes">
+                    <h4>制作のポイント</h4>
+                    <ul>
+                      {project.points.map((point) => (
+                        <li>{point}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {project.process && (
+                  <div class="project-card__notes">
+                    <h4>制作方法</h4>
+                    <p>{project.process}</p>
+                  </div>
+                )}
+                {project.url && (
+                  <a
+                    class="project-card__link"
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${project.title}のサイトを見る（新しいタブで開きます）`}
+                  >
+                    サイトを見る ↗
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+        <nav class="projects__pagination" aria-label="制作実績の切り替え">
+          <button
+            type="button"
+            data-project-prev
+            hidden={category.projects.length <= 1}
+            aria-controls={`project-cards-${category.id}`}
+            disabled
+          >
+            前へ
+          </button>
+          <span data-project-page role="status" aria-live="polite" aria-atomic="true">
+            01 / {String(category.projects.length).padStart(2, '0')}
+          </span>
+          <button
+            type="button"
+            data-project-next
+            hidden={category.projects.length <= 1}
+            disabled={category.projects.length <= 1}
+            aria-controls={`project-cards-${category.id}`}
+          >
+            次へ
+          </button>
+        </nav>
       </div>
-      <div class="project-card__copy">
-        <span class="projects__eyebrow">示例项目 · 内容占位</span>
-        <h3>个人作品集设计</h3>
-        <p>
-          用一个清晰的全屏界面，展示个人经历与创作。这里将来可以介绍项目背景、负责的工作和最终成果。
-        </p>
-        <span class="project-card__tag">界面设计 / 前端开发</span>
-      </div>
-    </article>
+    ))}
   </div>
 </section>
+
+<script>
+  const scene = document.querySelector<HTMLElement>('#projects-scene');
+  if (scene) {
+    const list = scene.querySelector<HTMLElement>('[data-category-list]');
+    const panels = Array.from(scene.querySelectorAll<HTMLElement>('[data-category-panel]'));
+    const categoryButtons = Array.from(
+      scene.querySelectorAll<HTMLButtonElement>('[data-category]'),
+    );
+    panels.forEach((panel) => {
+      const cards = Array.from(panel.querySelectorAll<HTMLElement>('[data-project-card]'));
+      const previous = panel.querySelector<HTMLButtonElement>('[data-project-prev]');
+      const next = panel.querySelector<HTMLButtonElement>('[data-project-next]');
+      const page = panel.querySelector<HTMLElement>('[data-project-page]');
+      const title = panel.querySelector<HTMLElement>('.projects__category-title');
+      const back = panel.querySelector<HTMLButtonElement>('[data-back-category]');
+      const categoryButton = categoryButtons.find(
+        (button) => button.dataset.category === panel.dataset.categoryPanel,
+      );
+      if (
+        !list ||
+        !previous ||
+        !next ||
+        !page ||
+        !back ||
+        !title ||
+        !categoryButton ||
+        !cards.length
+      )
+        return;
+      let current = 0;
+      function show(index: number) {
+        if (index < 0 || index >= cards.length) return;
+        current = index;
+        cards.forEach((card, position) => {
+          card.hidden = position !== current;
+        });
+        previous!.disabled = current === 0;
+        next!.disabled = current === cards.length - 1;
+        page!.textContent = `${String(current + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
+        if (document.activeElement === previous && previous!.disabled)
+          (next!.disabled ? title! : next!).focus({ preventScroll: true });
+        if (document.activeElement === next && next!.disabled)
+          (previous!.disabled ? title! : previous!).focus({ preventScroll: true });
+      }
+      categoryButton.addEventListener('click', () => {
+        panels.forEach((item) => {
+          item.hidden = item !== panel;
+        });
+        list!.hidden = true;
+        show(0);
+        scene!.scrollTop = 0;
+        title!.focus({ preventScroll: true });
+      });
+      back.addEventListener('click', () => {
+        panel.hidden = true;
+        list!.hidden = false;
+        scene!.scrollTop = 0;
+        categoryButton.focus({ preventScroll: true });
+      });
+      previous.addEventListener('click', () => show(current - 1));
+      next.addEventListener('click', () => show(current + 1));
+    });
+    // 每次返回首页后，下次进入制作实绩从类别列表开始。
+    new MutationObserver(() => {
+      if (!scene!.hidden || !list) return;
+      panels.forEach((panel) => {
+        panel.hidden = true;
+      });
+      list.hidden = false;
+    }).observe(scene, { attributes: true, attributeFilter: ['hidden'] });
+  }
+</script>
 
 <style>
   .projects {
@@ -33,6 +349,66 @@
     width: min(100%, var(--stage-width));
     margin: auto;
   }
+  .projects__category {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) minmax(0, 1.1fr) 1.5rem;
+    align-items: baseline;
+    gap: var(--space-md);
+    width: 100%;
+    padding: var(--space-lg) 0;
+    border: 0;
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  [data-category-list] {
+    border-top: 1px solid var(--color-text);
+  }
+  [data-category-list][hidden] {
+    display: none;
+  }
+  .projects__category-name {
+    font-size: clamp(1.125rem, 2.2vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  .projects__category-number {
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .projects__category-arrow {
+    justify-self: end;
+    font-size: 1.25rem;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .projects__category:hover .projects__category-name {
+      text-decoration: underline;
+      text-underline-offset: 0.25em;
+      text-decoration-thickness: 1px;
+    }
+  }
+  .projects__category-description {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-muted);
+  }
+  .projects__category:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  .projects__category-title {
+    margin-block: var(--space-sm) var(--space-md);
+    font-weight: 600;
+  }
+  .projects__category-title:focus {
+    outline: none;
+  }
   .projects__back {
     padding: var(--space-sm) 0;
     border: 0;
@@ -41,6 +417,7 @@
     font: inherit;
     font-size: 0.875rem;
     cursor: pointer;
+    font-weight: 500;
   }
   .projects__back:focus-visible {
     outline: 2px solid var(--color-accent);
@@ -54,17 +431,21 @@
   h2 {
     margin: var(--space-sm) 0 var(--space-md);
     font-size: clamp(1.5rem, 4vw, 2.5rem);
-    font-weight: 500;
+    font-weight: 800;
   }
   h2:focus {
     outline: none;
   }
   .project-card {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     border: 1px solid var(--color-border);
-    border-radius: var(--space-sm);
+    border-radius: 6px;
+    background: var(--color-background);
     overflow: hidden;
+  }
+  .project-card[hidden] {
+    display: none;
   }
   .project-card__visual {
     display: grid;
@@ -72,26 +453,110 @@
     min-height: 220px;
     background: var(--color-surface);
     color: var(--color-accent);
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
+    font-size: 0.875rem;
+    padding: var(--space-md);
+    text-align: center;
   }
   .project-card__copy {
+    min-width: 0;
+    overflow-wrap: anywhere;
     padding: var(--space-lg);
   }
+  .project-card__visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
   h3 {
+    margin-top: 0;
     font-size: 1.125rem;
     font-weight: 500;
   }
   .project-card__copy p {
     color: var(--color-muted);
-    font-size: 0.875rem;
+    font-size: 1rem;
     line-height: 1.8;
   }
-  .project-card__tag {
+  .project-card__details {
+    font-size: 0.875rem;
+    line-height: 1.8;
+    margin-block: var(--space-md);
+  }
+  .project-card__notes {
+    margin-block: var(--space-md);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  .project-card__notes h4 {
+    margin: 0 0 var(--space-sm);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  .project-card__notes ul {
+    margin: 0;
+    padding-left: 1.25em;
+    color: var(--color-muted);
+  }
+  .project-card__details dt {
+    font-weight: 600;
+  }
+  .project-card__details dd {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-muted);
+  }
+  .project-card__link {
     color: var(--color-accent);
-    font-size: 0.625rem;
+    font-size: 0.875rem;
+    text-underline-offset: 4px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .projects__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+    font-size: 0.875rem;
+  }
+  .projects__pagination button {
+    font: inherit;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-background);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+  .projects__pagination button:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  .projects__pagination button[hidden] {
+    display: none;
+  }
+  .projects__pagination button:focus-visible,
+  .project-card__link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
   }
   @media (max-width: 600px) {
+    .projects__category {
+      grid-template-columns: 1.5rem minmax(0, 1fr) 1.25rem;
+      gap: var(--space-sm);
+      padding-block: var(--space-md);
+    }
+    .projects__category-description {
+      grid-column: 2;
+      grid-row: 2;
+    }
+    .projects__category-arrow {
+      grid-column: 3;
+      grid-row: 1;
+    }
     .project-card {
       grid-template-columns: 1fr;
     }

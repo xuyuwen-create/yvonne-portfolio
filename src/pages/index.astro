@@ -2,38 +2,49 @@
 import Portrait from '../components/Portrait.astro';
 import SceneMenu from '../components/SceneMenu.astro';
 import ProjectsScene from '../components/ProjectsScene.astro';
+import CursorGlow from '../components/CursorGlow.astro';
+import PendingScene from '../components/PendingScene.astro';
 import '../styles/global.css';
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Yvonne 的个人作品集：经历、技能、兴趣与工作项目。" />
-    <title>Yvonne · 个人作品集</title>
+    <meta
+      name="description"
+      content="Yvonneのポートフォリオです。これまでの歩み、できること、好きなこと、制作実績をご紹介します。"
+    />
+    <title>Yvonne｜ポートフォリオ</title>
   </head>
   <body>
     <main class="app">
       <header class="app__header">
-        <p class="app__brand">
-          YVONNE<span>个人作品集</span>
-        </p>
-        <span class="app__edition">PORTFOLIO / 01</span>
+        <button
+          class="app__brand"
+          type="button"
+          data-back-home
+          aria-label="YVONNE ポートフォリオ：ホームへ"
+        >
+          YVONNE<span>ポートフォリオ</span>
+        </button>
+        <span class="app__edition">ポートフォリオ / 01</span>
       </header>
       <div class="scenes">
-        <section id="home-scene" class="home scene" aria-label="作品集首页">
+        <section id="home-scene" class="home scene" aria-label="ポートフォリオのホーム">
           <div class="home__stage">
             <div class="home__copy">
-              <p class="home__eyebrow">个人作品集 / PORTFOLIO</p>
+              <p class="home__eyebrow">ポートフォリオ</p>
               <h1 class="home__title">
                 <span>YVONNE</span>
-                <span>的个人世界</span>
+                <span>の世界へ</span>
+                <span>ようこそ</span>
               </h1>
               <p class="home__intro">
-                关于我的经历、技能与兴趣，
+                これまでの歩みや、できること、好きなこと。
                 <br />
-                还有工作中的项目与创作。
+                仕事や制作のことも、ここでご紹介します。
               </p>
             </div>
             <div class="home__portrait">
@@ -43,12 +54,14 @@ import '../styles/global.css';
           </div>
         </section>
         <ProjectsScene />
+        <PendingScene />
       </div>
       <footer class="app__footer">
-        <span>经历 · 想法 · 创作</span>
-        <span id="menu-note">工作项目可预览 · 其他场景待加入</span>
+        <span>歩み・想い・ものづくり</span>
+        <span id="menu-note">制作実績をご覧いただけます。</span>
       </footer>
     </main>
+    <CursorGlow />
   </body>
 </html>
 

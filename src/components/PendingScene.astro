@@ -1,0 +1,50 @@
+<section id="pending-scene" class="pending scene" aria-labelledby="pending-title" hidden inert>
+  <div class="pending__content">
+    <button type="button" data-back-home>
+      ← ホームへ
+    </button>
+    <h2 id="pending-title" tabindex="-1">
+      ただいま準備中です。
+    </h2>
+    <p>内容は少しずつ更新していきます。</p>
+  </div>
+</section>
+
+<style>
+  .pending {
+    overflow: auto;
+    margin-bottom: calc(var(--page-padding) + var(--footer-height));
+    padding-block: var(--space-md);
+  }
+  .pending__content {
+    width: min(100%, var(--stage-width));
+    margin: auto;
+  }
+  button {
+    min-height: 44px;
+    padding: var(--space-sm) 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-accent);
+    font: inherit;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  h2 {
+    margin: var(--space-lg) 0 var(--space-md);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    line-height: 1.5;
+  }
+  h2:focus {
+    outline: none;
+  }
+  p {
+    color: var(--color-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+</style>

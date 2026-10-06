@@ -1,50 +1,59 @@
 ---
+import { withBase } from '../utils/paths';
 const entries = [
   {
     id: 'experience',
-    name: '个人经历',
+    name: 'これまでの歩み',
     number: '01',
     iconSrc: '/images/icons/experience.png',
   },
   {
     id: 'skills',
-    name: '个人技能',
+    name: 'できること',
     number: '02',
     iconSrc: '/images/icons/skills.png',
   },
   {
     id: 'interests',
-    name: '个人兴趣',
+    name: '好きなこと',
     number: '03',
     iconSrc: '/images/icons/interests.png',
   },
   {
     id: 'projects',
-    name: '工作项目',
+    name: '制作実績',
     number: '04',
     iconSrc: '/images/icons/projects.png',
   },
   {
     id: 'misc',
-    name: '杂项',
+    name: 'あれこれ',
     number: '05',
     iconSrc: '/images/icons/misc.png',
   },
 ];
 ---
 
-<nav class="scene-menu" aria-label="作品集场景入口">
+<nav class="scene-menu" aria-label="ポートフォリオのメニュー">
   {entries.map(({ id, name, number, iconSrc }) => (
     <button
       class={`scene-menu__entry scene-menu__entry--${id}`}
       type="button"
       data-scene={id}
-      aria-controls={id === 'projects' ? 'projects-scene' : undefined}
+      aria-label={id !== 'projects' ? `${name}（準備中）` : undefined}
+      aria-controls={id === 'projects' ? 'projects-scene' : 'pending-scene'}
       aria-describedby="menu-note"
     >
       <span class="scene-menu__content">
         <span class="scene-menu__icon" aria-hidden="true">
-          <img src={iconSrc} alt="" width="28" height="28" decoding="async" draggable="false" />
+          <img
+            src={withBase(iconSrc)}
+            alt=""
+            width="28"
+            height="28"
+            decoding="async"
+            draggable="false"
+          />
         </span>
         <span class="scene-menu__name">{name}</span>
       </span>
@@ -57,6 +66,7 @@ const entries = [
 
 <style>
   .scene-menu {
+    --entry-width: min(var(--menu-width), calc(100% / 3 - 12px));
     position: absolute;
     inset: 0;
   }
@@ -64,44 +74,66 @@ const entries = [
     position: absolute;
     display: flex;
     align-items: center;
-    width: var(--menu-width);
+    width: var(--entry-width);
     min-height: 44px;
     justify-content: center;
-    padding: 10px 8px;
+    padding: 12px 8px;
     color: var(--color-text);
-    background: #fff;
+    background: #fdfbfb;
     border: 1px solid #d9d9d9;
-    border-radius: 6px;
+    /* border-radius: 6px; */
     font: inherit;
     text-align: left;
     cursor: pointer;
     transform: translate(-50%, -50%);
   }
   .scene-menu__content {
+    --menu-pop-x: 8px;
+    --menu-pop-tilt: 8deg;
     display: flex;
+    width: 100%;
+    min-width: 0;
     align-items: center;
+    justify-content: center;
     gap: var(--menu-gap);
     padding: 3px 2px;
-    background: #fff;
+    background: #fdfbfb;
     border-radius: 3px;
     pointer-events: none;
+  }
+  .scene-menu__icon,
+  .scene-menu__name {
     transition: transform var(--menu-pop-duration) cubic-bezier(0.22, 1.35, 0.36, 1);
+    transform-origin: center bottom;
   }
   /* 按钮盒子和点击范围固定，内容层弹出，避免悬停反复触发。 */
   @media (hover: hover) and (pointer: fine) {
-    .scene-menu__entry:hover .scene-menu__content {
-      transform: translateY(calc(-1 * var(--menu-pop-distance)));
+    .scene-menu__entry:hover .scene-menu__icon {
+      transform: translate(calc(-1 * var(--menu-pop-x)), calc(-1 * var(--menu-pop-distance)))
+        rotate(calc(-1 * var(--menu-pop-tilt)));
+    }
+    .scene-menu__entry:hover .scene-menu__name {
+      transform: translate(var(--menu-pop-x), calc(-1 * var(--menu-pop-distance)))
+        rotate(var(--menu-pop-tilt));
     }
   }
-  .scene-menu__entry:focus-visible .scene-menu__content {
-    transform: translateY(calc(-1 * var(--menu-pop-distance)));
+  .scene-menu__entry:focus-visible .scene-menu__icon {
+    transform: translate(calc(-1 * var(--menu-pop-x)), calc(-1 * var(--menu-pop-distance)))
+      rotate(calc(-1 * var(--menu-pop-tilt)));
+  }
+  .scene-menu__entry:focus-visible .scene-menu__name {
+    transform: translate(var(--menu-pop-x), calc(-1 * var(--menu-pop-distance)))
+      rotate(var(--menu-pop-tilt));
   }
   @media (prefers-reduced-motion: reduce) {
-    .scene-menu__content {
+    .scene-menu__icon,
+    .scene-menu__name {
       transition: none;
     }
-    .scene-menu__entry:hover .scene-menu__content,
-    .scene-menu__entry:focus-visible .scene-menu__content {
+    .scene-menu__entry:hover .scene-menu__icon,
+    .scene-menu__entry:hover .scene-menu__name,
+    .scene-menu__entry:focus-visible .scene-menu__icon,
+    .scene-menu__entry:focus-visible .scene-menu__name {
       transform: none;
     }
     .scene-menu__entry:hover {
@@ -112,13 +144,23 @@ const entries = [
     outline: 2px solid var(--color-accent);
     outline-offset: 5px;
   }
+  @media (max-width: 900px) and (min-height: 521px) {
+    .scene-menu__entry:hover .scene-menu__icon,
+    .scene-menu__entry:hover .scene-menu__name {
+      transform: none;
+    }
+    .scene-menu__entry:hover {
+      border-color: #d9d9d9;
+    }
+  }
   .scene-menu__entry--experience {
     --icon-scale: 0.94;
-    left: var(--menu-left);
-    top: var(--menu-upper);
+    left: max(var(--menu-left), calc(var(--entry-width) / 2 + 6px));
+    top: var(--menu-top);
   }
   .scene-menu__entry--skills {
-    left: calc(var(--menu-left) + 2%);
+    /* left: calc(var(--menu-left) + 2%); */
+    left: max(var(--menu-left), calc(var(--entry-width) / 2 + 6px));
     top: var(--menu-lower);
   }
   .scene-menu__entry--interests {
@@ -127,13 +169,15 @@ const entries = [
   }
   .scene-menu__entry--projects {
     --icon-scale: 0.92;
-    left: var(--menu-right);
-    top: calc(var(--menu-upper) + 3%);
+    left: min(var(--menu-right), calc(100% - var(--entry-width) / 2 - 6px));
+    top: var(--menu-top);
   }
   .scene-menu__entry--misc {
     --icon-scale: 0.96;
-    left: calc(var(--menu-right) - 2%);
-    top: calc(var(--menu-lower) + 3%);
+    /* left: calc(var(--menu-right) - 2%); */
+    left: min(var(--menu-right), calc(100% - var(--entry-width) / 2 - 6px));
+    /* top: calc(var(--menu-lower) + 3%); */
+    top: var(--menu-lower);
   }
   .scene-menu__icon {
     display: grid;
@@ -152,9 +196,70 @@ const entries = [
     font-family: inherit;
     font-size: var(--menu-font-size);
     letter-spacing: 0.025em;
-    white-space: nowrap;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
   }
   .scene-menu__number {
     display: none;
+  }
+  .scene-menu__entry:not(.scene-menu__entry--projects)::after {
+    content: '準備中';
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: var(--color-muted);
+    letter-spacing: 0.05em;
+  }
+  .scene-menu__entry:not(.scene-menu__entry--projects):hover::after,
+  .scene-menu__entry:not(.scene-menu__entry--projects):focus-visible::after {
+    opacity: 1;
+  }
+  /* 最窄手机也保留同一排，缩小这三个入口，避免盒子相互重叠。 */
+  @media (max-width: 900px) and (min-height: 521px), (max-width: 600px) {
+    .scene-menu {
+      --entry-width: min(var(--menu-width), calc(100% / 3 - 8px));
+    }
+    .scene-menu__entry {
+      --icon-size: 18px;
+      --menu-gap: 4px;
+      --menu-font-size: 12px;
+      padding-inline: 4px;
+      min-height: 56px;
+      transform: translateX(-50%);
+    }
+    .scene-menu__entry--experience,
+    .scene-menu__entry--skills {
+      left: calc(100% / 6);
+    }
+    .scene-menu__entry--projects,
+    .scene-menu__entry--misc {
+      left: calc(100% * 5 / 6);
+    }
+    .scene-menu__entry--experience,
+    .scene-menu__entry--interests,
+    .scene-menu__entry--projects {
+      top: max(0px, min(var(--menu-top), calc(100% - 156px)));
+    }
+    .scene-menu__entry--skills,
+    .scene-menu__entry--misc {
+      top: min(
+        calc(100% - 76px),
+        max(var(--menu-lower), calc(max(0px, min(var(--menu-top), calc(100% - 156px))) + 80px))
+      );
+    }
+    .scene-menu__entry:hover .scene-menu__icon,
+    .scene-menu__entry:hover .scene-menu__name,
+    .scene-menu__entry:focus-visible .scene-menu__icon,
+    .scene-menu__entry:focus-visible .scene-menu__name {
+      transform: none;
+    }
   }
 </style>

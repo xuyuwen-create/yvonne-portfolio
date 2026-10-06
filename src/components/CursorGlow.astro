@@ -1,0 +1,148 @@
+<canvas class="cursor-glow" data-cursor-glow aria-hidden="true"></canvas>
+
+<script>
+  const config = {
+    color: '142, 104, 195',
+    coreColor: '#e9dcff',
+    dotRadius: 3,
+    glowRadius: 10,
+    trailRadius: 2.5,
+    lifetimeMs: 400,
+    spacingPx: 5,
+    maxPoints: 100,
+  };
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-cursor-glow]');
+  const context = canvas?.getContext('2d');
+  if (canvas && context) {
+    const enabled = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    type Point = { x: number; y: number; time: number };
+    let points: Point[] = [];
+    let pending: Point[] = [];
+    let pointer: Point | null = null;
+    let lastSample: Point | null = null;
+    let frame = 0;
+    let width = 0;
+    let height = 0;
+
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas!.width = Math.round(width * ratio);
+      canvas!.height = Math.round(height * ratio);
+      context!.setTransform(ratio, 0, 0, ratio, 0, 0);
+      if (pointer) start();
+    }
+
+    function drawDot(x: number, y: number, radius: number, opacity: number) {
+      const glow = context!.createRadialGradient(x, y, 0, x, y, radius * 3);
+      glow.addColorStop(0, `rgba(${config.color}, ${opacity})`);
+      glow.addColorStop(1, `rgba(${config.color}, 0)`);
+      context!.fillStyle = glow;
+      context!.beginPath();
+      context!.arc(x, y, radius * 3, 0, Math.PI * 2);
+      context!.fill();
+    }
+
+    function render(time: number) {
+      frame = 0;
+      for (const sample of pending) {
+        if (lastSample) {
+          const dx = sample.x - lastSample.x;
+          const dy = sample.y - lastSample.y;
+          const distance = Math.hypot(dx, dy);
+          const count = Math.min(config.maxPoints, Math.floor(distance / config.spacingPx));
+          if (count) {
+            for (let step = 1; step <= count; step++) {
+              const fraction = step / count;
+              points.push({
+                x: lastSample.x + dx * fraction,
+                y: lastSample.y + dy * fraction,
+                time: sample.time,
+              });
+            }
+            lastSample = sample;
+          }
+        } else {
+          lastSample = sample;
+        }
+      }
+      pending = [];
+      points = points
+        .filter((point) => time - point.time < config.lifetimeMs)
+        .slice(-config.maxPoints);
+      context!.clearRect(0, 0, width, height);
+      for (const point of points) {
+        const remaining = Math.max(0, 1 - (time - point.time) / config.lifetimeMs);
+        drawDot(point.x, point.y, config.trailRadius * remaining, 0.45 * remaining);
+      }
+      if (pointer) {
+        drawDot(pointer.x, pointer.y, config.glowRadius / 3, 0.65);
+        context!.fillStyle = config.coreColor;
+        context!.strokeStyle = `rgba(${config.color}, 0.9)`;
+        context!.lineWidth = 1;
+        context!.beginPath();
+        context!.arc(pointer.x, pointer.y, config.dotRadius, 0, Math.PI * 2);
+        context!.fill();
+        context!.stroke();
+      }
+      if (points.length) frame = requestAnimationFrame(render);
+    }
+
+    function start() {
+      if (!frame) frame = requestAnimationFrame(render);
+    }
+    function move(event: PointerEvent) {
+      if (event.pointerType !== 'mouse') return;
+      pointer = { x: event.clientX, y: event.clientY, time: performance.now() };
+      pending.push(pointer);
+      pending = pending.slice(-config.maxPoints);
+      start();
+    }
+    function clear() {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      points = [];
+      pending = [];
+      pointer = lastSample = null;
+      context!.clearRect(0, 0, width, height);
+    }
+    function leave(event: PointerEvent) {
+      if (!event.relatedTarget) clear();
+    }
+    function sync() {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerout', leave);
+      window.removeEventListener('blur', clear);
+      window.removeEventListener('resize', resize);
+      clear();
+      canvas!.hidden = !enabled.matches || reducedMotion.matches;
+      if (canvas!.hidden) return;
+      resize();
+      window.addEventListener('pointermove', move, { passive: true });
+      window.addEventListener('pointerout', leave);
+      window.addEventListener('blur', clear);
+      window.addEventListener('resize', resize);
+    }
+    enabled.addEventListener('change', sync);
+    reducedMotion.addEventListener('change', sync);
+    sync();
+  }
+</script>
+
+<style>
+  .cursor-glow {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    pointer-events: none;
+  }
+  @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+    .cursor-glow {
+      display: none;
+    }
+  }
+</style>

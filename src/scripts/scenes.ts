@@ -1,19 +1,23 @@
 const home = document.querySelector<HTMLElement>('#home-scene');
 const projects = document.querySelector<HTMLElement>('#projects-scene');
-const projectButton = document.querySelector<HTMLButtonElement>('[data-scene="projects"]');
-const backButton = document.querySelector<HTMLButtonElement>('[data-back-home]');
+const pending = document.querySelector<HTMLElement>('#pending-scene');
+const menuButtons = document.querySelectorAll<HTMLButtonElement>('[data-scene]');
+const backButtons = document.querySelectorAll<HTMLButtonElement>('[data-back-home]');
 const projectTitle = document.querySelector<HTMLElement>('#projects-title');
+const pendingTitle = document.querySelector<HTMLElement>('#pending-title');
 
-if (home && projects && projectButton && backButton && projectTitle) {
+if (home && projects && pending && projectTitle && pendingTitle) {
   let switching = false;
+  let activeScene = projects;
+  let returnButton: HTMLButtonElement | null = null;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   async function switchScene(entering: boolean) {
     // 忽略动画期间的重复点击，避免两个场景状态交错。
-    if (switching) return;
+    if (switching || (!entering && !home!.hidden)) return;
     switching = true;
-    const outgoing = entering ? home! : projects!;
-    const incoming = entering ? projects! : home!;
+    const outgoing = entering ? home! : activeScene;
+    const incoming = entering ? activeScene : home!;
     const direction = entering ? 1 : -1;
     const styles = getComputedStyle(document.documentElement);
     const distance = styles.getPropertyValue('--scene-distance').trim();
@@ -51,11 +55,25 @@ if (home && projects && projectButton && backButton && projectTitle) {
       outgoing.hidden = true;
       incoming.inert = false;
       animations.forEach((animation) => animation.cancel());
-      (entering ? projectTitle! : projectButton!).focus({ preventScroll: true });
+      const focusTarget = entering
+        ? activeScene === projects
+          ? projectTitle!
+          : pendingTitle!
+        : returnButton;
+      focusTarget?.focus({ preventScroll: true });
       switching = false;
     }
   }
 
-  projectButton.addEventListener('click', () => void switchScene(true));
-  backButton.addEventListener('click', () => void switchScene(false));
+  menuButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      if (switching) return;
+      activeScene = button.dataset.scene === 'projects' ? projects! : pending!;
+      returnButton = button;
+      void switchScene(true);
+    });
+  });
+  backButtons.forEach((button) => {
+    button.addEventListener('click', () => void switchScene(false));
+  });
 }
