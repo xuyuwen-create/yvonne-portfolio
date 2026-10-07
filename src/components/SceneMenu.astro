@@ -5,53 +5,47 @@ const entries = [
     id: 'experience',
     name: '個人経歴',
     number: '01',
-    imageSrc: '/images/menu-buttons/about.webp',
+    label: 'About',
   },
   {
     id: 'skills',
     name: 'できること',
     number: '02',
-    imageSrc: '/images/menu-buttons/skills.webp',
+    label: 'Skills',
   },
   {
     id: 'interests',
     name: '好きなこと',
     number: '03',
-    imageSrc: '/images/menu-buttons/blog.webp',
+    label: 'Blog',
   },
   {
     id: 'projects',
     name: '制作実績',
     number: '04',
-    imageSrc: '/images/menu-buttons/works.webp',
+    label: 'Works',
   },
   {
     id: 'misc',
     name: 'あれこれ',
     number: '05',
-    imageSrc: '/images/menu-buttons/more.webp',
+    label: 'More',
   },
 ];
 ---
 
 <nav class="scene-menu" aria-label="ポートフォリオのメニュー">
-  {entries.map(({ id, name, number, imageSrc }) => (
+  {entries.map(({ id, name, number, label }) => (
     <button
       class={`scene-menu__entry scene-menu__entry--${id}`}
       type="button"
+      style={`--jelly-default: url('${withBase(`/images/jelly-buttons/${id}-default.webp`)}'); --jelly-hover: url('${withBase(`/images/jelly-buttons/${id}-hover.webp`)}'); --jelly-active: url('${withBase(`/images/jelly-buttons/${id}-active.webp`)}')`}
       data-scene={id}
       aria-label={id !== 'projects' ? `${name}（準備中）` : name}
       aria-controls={id === 'projects' ? 'projects-scene' : 'pending-scene'}
     >
       <span class="scene-menu__content" aria-hidden="true">
-        <img
-          src={withBase(imageSrc)}
-          alt=""
-          width="480"
-          height="285"
-          decoding="async"
-          draggable="false"
-        />
+        <span class="scene-menu__label">{label}</span>
       </span>
       <span class="scene-menu__name" aria-hidden="true">
         {name}
@@ -88,19 +82,66 @@ const entries = [
     cursor: pointer;
     transform: translate(-50%, -50%);
   }
+  /* 三种图片状态与 HTML 文字分开管理。 */
+  .scene-menu {
+    --jelly-text: #f2edf9;
+    --jelly-duration: 280ms;
+  }
   .scene-menu__content {
-    display: block;
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
     width: 100%;
-    aspect-ratio: 1.7 / 1;
+    aspect-ratio: 2.2 / 1;
+    min-height: 48px;
+    padding: 10px 12px;
+    background: var(--jelly-default) center / contain no-repeat;
+    color: var(--jelly-text);
     pointer-events: none;
     animation: menu-float var(--menu-float-duration) ease-in-out infinite;
     animation-delay: var(--float-delay, 0s);
+    transition: scale var(--jelly-duration) ease;
   }
-  .scene-menu__content img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  .scene-menu__content::before,
+  .scene-menu__content::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--jelly-hover) center / contain no-repeat;
+    opacity: 0;
+    transition: opacity var(--jelly-duration) ease;
+  }
+  .scene-menu__content::after {
+    background-image: var(--jelly-active);
+  }
+  .scene-menu__label {
+    padding-left: 12%;
+    font-family: inherit;
+    font-size: clamp(12px, 1.3vw, 17px);
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    line-height: 1.2;
+    white-space: nowrap;
+    text-shadow: 0 1px 4px #11132d;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .scene-menu__entry:hover .scene-menu__content {
+      scale: 1.03;
+    }
+    .scene-menu__entry:hover .scene-menu__content::before {
+      opacity: 1;
+    }
+  }
+  .scene-menu__entry:focus-visible .scene-menu__content::before {
+    opacity: 1;
+  }
+  .scene-menu__entry:active .scene-menu__content {
+    scale: 0.98;
+  }
+  .scene-menu__entry:active .scene-menu__content::after {
+    opacity: 1;
   }
   @keyframes menu-float {
     0%,
@@ -144,9 +185,21 @@ const entries = [
   @media (prefers-reduced-motion: reduce) {
     .scene-menu__content {
       animation: none;
+      transition: none;
+      scale: 1;
+    }
+    .scene-menu__content::before,
+    .scene-menu__content::after {
+      transition: none;
     }
     .scene-menu__name {
       transition: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scene-menu__entry:hover .scene-menu__content,
+    .scene-menu__entry:active .scene-menu__content {
+      scale: 1;
     }
   }
   .scene-menu__entry--experience {
@@ -156,12 +209,14 @@ const entries = [
   }
   .scene-menu__entry--skills {
     --float-delay: -1.7s;
+    --jelly-shape: 53% 47% 46% 54% / 48% 55% 45% 52%;
     /* left: calc(var(--menu-left) + 2%); */
     left: max(var(--menu-left), calc(var(--entry-width) / 2 + 6px));
     top: var(--menu-lower);
   }
   .scene-menu__entry--interests {
     --float-delay: -3.1s;
+    --jelly-shape: 48% 52% 55% 45% / 52% 48% 54% 46%;
     left: var(--menu-center, 50%);
     top: var(--menu-top);
   }

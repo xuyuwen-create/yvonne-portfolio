@@ -84,7 +84,7 @@ App 外层、首页和工作项目统一使用浅色流光渐变、黑灰文字�
 
 在 `max-width: 900px` 且 `min-height: 521px` 时，导航禁用 hover 的弹出、倾斜和边框变化，点击功能与键盘焦点边框保留。
 
-首页导航使用毛绒按钮图片，视觉层持续轻柔漂浮，按钮的点击范围和位置不随漂浮移动。`SceneMenu.astro` 中 `--menu-float-distance`、`--menu-float-duration` 和各入口 `--float-delay` 控制幅度、速度和错开的节奏；减少动画模式关闭漂浮。桌面悬停和键盘聚焦时，下方显示现有日语名称及未开放入口的「準備中」；触屏默认显示日语名称。
+首页导航使用 `kv_btns.png` 经 imagegen 去字、去背景后裁出的果冻素材，位于 `public/images/jelly-buttons/`。每个入口有 default、hover、active 三张 WebP，HTML 文字独立显示。`SceneMenu.astro` 的 `--jelly-default` / `--jelly-hover` / `--jelly-active` 控制图片，伪元素淡入切换状态；悬停放大 1.03、按下缩小 0.98，过渡为 `--jelly-duration: 280ms`。保留漂浮、日语提示、键盘焦点及减少动画适配。素材处理提示：保留原果冻外形、颜色与质感，去除文字及背景，输出透明素材。
 
 600px 以下，以及 `max-width: 900px` 且 `min-height: 521px` 的区间，人像高度使用 `--portrait-mobile-height: 75svh`，约占屏幕高度的四分之三，居中贴底。宽度按素材比例计算并限制在首页宽度内；窄长屏保持现有 SVG cover 显示方式，可能裁掉两侧少量衣服。桌面尺寸和跟随参数不变。
 
@@ -94,7 +94,7 @@ App 外层、首页和工作项目统一使用浅色流光渐变、黑灰文字�
 
 在 `max-width: 900px` 且 `min-height: 521px` 时，`.home` 使用 `--menu-top: 47%`，百分比相对于导航容器高度。
 
-按钮素材来自 `public/images/btns.png`，按图中实际按钮位置裁取成透明无损 WebP，位于 `public/images/menu-buttons/`。对应关系为：个人经历 About、技能 Skills、兴趣 Blog、制作实绩 Works、杂项 More；Contact 暂不使用。图片为空 `alt`，按钮的日语 `aria-label` 提供名称；原黑白图标保留以便回退。
+旧毛绒按钮素材保留在 `public/images/menu-buttons/` 以便回退，当前导航使用独立果冻图片，文字由 HTML 渲染。
 
 首页采用海报式不对称布局：桌面左侧 40% 为两行粗体标题和简介，彩色人像在 71% 的横向位置贴底，导航分布在右侧区域。`--home-copy-width`、`--home-title-size`、`--home-portrait-x` 集中控制构图。900px 以下改为上方标题、下方人像与导航；窄而矮的窗口使用独立紧凑布局，通过容器单位限制人像尺寸，保留文字可读性。菜单弹出、人像跟随和场景切换逻辑不变。
 
@@ -104,7 +104,7 @@ App 外层、首页和工作项目统一使用浅色流光渐变、黑灰文字�
 
 Header 的上下细边线位于 `global.css` 的 `.app__header`；`--header-border-width` 控制线宽，`--header-padding-block` 控制上下内边距，颜色复用 `--color-border`。矮屏会减小内边距。
 
-首页当前采用关键帧人物头像与毛绒漂浮导航。菜单仍通过 `--menu-*` 管理尺寸和位置，浮动仅作用于图片视觉层，不改变点击范围。`UniverseBackdrop.astro` 保留为未使用的旧装饰组件。
+首页当前采用关键帧人物头像与半透明树脂漂浮导航。菜单仍通过 `--menu-*` 管理尺寸和位置，浮动仅作用于图片视觉层，不改变点击范围。`UniverseBackdrop.astro` 保留为未使用的旧装饰组件。
 
 菜单使用透明剪纸 PNG 图标，不依赖图标库。`global.css` 中 `--portrait-scale: 1.728` 控制人像放大比例。窄屏与矮屏使用独立基准尺寸，再应用同一个比例。人像跟随参数、校准和场景动画不受这些样式调整影响。
 
