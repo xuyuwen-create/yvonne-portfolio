@@ -227,12 +227,32 @@ body {
   display: none;
 }
 .home__stage {
+  --tracking-left: 43%;
+  --tracking-top: 20%;
+  --tracking-width: 57%;
+  --tracking-height: 75%;
   --home-copy-width: 40%;
   --home-portrait-x: 71%;
   --home-title-size: clamp(56px, 7.1vw, 112px);
   position: relative;
   width: min(100%, 1440px);
   height: 100%;
+}
+.home__tracking-area {
+  position: absolute;
+  left: var(--tracking-left);
+  top: var(--tracking-top);
+  width: var(--tracking-width);
+  height: var(--tracking-height);
+  pointer-events: none;
+}
+@media (max-width: 900px) and (min-height: 521px), (max-width: 600px) {
+  .home__stage {
+    --tracking-left: 0%;
+    --tracking-top: 48%;
+    --tracking-width: 100%;
+    --tracking-height: 48%;
+  }
 }
 .home__copy {
   position: absolute;

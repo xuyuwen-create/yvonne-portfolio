@@ -2,15 +2,15 @@ import sharp from 'sharp';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 // 离线处理：由真实透明轮廓识别人像，不按平均网格裁切。
-const source = 'public/images/portrait-sprite.png';
+const source = 'public/images/portrait-sprite_2.png';
 const destination = 'public/images/portrait-frames';
 const canvasSize = 324;
 const targetWidth = 298;
 const targetBottom = 310;
 // 检查联系表后记录的颈部/胸口中心，源图像素；不是裁切框左上角。
 const neckCenters = [
-  175.3, 489.8, 810.8, 1139, 1447.3, 174.9, 492, 810.7, 1132, 1448, 194.3, 504.1, 812.7, 1125.2,
-  1431.8,
+  154.8, 480.9, 810.7, 1139, 1468.7, 157.3, 483.4, 811.1, 1137.1, 1466.6, 159.8, 485.2, 809.3,
+  1134.5, 1460.1,
 ];
 const { data, info } = await sharp(source)
   .ensureAlpha()

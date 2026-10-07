@@ -2,331 +2,331 @@
   {
     "filename": "portrait-00.png",
     "subject": {
-      "left": 32,
-      "top": 18,
-      "right": 330,
-      "bottom": 317,
-      "pixels": 66348
+      "left": 11,
+      "top": 13,
+      "right": 316,
+      "bottom": 320,
+      "pixels": 70065
     },
-    "headCenter": 196.5,
-    "neckCenter": 175.3,
-    "anchorX": 182.72,
-    "scale": 0.9966555183946488,
+    "headCenter": 174,
+    "neckCenter": 154.8,
+    "anchorX": 161.52,
+    "scale": 0.9738562091503268,
     "crop": {
-      "left": 30,
-      "top": 16,
-      "width": 303,
-      "height": 304
+      "left": 9,
+      "top": 11,
+      "width": 310,
+      "height": 312
     },
-    "left": 10,
-    "top": 10
+    "left": 13,
+    "top": 9
   },
   {
     "filename": "portrait-01.png",
     "subject": {
-      "left": 349,
-      "top": 18,
-      "right": 643,
-      "bottom": 316,
-      "pixels": 65733
+      "left": 332,
+      "top": 12,
+      "right": 640,
+      "bottom": 320,
+      "pixels": 69924
     },
-    "headCenter": 504.5,
-    "neckCenter": 489.8,
-    "anchorX": 494.945,
-    "scale": 1.0101694915254238,
+    "headCenter": 494.5,
+    "neckCenter": 480.9,
+    "anchorX": 485.65999999999997,
+    "scale": 0.9644012944983819,
     "crop": {
-      "left": 347,
-      "top": 16,
-      "width": 299,
-      "height": 303
+      "left": 330,
+      "top": 10,
+      "width": 313,
+      "height": 313
     },
-    "left": 13,
-    "top": 7
+    "left": 12,
+    "top": 11
   },
   {
     "filename": "portrait-02.png",
     "subject": {
-      "left": 662,
-      "top": 18,
-      "right": 958,
-      "bottom": 316,
-      "pixels": 64297
+      "left": 656,
+      "top": 14,
+      "right": 964,
+      "bottom": 320,
+      "pixels": 68533
     },
-    "headCenter": 810,
-    "neckCenter": 810.8,
-    "anchorX": 810.52,
-    "scale": 1.0033670033670035,
+    "headCenter": 809,
+    "neckCenter": 810.7,
+    "anchorX": 810.105,
+    "scale": 0.9644012944983819,
     "crop": {
-      "left": 660,
-      "top": 16,
-      "width": 301,
-      "height": 303
+      "left": 654,
+      "top": 12,
+      "width": 313,
+      "height": 311
     },
     "left": 11,
-    "top": 9
+    "top": 13
   },
   {
     "filename": "portrait-03.png",
     "subject": {
-      "left": 976,
-      "top": 17,
-      "right": 1272,
-      "bottom": 316,
-      "pixels": 66467
+      "left": 979,
+      "top": 13,
+      "right": 1286,
+      "bottom": 320,
+      "pixels": 69271
     },
-    "headCenter": 1119.5,
+    "headCenter": 1124.5,
     "neckCenter": 1139,
-    "anchorX": 1132.175,
-    "scale": 1.0033670033670035,
+    "anchorX": 1133.925,
+    "scale": 0.9675324675324676,
     "crop": {
-      "left": 974,
-      "top": 15,
-      "width": 301,
-      "height": 304
+      "left": 977,
+      "top": 11,
+      "width": 312,
+      "height": 312
     },
-    "left": 3,
-    "top": 8
+    "left": 10,
+    "top": 11
   },
   {
     "filename": "portrait-04.png",
     "subject": {
-      "left": 1289,
-      "top": 18,
-      "right": 1588,
-      "bottom": 316,
-      "pixels": 66655
+      "left": 1304,
+      "top": 13,
+      "right": 1609,
+      "bottom": 320,
+      "pixels": 69661
     },
-    "headCenter": 1421,
-    "neckCenter": 1447.3,
-    "anchorX": 1438.095,
-    "scale": 0.9933333333333333,
+    "headCenter": 1445.5,
+    "neckCenter": 1468.7,
+    "anchorX": 1460.58,
+    "scale": 0.9738562091503268,
     "crop": {
-      "left": 1287,
-      "top": 16,
-      "width": 304,
-      "height": 303
+      "left": 1302,
+      "top": 11,
+      "width": 310,
+      "height": 312
     },
-    "left": 12,
-    "top": 12
+    "left": 8,
+    "top": 9
   },
   {
     "filename": "portrait-05.png",
     "subject": {
-      "left": 32,
-      "top": 330,
-      "right": 331,
-      "bottom": 633,
-      "pixels": 67501
+      "left": 12,
+      "top": 331,
+      "right": 318,
+      "bottom": 639,
+      "pixels": 69771
     },
-    "headCenter": 184.5,
-    "neckCenter": 174.9,
-    "anchorX": 178.26,
-    "scale": 0.9933333333333333,
+    "headCenter": 168.5,
+    "neckCenter": 157.3,
+    "anchorX": 161.22,
+    "scale": 0.9706840390879479,
     "crop": {
-      "left": 30,
-      "top": 328,
-      "width": 304,
-      "height": 308
+      "left": 10,
+      "top": 329,
+      "width": 311,
+      "height": 313
     },
     "left": 15,
-    "top": 7
+    "top": 9
   },
   {
     "filename": "portrait-06.png",
     "subject": {
-      "left": 350,
-      "top": 328,
-      "right": 644,
-      "bottom": 632,
-      "pixels": 67796
+      "left": 334,
+      "top": 331,
+      "right": 642,
+      "bottom": 639,
+      "pixels": 70300
     },
-    "headCenter": 496.5,
-    "neckCenter": 492,
-    "anchorX": 493.575,
-    "scale": 1.0101694915254238,
+    "headCenter": 489,
+    "neckCenter": 483.4,
+    "anchorX": 485.35999999999996,
+    "scale": 0.9644012944983819,
     "crop": {
-      "left": 348,
-      "top": 326,
-      "width": 299,
-      "height": 309
+      "left": 332,
+      "top": 329,
+      "width": 313,
+      "height": 313
     },
-    "left": 15,
-    "top": 1
+    "left": 14,
+    "top": 11
   },
   {
     "filename": "portrait-07.png",
     "subject": {
-      "left": 662,
-      "top": 329,
-      "right": 958,
-      "bottom": 632,
-      "pixels": 66539
+      "left": 656,
+      "top": 332,
+      "right": 965,
+      "bottom": 639,
+      "pixels": 69061
     },
-    "headCenter": 808.5,
-    "neckCenter": 810.7,
-    "anchorX": 809.9300000000001,
-    "scale": 1.0033670033670035,
+    "headCenter": 809.5,
+    "neckCenter": 811.1,
+    "anchorX": 810.54,
+    "scale": 0.9612903225806452,
     "crop": {
-      "left": 660,
-      "top": 327,
-      "width": 301,
-      "height": 308
+      "left": 654,
+      "top": 330,
+      "width": 314,
+      "height": 312
     },
     "left": 12,
-    "top": 4
+    "top": 13
   },
   {
     "filename": "portrait-08.png",
     "subject": {
-      "left": 975,
-      "top": 329,
-      "right": 1272,
-      "bottom": 632,
-      "pixels": 68561
+      "left": 978,
+      "top": 331,
+      "right": 1286,
+      "bottom": 639,
+      "pixels": 70082
     },
-    "headCenter": 1122.5,
-    "neckCenter": 1132,
-    "anchorX": 1128.6750000000002,
-    "scale": 1,
+    "headCenter": 1128.5,
+    "neckCenter": 1137.1,
+    "anchorX": 1134.09,
+    "scale": 0.9644012944983819,
     "crop": {
-      "left": 973,
-      "top": 327,
-      "width": 302,
-      "height": 308
+      "left": 976,
+      "top": 329,
+      "width": 313,
+      "height": 313
     },
-    "left": 6,
-    "top": 5
+    "left": 10,
+    "top": 11
   },
   {
     "filename": "portrait-09.png",
     "subject": {
-      "left": 1289,
-      "top": 329,
-      "right": 1587,
-      "bottom": 632,
-      "pixels": 68148
+      "left": 1302,
+      "top": 331,
+      "right": 1608,
+      "bottom": 639,
+      "pixels": 69917
     },
-    "headCenter": 1437.5,
-    "neckCenter": 1448,
-    "anchorX": 1444.325,
-    "scale": 0.9966555183946488,
+    "headCenter": 1452,
+    "neckCenter": 1466.6,
+    "anchorX": 1461.49,
+    "scale": 0.9706840390879479,
     "crop": {
-      "left": 1287,
-      "top": 327,
-      "width": 303,
-      "height": 308
+      "left": 1300,
+      "top": 329,
+      "width": 311,
+      "height": 313
     },
     "left": 5,
-    "top": 6
+    "top": 9
   },
   {
     "filename": "portrait-10.png",
     "subject": {
-      "left": 40,
-      "top": 645,
-      "right": 338,
-      "bottom": 949,
-      "pixels": 69153
+      "left": 13,
+      "top": 646,
+      "right": 321,
+      "bottom": 957,
+      "pixels": 71950
     },
-    "headCenter": 188,
-    "neckCenter": 194.3,
-    "anchorX": 192.09500000000003,
-    "scale": 0.9966555183946488,
+    "headCenter": 163,
+    "neckCenter": 159.8,
+    "anchorX": 160.92000000000002,
+    "scale": 0.9644012944983819,
     "crop": {
-      "left": 38,
-      "top": 643,
-      "width": 303,
-      "height": 309
+      "left": 11,
+      "top": 644,
+      "width": 313,
+      "height": 316
     },
-    "left": 8,
-    "top": 5
+    "left": 17,
+    "top": 8
   },
   {
     "filename": "portrait-11.png",
     "subject": {
-      "left": 351,
-      "top": 642,
-      "right": 649,
-      "bottom": 949,
-      "pixels": 69492
+      "left": 334,
+      "top": 646,
+      "right": 643,
+      "bottom": 957,
+      "pixels": 71574
     },
-    "headCenter": 494.5,
-    "neckCenter": 504.1,
-    "anchorX": 500.74,
-    "scale": 0.9966555183946488,
+    "headCenter": 487,
+    "neckCenter": 485.2,
+    "anchorX": 485.83,
+    "scale": 0.9612903225806452,
     "crop": {
-      "left": 349,
-      "top": 640,
-      "width": 303,
-      "height": 312
+      "left": 332,
+      "top": 644,
+      "width": 314,
+      "height": 316
     },
-    "left": 11,
-    "top": 2
+    "left": 14,
+    "top": 9
   },
   {
     "filename": "portrait-12.png",
     "subject": {
-      "left": 662,
-      "top": 642,
-      "right": 959,
-      "bottom": 949,
-      "pixels": 68304
+      "left": 655,
+      "top": 648,
+      "right": 965,
+      "bottom": 957,
+      "pixels": 70134
     },
-    "headCenter": 809,
-    "neckCenter": 812.7,
-    "anchorX": 811.405,
-    "scale": 1,
+    "headCenter": 808.5,
+    "neckCenter": 809.3,
+    "anchorX": 809.02,
+    "scale": 0.9581993569131833,
     "crop": {
-      "left": 660,
-      "top": 640,
-      "width": 302,
-      "height": 312
+      "left": 653,
+      "top": 646,
+      "width": 315,
+      "height": 314
     },
-    "left": 11,
-    "top": 1
+    "left": 13,
+    "top": 12
   },
   {
     "filename": "portrait-13.png",
     "subject": {
-      "left": 971,
-      "top": 642,
-      "right": 1273,
-      "bottom": 949,
-      "pixels": 70831
+      "left": 977,
+      "top": 646,
+      "right": 1286,
+      "bottom": 957,
+      "pixels": 71694
     },
-    "headCenter": 1126,
-    "neckCenter": 1125.2,
-    "anchorX": 1125.48,
-    "scale": 0.9834983498349835,
+    "headCenter": 1132,
+    "neckCenter": 1134.5,
+    "anchorX": 1133.625,
+    "scale": 0.9612903225806452,
     "crop": {
-      "left": 969,
-      "top": 640,
-      "width": 307,
-      "height": 312
+      "left": 975,
+      "top": 644,
+      "width": 314,
+      "height": 316
     },
-    "left": 8,
-    "top": 6
+    "left": 10,
+    "top": 9
   },
   {
     "filename": "portrait-14.png",
     "subject": {
-      "left": 1283,
-      "top": 643,
-      "right": 1579,
-      "bottom": 949,
-      "pixels": 69525
+      "left": 1300,
+      "top": 647,
+      "right": 1608,
+      "bottom": 957,
+      "pixels": 71211
     },
-    "headCenter": 1434,
-    "neckCenter": 1431.8,
-    "anchorX": 1432.57,
-    "scale": 1.0033670033670035,
+    "headCenter": 1456,
+    "neckCenter": 1460.1,
+    "anchorX": 1458.665,
+    "scale": 0.9644012944983819,
     "crop": {
-      "left": 1281,
-      "top": 641,
-      "width": 301,
-      "height": 311
+      "left": 1298,
+      "top": 645,
+      "width": 313,
+      "height": 315
     },
-    "left": 10,
-    "top": 1
+    "left": 7,
+    "top": 9
   }
 ]

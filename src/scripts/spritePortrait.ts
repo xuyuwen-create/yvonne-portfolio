@@ -1,4 +1,4 @@
-// 边界为 viewport 的比例；中央宽区域是 dead zone，缓冲区防止边缘闪烁。
+// 边界为独立监听区域内的比例；中央宽区域是 dead zone。
 const tracking = {
   xBoundaries: [0.18, 0.36, 0.64, 0.82],
   yBoundaries: [0.3, 0.7],
@@ -30,7 +30,8 @@ document.querySelectorAll<HTMLImageElement>('[data-tracking-portrait]').forEach(
   });
   let ready = false;
   const scene = portrait.closest<HTMLElement>('.scene');
-  const area = scene?.querySelector<HTMLElement>('.scene-menu');
+  const area = scene?.querySelector<HTMLElement>('[data-portrait-area]');
+  let areaBounds = area?.getBoundingClientRect();
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let column = tracking.frontColumn;
@@ -70,9 +71,22 @@ document.querySelectorAll<HTMLImageElement>('[data-tracking-portrait]').forEach(
 
   function onPointerMove(event: PointerEvent) {
     if (event.pointerType !== 'mouse' || !enabled()) return;
+    const bounds = areaBounds;
+    if (
+      !bounds ||
+      bounds.width <= 0 ||
+      bounds.height <= 0 ||
+      event.clientX < bounds.left ||
+      event.clientX > bounds.right ||
+      event.clientY < bounds.top ||
+      event.clientY > bounds.bottom
+    ) {
+      if (point || frame || column !== tracking.frontColumn || row !== tracking.frontRow) reset();
+      return;
+    }
     point = {
-      x: Math.max(0, Math.min(1, event.clientX / Math.max(1, innerWidth))),
-      y: Math.max(0, Math.min(1, event.clientY / Math.max(1, innerHeight))),
+      x: (event.clientX - bounds.left) / bounds.width,
+      y: (event.clientY - bounds.top) / bounds.height,
     };
     if (!frame) frame = requestAnimationFrame(update);
   }
@@ -88,23 +102,25 @@ document.querySelectorAll<HTMLImageElement>('[data-tracking-portrait]').forEach(
 
   function sync() {
     stopListening();
-    listening = enabled() && !!area?.matches(':hover');
-    if (listening) area?.addEventListener('pointermove', onPointerMove, { passive: true });
+    areaBounds = area?.getBoundingClientRect();
+    listening = enabled() && !!scene?.matches(':hover');
+    if (listening) scene?.addEventListener('pointermove', onPointerMove, { passive: true });
   }
 
   function stopListening() {
-    area?.removeEventListener('pointermove', onPointerMove);
+    scene?.removeEventListener('pointermove', onPointerMove);
     listening = false;
     reset();
   }
 
-  area?.addEventListener('pointerenter', (event) => {
+  scene?.addEventListener('pointerenter', (event) => {
     if (event.pointerType !== 'mouse' || !enabled()) return;
     listening = true;
-    area.addEventListener('pointermove', onPointerMove, { passive: true });
+    areaBounds = area?.getBoundingClientRect();
+    scene.addEventListener('pointermove', onPointerMove, { passive: true });
     onPointerMove(event);
   });
-  area?.addEventListener('pointerleave', stopListening);
+  scene?.addEventListener('pointerleave', stopListening);
   document.documentElement.addEventListener('pointerleave', stopListening);
   window.addEventListener('pointerout', (event) => {
     if (!event.relatedTarget) stopListening();
@@ -121,6 +137,7 @@ document.querySelectorAll<HTMLImageElement>('[data-tracking-portrait]').forEach(
       attributeFilter: ['hidden', 'inert'],
     });
   }
+  if (area) new ResizeObserver(sync).observe(area);
   sync();
   void Promise.all(loadedFrames.map((image) => image.decode()))
     .then(() => {

@@ -120,9 +120,9 @@ npm run format:check  # 只检查格式
 - `src/pages/index.astro`：首页结构、标题、组件组合。
 - `src/components/Portrait.astro`：分层人像、鼠标跟随和开发时的母版对照开关。
 - `src/components/SpritePortrait.astro`：当前首页的关键帧头像，使用 `public/images/portrait-frames/portrait-00.png` ～ `portrait-14.png`，固定正方形 img 贴底显示，保留旧人像组件以便回退。
-- `src/scripts/spritePortrait.ts`：只在 `.scene-menu` 范围内监听鼠标，仍按 viewport 方向切换头像；离开范围移除监听并恢复正面；顶部 `tracking` 管理横纵区域、边界缓冲和正面帧。每帧最多更新一次，仅鼠标设备启用，离开窗口、失焦或离开首页时回正；触屏及减少动画模式固定正面。
+- `src/scripts/spritePortrait.ts`：通过首页事件检查独立 `.home__tracking-area`，仅范围内处理跟随，按区域内相对位置切换头像；离开范围恢复正面；顶部 `tracking` 管理横纵区域、边界缓冲和正面帧。每帧最多更新一次，仅鼠标设备启用，离开窗口、失焦或离开首页时回正；触屏及减少动画模式固定正面。
 
-头像源图 `public/images/portrait-sprite.png` 仅用于离线处理，不在首页加载。`scripts/prepare-portrait-frames.mjs` 检测 15 个人物的透明轮廓，按头部轮廓和颈部/胸口中心重新对齐，统一肩宽及底边，输出 324 × 324 透明 PNG。`scripts/portrait-frame-calibration.json` 记录实际边界、锚点、缩放和放置位置；运行 `node scripts/prepare-portrait-frames.mjs` 可重新生成。保留抬头/低头造成的自然眼睛高度变化，不拉伸面部。前端预加载并解码所有帧后才启用跟随，以 `row * 5 + column` 切换 `src`，正面为第 07 帧。
+当前头像源图 `public/images/portrait-sprite_2.png` 仅用于离线处理（旧版 `portrait-sprite.png` 保留），不在首页加载。`scripts/prepare-portrait-frames.mjs` 检测 15 个人物的透明轮廓，按头部轮廓和颈部/胸口中心重新对齐，统一肩宽及底边，输出 324 × 324 透明 PNG。`scripts/portrait-frame-calibration.json` 记录实际边界、锚点、缩放和放置位置；运行 `node scripts/prepare-portrait-frames.mjs` 可重新生成。保留抬头/低头造成的自然眼睛高度变化，不拉伸面部。前端预加载并解码所有帧后才启用跟随，以 `row * 5 + column` 切换 `src`，正面为第 07 帧。
 
 - `src/components/SceneMenu.astro`：五个菜单入口，`entries` 管理名称和场景标识。
 - `src/components/UniverseBackdrop.astro`：旧版装饰，当前首页未引用。
@@ -143,3 +143,5 @@ npm run format:check  # 只检查格式
 人像参数集中在 `Portrait.astro` 顶部：`alignment` 控制素材对齐，`tracking` 控制头部偏移、倾斜、瞳孔移动和平滑。坐标统一为 1086 × 1448 素材像素。`headX/headY/headTilt` 的安全上限为 4/2/0.45，保留头颈覆盖；`pupilX/pupilY` 默认 9/6，眼白裁切防止瞳孔越界；`smoothMs` 越大跟随越慢。只有鼠标设备启用跟随，触屏和减少动画模式保持默认姿态。离开窗口或首页会回正，母版对照时暂停跟随。
 
 首页人像居中贴视窗底边，场景区域延伸至底部；页脚叠放且保留可读底色，工作项目内容仍避开页脚。窄屏和矮屏沿用各自的尺寸基准；开发用母版对照开关移至人像内部底边。
+
+头像监听范围由 `.home__stage` 上的 `--tracking-left`、`--tracking-top`、`--tracking-width`、`--tracking-height` 控制，桌面和手机分别设置，不影响菜单布局。监听区域是无点击拦截的透明参考框，仅在区域内更新方向；越界取消待更新帧并回正。
