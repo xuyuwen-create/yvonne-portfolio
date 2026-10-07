@@ -34,7 +34,7 @@ GitHub Pages 部署：仓库 `xuyuwen-create/yvonne-portfolio`，站点地址 `h
 
 GitHub Pages 路径兼容：`src/utils/paths.ts` 的 `withBase()` 为人像、图标与项目图片加上 Astro `BASE_URL`；图片存在性仍按本地 public 路径检查。系统字体、内嵌纸纹和场景按钮不依赖站点根路径。Astro 显式使用 `output: 'static'`。
 
-Header 的 YVONNE 与ポートフォリオ复用深紫星空文字效果，保留返回首页功能。全站 `.app::after` 叠加静态纸纹，`--paper-texture-opacity` 控制纹理浓度；云彩浓度提高至 0.65，18 秒往返漂移并增加旋转、缩放和各色层的位移。背景不再监听鼠标，减少动画模式关闭动态。
+Header 的 YVONNE 与ポートフォリオ复用星空文字效果，保留返回首页功能。当前背景采用深蓝紫星云：`.app::before` 显示紫蓝、青蓝云雾的缓慢翻滚，`.app::after` 叠加稀疏细星点并缓慢漂移；`--stars-opacity` / `--stars-duration` 调星点浓度和速度。减少动画模式保持静态，背景不监听鼠标。
 
 自主制作项目缩略图由用户提供的 `personal-portfolio.png` 生成，裁掉底部 66px 开发工具区域，保留标题、导航和人像主体，输出为 `public/images/projects/personal-portfolio.webp`；原 PNG 保留。
 
@@ -74,7 +74,7 @@ Zoff 项目使用品牌提供的 OGP 介绍图，来源为 `https://www.zoff.co.
 
 首页 `.home__title` 使用只裁切在文字笔画内的深紫流光渐变。`--title-purple-deep`、`--title-purple-mid`、`--title-purple-light` 控制颜色，`--title-shimmer-duration` 控制流动速度；减少动画模式显示静态渐变，不支持文字裁切时回退为深紫纯色。字号、布局和页面背景不变。
 
-背景使用低饱和的灰紫、暖灰、雾蓝和香槟色光晕，浓度为 `--glow-opacity: 0.46`，保留浅色留白与自动漂移。
+背景以深蓝紫为底，紫蓝与青蓝云雾通过 `--glow-opacity: 0.75` 和 `--glow-duration: 28s` 控制浓度、翻滚速度。正文、标题和细边线同步提高对比度。
 
 背景仅按 `--glow-duration` 自动漂移，不监听鼠标；光标尾光和人像跟随保持独立。
 
@@ -84,7 +84,7 @@ App 外层、首页和工作项目统一使用浅色流光渐变、黑灰文字�
 
 在 `max-width: 900px` 且 `min-height: 521px` 时，导航禁用 hover 的弹出、倾斜和边框变化，点击功能与键盘焦点边框保留。
 
-菜单悬停时，图标向左上弹出并左倾，名称向右上弹出并右倾，盒子和点击范围不移动。`SceneMenu.astro` 中 `--menu-pop-x` 和 `--menu-pop-tilt` 控制横向偏移、倾角；纵向距离和时长继续使用 `--menu-pop-distance`、`--menu-pop-duration`。键盘焦点使用同一效果，减少动画模式禁用移动。
+首页导航使用毛绒按钮图片，视觉层持续轻柔漂浮，按钮的点击范围和位置不随漂浮移动。`SceneMenu.astro` 中 `--menu-float-distance`、`--menu-float-duration` 和各入口 `--float-delay` 控制幅度、速度和错开的节奏；减少动画模式关闭漂浮。桌面悬停和键盘聚焦时，下方显示现有日语名称及未开放入口的「準備中」；触屏默认显示日语名称。
 
 600px 以下，以及 `max-width: 900px` 且 `min-height: 521px` 的区间，人像高度使用 `--portrait-mobile-height: 75svh`，约占屏幕高度的四分之三，居中贴底。宽度按素材比例计算并限制在首页宽度内；窄长屏保持现有 SVG cover 显示方式，可能裁掉两侧少量衣服。桌面尺寸和跟随参数不变。
 
@@ -94,7 +94,7 @@ App 外层、首页和工作项目统一使用浅色流光渐变、黑灰文字�
 
 在 `max-width: 900px` 且 `min-height: 521px` 时，`.home` 使用 `--menu-top: 47%`，百分比相对于导航容器高度。
 
-导航图标现在使用剪纸 PNG：`SceneMenu.astro` 中 `iconSrc` 指向 `/images/icons/{id}.png`，图片使用空 `alt`，由旁边名称提供说明。统一容器采用 `object-fit: contain`，各入口的 `--icon-scale` 调视觉大小。原始 1254px 素材保留在 `public/images/`；优化版位于 `public/images/icons/`，裁去多余透明留白、保留边缘余量并缩为 128 × 128 全色透明 PNG。手机沿用 22px 容器，位置、弹出动画与点击逻辑不变。
+按钮素材来自 `public/images/btns.png`，按图中实际按钮位置裁取成透明无损 WebP，位于 `public/images/menu-buttons/`。对应关系为：个人经历 About、技能 Skills、兴趣 Blog、制作实绩 Works、杂项 More；Contact 暂不使用。图片为空 `alt`，按钮的日语 `aria-label` 提供名称；原黑白图标保留以便回退。
 
 首页采用海报式不对称布局：桌面左侧 40% 为两行粗体标题和简介，彩色人像在 71% 的横向位置贴底，导航分布在右侧区域。`--home-copy-width`、`--home-title-size`、`--home-portrait-x` 集中控制构图。900px 以下改为上方标题、下方人像与导航；窄而矮的窗口使用独立紧凑布局，通过容器单位限制人像尺寸，保留文字可读性。菜单弹出、人像跟随和场景切换逻辑不变。
 
@@ -104,7 +104,7 @@ App 外层、首页和工作项目统一使用浅色流光渐变、黑灰文字�
 
 Header 的上下细边线位于 `global.css` 的 `.app__header`；`--header-border-width` 控制线宽，`--header-padding-block` 控制上下内边距，颜色复用 `--color-border`。矮屏会减小内边距。
 
-首页当前采用“彩色拼贴人像＋黑白剪纸导航”：白色背景、黑白小盒子导航，无宇宙装饰。首页主题通过 `.app:has(#home-scene:not([hidden]))` 限定，内页保留原配色。菜单变量 `--menu-*` 调间距、位置和字体，`--icon-scale` 调整各图标的视觉大小；图标在左、名称在右；悬停或键盘聚焦时内容向上弹出，盒子和点击范围固定。`--menu-pop-distance` 和 `--menu-pop-duration` 控制弹出距离与时间；触屏保持默认，减少动态效果模式关闭弹出。`UniverseBackdrop.astro` 保留为未使用的旧装饰组件。
+首页当前采用关键帧人物头像与毛绒漂浮导航。菜单仍通过 `--menu-*` 管理尺寸和位置，浮动仅作用于图片视觉层，不改变点击范围。`UniverseBackdrop.astro` 保留为未使用的旧装饰组件。
 
 菜单使用透明剪纸 PNG 图标，不依赖图标库。`global.css` 中 `--portrait-scale: 1.728` 控制人像放大比例。窄屏与矮屏使用独立基准尺寸，再应用同一个比例。人像跟随参数、校准和场景动画不受这些样式调整影响。
 
@@ -119,6 +119,11 @@ npm run format:check  # 只检查格式
 
 - `src/pages/index.astro`：首页结构、标题、组件组合。
 - `src/components/Portrait.astro`：分层人像、鼠标跟随和开发时的母版对照开关。
+- `src/components/SpritePortrait.astro`：当前首页的关键帧头像，使用 `public/images/portrait-frames/portrait-00.png` ～ `portrait-14.png`，固定正方形 img 贴底显示，保留旧人像组件以便回退。
+- `src/scripts/spritePortrait.ts`：只在 `.scene-menu` 范围内监听鼠标，仍按 viewport 方向切换头像；离开范围移除监听并恢复正面；顶部 `tracking` 管理横纵区域、边界缓冲和正面帧。每帧最多更新一次，仅鼠标设备启用，离开窗口、失焦或离开首页时回正；触屏及减少动画模式固定正面。
+
+头像源图 `public/images/portrait-sprite.png` 仅用于离线处理，不在首页加载。`scripts/prepare-portrait-frames.mjs` 检测 15 个人物的透明轮廓，按头部轮廓和颈部/胸口中心重新对齐，统一肩宽及底边，输出 324 × 324 透明 PNG。`scripts/portrait-frame-calibration.json` 记录实际边界、锚点、缩放和放置位置；运行 `node scripts/prepare-portrait-frames.mjs` 可重新生成。保留抬头/低头造成的自然眼睛高度变化，不拉伸面部。前端预加载并解码所有帧后才启用跟随，以 `row * 5 + column` 切换 `src`，正面为第 07 帧。
+
 - `src/components/SceneMenu.astro`：五个菜单入口，`entries` 管理名称和场景标识。
 - `src/components/UniverseBackdrop.astro`：旧版装饰，当前首页未引用。
 - `src/components/ProjectsScene.astro`：工作项目示例内容和返回按钮。

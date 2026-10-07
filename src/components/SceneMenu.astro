@@ -3,59 +3,59 @@ import { withBase } from '../utils/paths';
 const entries = [
   {
     id: 'experience',
-    name: 'これまでの歩み',
+    name: '個人経歴',
     number: '01',
-    iconSrc: '/images/icons/experience.png',
+    imageSrc: '/images/menu-buttons/about.webp',
   },
   {
     id: 'skills',
     name: 'できること',
     number: '02',
-    iconSrc: '/images/icons/skills.png',
+    imageSrc: '/images/menu-buttons/skills.webp',
   },
   {
     id: 'interests',
     name: '好きなこと',
     number: '03',
-    iconSrc: '/images/icons/interests.png',
+    imageSrc: '/images/menu-buttons/blog.webp',
   },
   {
     id: 'projects',
     name: '制作実績',
     number: '04',
-    iconSrc: '/images/icons/projects.png',
+    imageSrc: '/images/menu-buttons/works.webp',
   },
   {
     id: 'misc',
     name: 'あれこれ',
     number: '05',
-    iconSrc: '/images/icons/misc.png',
+    imageSrc: '/images/menu-buttons/more.webp',
   },
 ];
 ---
 
 <nav class="scene-menu" aria-label="ポートフォリオのメニュー">
-  {entries.map(({ id, name, number, iconSrc }) => (
+  {entries.map(({ id, name, number, imageSrc }) => (
     <button
       class={`scene-menu__entry scene-menu__entry--${id}`}
       type="button"
       data-scene={id}
-      aria-label={id !== 'projects' ? `${name}（準備中）` : undefined}
+      aria-label={id !== 'projects' ? `${name}（準備中）` : name}
       aria-controls={id === 'projects' ? 'projects-scene' : 'pending-scene'}
       aria-describedby="menu-note"
     >
-      <span class="scene-menu__content">
-        <span class="scene-menu__icon" aria-hidden="true">
-          <img
-            src={withBase(iconSrc)}
-            alt=""
-            width="28"
-            height="28"
-            decoding="async"
-            draggable="false"
-          />
-        </span>
-        <span class="scene-menu__name">{name}</span>
+      <span class="scene-menu__content" aria-hidden="true">
+        <img
+          src={withBase(imageSrc)}
+          alt=""
+          width="480"
+          height="285"
+          decoding="async"
+          draggable="false"
+        />
+      </span>
+      <span class="scene-menu__name" aria-hidden="true">
+        {name}
       </span>
       <span class="scene-menu__number" aria-hidden="true">
         {number}
@@ -70,136 +70,113 @@ const entries = [
     position: absolute;
     inset: 0;
   }
+  .scene-menu {
+    --menu-float-distance: 6px;
+    --menu-float-duration: 5s;
+    --menu-caption-gap: 4px;
+  }
   .scene-menu__entry {
     position: absolute;
-    display: flex;
-    align-items: center;
+    display: grid;
+    place-items: center;
     width: var(--entry-width);
     min-height: 44px;
-    justify-content: center;
-    padding: 12px 8px;
+    padding: 8px 0;
+    border: 0;
+    background: transparent;
     color: var(--color-text);
-    background: #fdfbfb;
-    border: 1px solid #d9d9d9;
-    /* border-radius: 6px; */
     font: inherit;
-    text-align: left;
     cursor: pointer;
     transform: translate(-50%, -50%);
   }
   .scene-menu__content {
-    --menu-pop-x: 8px;
-    --menu-pop-tilt: 8deg;
-    display: flex;
+    display: block;
     width: 100%;
-    min-width: 0;
-    align-items: center;
-    justify-content: center;
-    gap: var(--menu-gap);
-    padding: 3px 2px;
-    background: #fdfbfb;
-    border-radius: 3px;
+    aspect-ratio: 1.7 / 1;
     pointer-events: none;
+    animation: menu-float var(--menu-float-duration) ease-in-out infinite;
+    animation-delay: var(--float-delay, 0s);
   }
-  .scene-menu__icon,
+  .scene-menu__content img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  @keyframes menu-float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 calc(-1 * var(--menu-float-distance));
+    }
+  }
   .scene-menu__name {
-    transition: transform var(--menu-pop-duration) cubic-bezier(0.22, 1.35, 0.36, 1);
-    transform-origin: center bottom;
-  }
-  /* 按钮盒子和点击范围固定，内容层弹出，避免悬停反复触发。 */
-  @media (hover: hover) and (pointer: fine) {
-    .scene-menu__entry:hover .scene-menu__icon {
-      transform: translate(calc(-1 * var(--menu-pop-x)), calc(-1 * var(--menu-pop-distance)))
-        rotate(calc(-1 * var(--menu-pop-tilt)));
-    }
-    .scene-menu__entry:hover .scene-menu__name {
-      transform: translate(var(--menu-pop-x), calc(-1 * var(--menu-pop-distance)))
-        rotate(var(--menu-pop-tilt));
-    }
-  }
-  .scene-menu__entry:focus-visible .scene-menu__icon {
-    transform: translate(calc(-1 * var(--menu-pop-x)), calc(-1 * var(--menu-pop-distance)))
-      rotate(calc(-1 * var(--menu-pop-tilt)));
+    position: absolute;
+    top: calc(100% + var(--menu-caption-gap));
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    text-align: center;
+    font-size: var(--menu-font-size);
+    line-height: 1.5;
+    pointer-events: none;
+    transition: opacity 180ms ease;
   }
   .scene-menu__entry:focus-visible .scene-menu__name {
-    transform: translate(var(--menu-pop-x), calc(-1 * var(--menu-pop-distance)))
-      rotate(var(--menu-pop-tilt));
+    opacity: 1;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .scene-menu__icon,
+  @media (hover: hover) and (pointer: fine) {
+    .scene-menu__entry:hover .scene-menu__name {
+      opacity: 1;
+    }
+  }
+  @media (hover: none), (pointer: coarse) {
     .scene-menu__name {
-      transition: none;
-    }
-    .scene-menu__entry:hover .scene-menu__icon,
-    .scene-menu__entry:hover .scene-menu__name,
-    .scene-menu__entry:focus-visible .scene-menu__icon,
-    .scene-menu__entry:focus-visible .scene-menu__name {
-      transform: none;
-    }
-    .scene-menu__entry:hover {
-      border-color: #555;
+      opacity: 1;
     }
   }
   .scene-menu__entry:focus-visible {
     outline: 2px solid var(--color-accent);
-    outline-offset: 5px;
+    outline-offset: 4px;
+    border-radius: 999px;
   }
-  @media (max-width: 900px) and (min-height: 521px) {
-    .scene-menu__entry:hover .scene-menu__icon,
-    .scene-menu__entry:hover .scene-menu__name {
-      transform: none;
+  @media (prefers-reduced-motion: reduce) {
+    .scene-menu__content {
+      animation: none;
     }
-    .scene-menu__entry:hover {
-      border-color: #d9d9d9;
+    .scene-menu__name {
+      transition: none;
     }
   }
   .scene-menu__entry--experience {
-    --icon-scale: 0.94;
+    --float-delay: -0.8s;
     left: max(var(--menu-left), calc(var(--entry-width) / 2 + 6px));
     top: var(--menu-top);
   }
   .scene-menu__entry--skills {
+    --float-delay: -1.7s;
     /* left: calc(var(--menu-left) + 2%); */
     left: max(var(--menu-left), calc(var(--entry-width) / 2 + 6px));
     top: var(--menu-lower);
   }
   .scene-menu__entry--interests {
+    --float-delay: -3.1s;
     left: var(--menu-center, 50%);
     top: var(--menu-top);
   }
   .scene-menu__entry--projects {
-    --icon-scale: 0.92;
+    --float-delay: -2.6s;
     left: min(var(--menu-right), calc(100% - var(--entry-width) / 2 - 6px));
     top: var(--menu-top);
   }
   .scene-menu__entry--misc {
-    --icon-scale: 0.96;
+    --float-delay: -3.8s;
     /* left: calc(var(--menu-right) - 2%); */
     left: min(var(--menu-right), calc(100% - var(--entry-width) / 2 - 6px));
     /* top: calc(var(--menu-lower) + 3%); */
     top: var(--menu-lower);
-  }
-  .scene-menu__icon {
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    width: var(--icon-size);
-    height: var(--icon-size);
-  }
-  .scene-menu__icon img {
-    display: block;
-    width: calc(100% * var(--icon-scale, 1));
-    height: calc(100% * var(--icon-scale, 1));
-    object-fit: contain;
-  }
-  .scene-menu__name {
-    font-family: inherit;
-    font-size: var(--menu-font-size);
-    letter-spacing: 0.025em;
-    min-width: 0;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    line-height: 1.5;
   }
   .scene-menu__number {
     display: none;
@@ -207,7 +184,7 @@ const entries = [
   .scene-menu__entry:not(.scene-menu__entry--projects)::after {
     content: '準備中';
     position: absolute;
-    top: calc(100% + 6px);
+    top: calc(100% + var(--menu-caption-gap) + 1.5em + 4px);
     left: 50%;
     transform: translateX(-50%);
     pointer-events: none;
@@ -228,8 +205,6 @@ const entries = [
       --entry-width: min(var(--menu-width), calc(100% / 3 - 8px));
     }
     .scene-menu__entry {
-      --icon-size: 18px;
-      --menu-gap: 4px;
       --menu-font-size: 12px;
       padding-inline: 4px;
       min-height: 56px;
@@ -246,20 +221,14 @@ const entries = [
     .scene-menu__entry--experience,
     .scene-menu__entry--interests,
     .scene-menu__entry--projects {
-      top: max(0px, min(var(--menu-top), calc(100% - 156px)));
+      top: max(0px, min(var(--menu-top), calc(100% - 400px)));
     }
     .scene-menu__entry--skills,
     .scene-menu__entry--misc {
       top: min(
-        calc(100% - 76px),
-        max(var(--menu-lower), calc(max(0px, min(var(--menu-top), calc(100% - 156px))) + 80px))
+        calc(100% - 168px),
+        max(var(--menu-lower), calc(max(0px, min(var(--menu-top), calc(100% - 296px))) + 128px))
       );
-    }
-    .scene-menu__entry:hover .scene-menu__icon,
-    .scene-menu__entry:hover .scene-menu__name,
-    .scene-menu__entry:focus-visible .scene-menu__icon,
-    .scene-menu__entry:focus-visible .scene-menu__name {
-      transform: none;
     }
   }
 </style>

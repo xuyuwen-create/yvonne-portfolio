@@ -1,0 +1,43 @@
+---
+import { withBase } from '../utils/paths';
+const frames = Array.from({ length: 15 }, (_, index) =>
+  withBase(`/images/portrait-frames/portrait-${String(index).padStart(2, '0')}.png`),
+);
+---
+
+<div class="portrait">
+  <img
+    class="sprite-portrait"
+    data-tracking-portrait
+    data-frames={JSON.stringify(frames)}
+    src={frames[7]}
+    alt="Yvonneのポートレート"
+    width="324"
+    height="324"
+    loading="eager"
+    decoding="async"
+  />
+</div>
+
+<script>
+  import '../scripts/spritePortrait';
+</script>
+
+<style>
+  .portrait {
+    position: relative;
+    width: var(--portrait-width);
+    height: var(--portrait-height);
+  }
+  .sprite-portrait {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* 固定正方形显示区域，切换 src 不改变布局。 */
+    aspect-ratio: 1 / 1;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+  }
+</style>

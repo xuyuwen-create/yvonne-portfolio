@@ -1,0 +1,332 @@
+[
+  {
+    "filename": "portrait-00.png",
+    "subject": {
+      "left": 32,
+      "top": 18,
+      "right": 330,
+      "bottom": 317,
+      "pixels": 66348
+    },
+    "headCenter": 196.5,
+    "neckCenter": 175.3,
+    "anchorX": 182.72,
+    "scale": 0.9966555183946488,
+    "crop": {
+      "left": 30,
+      "top": 16,
+      "width": 303,
+      "height": 304
+    },
+    "left": 10,
+    "top": 10
+  },
+  {
+    "filename": "portrait-01.png",
+    "subject": {
+      "left": 349,
+      "top": 18,
+      "right": 643,
+      "bottom": 316,
+      "pixels": 65733
+    },
+    "headCenter": 504.5,
+    "neckCenter": 489.8,
+    "anchorX": 494.945,
+    "scale": 1.0101694915254238,
+    "crop": {
+      "left": 347,
+      "top": 16,
+      "width": 299,
+      "height": 303
+    },
+    "left": 13,
+    "top": 7
+  },
+  {
+    "filename": "portrait-02.png",
+    "subject": {
+      "left": 662,
+      "top": 18,
+      "right": 958,
+      "bottom": 316,
+      "pixels": 64297
+    },
+    "headCenter": 810,
+    "neckCenter": 810.8,
+    "anchorX": 810.52,
+    "scale": 1.0033670033670035,
+    "crop": {
+      "left": 660,
+      "top": 16,
+      "width": 301,
+      "height": 303
+    },
+    "left": 11,
+    "top": 9
+  },
+  {
+    "filename": "portrait-03.png",
+    "subject": {
+      "left": 976,
+      "top": 17,
+      "right": 1272,
+      "bottom": 316,
+      "pixels": 66467
+    },
+    "headCenter": 1119.5,
+    "neckCenter": 1139,
+    "anchorX": 1132.175,
+    "scale": 1.0033670033670035,
+    "crop": {
+      "left": 974,
+      "top": 15,
+      "width": 301,
+      "height": 304
+    },
+    "left": 3,
+    "top": 8
+  },
+  {
+    "filename": "portrait-04.png",
+    "subject": {
+      "left": 1289,
+      "top": 18,
+      "right": 1588,
+      "bottom": 316,
+      "pixels": 66655
+    },
+    "headCenter": 1421,
+    "neckCenter": 1447.3,
+    "anchorX": 1438.095,
+    "scale": 0.9933333333333333,
+    "crop": {
+      "left": 1287,
+      "top": 16,
+      "width": 304,
+      "height": 303
+    },
+    "left": 12,
+    "top": 12
+  },
+  {
+    "filename": "portrait-05.png",
+    "subject": {
+      "left": 32,
+      "top": 330,
+      "right": 331,
+      "bottom": 633,
+      "pixels": 67501
+    },
+    "headCenter": 184.5,
+    "neckCenter": 174.9,
+    "anchorX": 178.26,
+    "scale": 0.9933333333333333,
+    "crop": {
+      "left": 30,
+      "top": 328,
+      "width": 304,
+      "height": 308
+    },
+    "left": 15,
+    "top": 7
+  },
+  {
+    "filename": "portrait-06.png",
+    "subject": {
+      "left": 350,
+      "top": 328,
+      "right": 644,
+      "bottom": 632,
+      "pixels": 67796
+    },
+    "headCenter": 496.5,
+    "neckCenter": 492,
+    "anchorX": 493.575,
+    "scale": 1.0101694915254238,
+    "crop": {
+      "left": 348,
+      "top": 326,
+      "width": 299,
+      "height": 309
+    },
+    "left": 15,
+    "top": 1
+  },
+  {
+    "filename": "portrait-07.png",
+    "subject": {
+      "left": 662,
+      "top": 329,
+      "right": 958,
+      "bottom": 632,
+      "pixels": 66539
+    },
+    "headCenter": 808.5,
+    "neckCenter": 810.7,
+    "anchorX": 809.9300000000001,
+    "scale": 1.0033670033670035,
+    "crop": {
+      "left": 660,
+      "top": 327,
+      "width": 301,
+      "height": 308
+    },
+    "left": 12,
+    "top": 4
+  },
+  {
+    "filename": "portrait-08.png",
+    "subject": {
+      "left": 975,
+      "top": 329,
+      "right": 1272,
+      "bottom": 632,
+      "pixels": 68561
+    },
+    "headCenter": 1122.5,
+    "neckCenter": 1132,
+    "anchorX": 1128.6750000000002,
+    "scale": 1,
+    "crop": {
+      "left": 973,
+      "top": 327,
+      "width": 302,
+      "height": 308
+    },
+    "left": 6,
+    "top": 5
+  },
+  {
+    "filename": "portrait-09.png",
+    "subject": {
+      "left": 1289,
+      "top": 329,
+      "right": 1587,
+      "bottom": 632,
+      "pixels": 68148
+    },
+    "headCenter": 1437.5,
+    "neckCenter": 1448,
+    "anchorX": 1444.325,
+    "scale": 0.9966555183946488,
+    "crop": {
+      "left": 1287,
+      "top": 327,
+      "width": 303,
+      "height": 308
+    },
+    "left": 5,
+    "top": 6
+  },
+  {
+    "filename": "portrait-10.png",
+    "subject": {
+      "left": 40,
+      "top": 645,
+      "right": 338,
+      "bottom": 949,
+      "pixels": 69153
+    },
+    "headCenter": 188,
+    "neckCenter": 194.3,
+    "anchorX": 192.09500000000003,
+    "scale": 0.9966555183946488,
+    "crop": {
+      "left": 38,
+      "top": 643,
+      "width": 303,
+      "height": 309
+    },
+    "left": 8,
+    "top": 5
+  },
+  {
+    "filename": "portrait-11.png",
+    "subject": {
+      "left": 351,
+      "top": 642,
+      "right": 649,
+      "bottom": 949,
+      "pixels": 69492
+    },
+    "headCenter": 494.5,
+    "neckCenter": 504.1,
+    "anchorX": 500.74,
+    "scale": 0.9966555183946488,
+    "crop": {
+      "left": 349,
+      "top": 640,
+      "width": 303,
+      "height": 312
+    },
+    "left": 11,
+    "top": 2
+  },
+  {
+    "filename": "portrait-12.png",
+    "subject": {
+      "left": 662,
+      "top": 642,
+      "right": 959,
+      "bottom": 949,
+      "pixels": 68304
+    },
+    "headCenter": 809,
+    "neckCenter": 812.7,
+    "anchorX": 811.405,
+    "scale": 1,
+    "crop": {
+      "left": 660,
+      "top": 640,
+      "width": 302,
+      "height": 312
+    },
+    "left": 11,
+    "top": 1
+  },
+  {
+    "filename": "portrait-13.png",
+    "subject": {
+      "left": 971,
+      "top": 642,
+      "right": 1273,
+      "bottom": 949,
+      "pixels": 70831
+    },
+    "headCenter": 1126,
+    "neckCenter": 1125.2,
+    "anchorX": 1125.48,
+    "scale": 0.9834983498349835,
+    "crop": {
+      "left": 969,
+      "top": 640,
+      "width": 307,
+      "height": 312
+    },
+    "left": 8,
+    "top": 6
+  },
+  {
+    "filename": "portrait-14.png",
+    "subject": {
+      "left": 1283,
+      "top": 643,
+      "right": 1579,
+      "bottom": 949,
+      "pixels": 69525
+    },
+    "headCenter": 1434,
+    "neckCenter": 1431.8,
+    "anchorX": 1432.57,
+    "scale": 1.0033670033670035,
+    "crop": {
+      "left": 1281,
+      "top": 641,
+      "width": 301,
+      "height": 311
+    },
+    "left": 10,
+    "top": 1
+  }
+]
