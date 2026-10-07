@@ -241,12 +241,28 @@ body {
   line-height: 1.08;
   letter-spacing: -0.045em;
 }
-.home__title span {
+.home__title > span {
   display: block;
   white-space: nowrap;
 }
-.home__title span:not(:first-child) {
+.home__title > span:not(:first-child) {
   font-size: calc(var(--home-title-size) * var(--title-welcome-scale));
+}
+.home__title-character {
+  display: inline-block;
+}
+html[data-home-entrance='pending']
+  :is(
+    .home__title > span,
+    .home__eyebrow,
+    .home__intro,
+    .home__portrait,
+    .scene-menu__entry,
+    .app__brand,
+    .app__edition,
+    .app__footer > span
+  ) {
+  opacity: 0;
 }
 .app__brand,
 .app__brand span {
@@ -254,6 +270,7 @@ body {
 }
 @supports (background-clip: text) or (-webkit-background-clip: text) {
   .home__title,
+  .home__title-character,
   .app__brand,
   .app__brand span {
     background-image:

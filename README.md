@@ -123,6 +123,7 @@ npm run format:check  # 只检查格式
 - `src/components/UniverseBackdrop.astro`：旧版装饰，当前首页未引用。
 - `src/components/ProjectsScene.astro`：工作项目示例内容和返回按钮。
 - `src/scripts/scenes.ts`：进入、返回动画及焦点管理，防止连续点击导致状态错乱。
+- `src/scripts/homeEntrance.ts`：首次打开首页时标题逐字向上弹出，再让其他元素从左右进入；顶部 `entrance` 集中管理时长、错开时间与距离。返回首页不重播，减少动画模式直接显示，点击或键盘聚焦会立即结束入场。
 - `src/styles/global.css`：全局主题、全屏布局和响应式 CSS 变量。
 - `astro.config.mjs` / `tsconfig.json`：Astro 默认配置 / 严格 TypeScript 配置。
 - `package.json` / `package-lock.json`：命令、依赖及锁定版本。

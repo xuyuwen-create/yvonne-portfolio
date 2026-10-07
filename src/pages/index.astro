@@ -17,6 +17,12 @@ import '../styles/global.css';
       content="Yvonneのポートフォリオです。これまでの歩み、できること、好きなこと、制作実績をご紹介します。"
     />
     <title>Yvonne｜ポートフォリオ</title>
+    <script is:inline>
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.dataset.homeEntrance = 'pending';
+        setTimeout(() => delete document.documentElement.dataset.homeEntrance, 4000);
+      }
+    </script>
   </head>
   <body>
     <main class="app">
@@ -67,4 +73,5 @@ import '../styles/global.css';
 
 <script>
   import '../scripts/scenes';
+  import '../scripts/homeEntrance';
 </script>
