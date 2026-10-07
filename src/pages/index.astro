@@ -4,6 +4,7 @@ import SceneMenu from '../components/SceneMenu.astro';
 import ProjectsScene from '../components/ProjectsScene.astro';
 import CursorGlow from '../components/CursorGlow.astro';
 import PendingScene from '../components/PendingScene.astro';
+import MeteorBackdrop from '../components/MeteorBackdrop.astro';
 import '../styles/global.css';
 ---
 
@@ -26,6 +27,7 @@ import '../styles/global.css';
   </head>
   <body>
     <main class="app">
+      <MeteorBackdrop />
       <header class="app__header">
         <button
           class="app__brand"

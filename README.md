@@ -145,3 +145,5 @@ npm run format:check  # 只检查格式
 首页人像居中贴视窗底边，场景区域延伸至底部；页脚叠放且保留可读底色，工作项目内容仍避开页脚。窄屏和矮屏沿用各自的尺寸基准；开发用母版对照开关移至人像内部底边。
 
 头像监听范围由 `.home__stage` 上的 `--tracking-left`、`--tracking-top`、`--tracking-width`、`--tracking-height` 控制，桌面和手机分别设置，不影响菜单布局。监听区域是无点击拦截的透明参考框，仅在区域内更新方向；越界取消待更新帧并回正。
+
+背景流星由 `src/components/MeteorBackdrop.astro` 管理，纯 CSS、固定三个装饰元素，约每 7 秒出现一颗，每颗划过约 1.5 秒。`--meteor-cycle` 控制循环间隔，`--meteor-length` / `--meteor-travel` 控制尾光长度与距离，`--meteor-opacity` / `--meteor-color` 控制亮度和颜色。移动端缩短尾光，减少动画模式关闭；不监听鼠标、不阻挡点击。

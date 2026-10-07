@@ -1,0 +1,95 @@
+<div class="meteors" aria-hidden="true">
+  <span class="meteors__track">
+    <span class="meteors__streak"></span>
+  </span>
+  <span class="meteors__track">
+    <span class="meteors__streak"></span>
+  </span>
+  <span class="meteors__track">
+    <span class="meteors__streak"></span>
+  </span>
+</div>
+
+<style>
+  .meteors {
+    --meteor-color: #ddd0ff;
+    --meteor-length: 100px;
+    --meteor-travel: clamp(220px, 28vw, 420px);
+    --meteor-cycle: 21s;
+    --meteor-opacity: 0.65;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .meteors__track {
+    position: absolute;
+    top: 16%;
+    left: 48%;
+    width: var(--meteor-length);
+    height: 1px;
+    transform: rotate(32deg);
+  }
+  .meteors__track:nth-child(2) {
+    top: 42%;
+    left: 8%;
+    --meteor-delay: 7s;
+  }
+  .meteors__track:nth-child(3) {
+    top: 8%;
+    left: 72%;
+    --meteor-delay: 14s;
+  }
+  .meteors__streak {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background: linear-gradient(90deg, transparent, var(--meteor-color));
+    animation: meteor-pass var(--meteor-cycle) linear infinite;
+    animation-delay: var(--meteor-delay, 0s);
+  }
+  .meteors__streak::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -1px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #f5efff;
+    box-shadow: 0 0 6px var(--meteor-color);
+  }
+  @keyframes meteor-pass {
+    0% {
+      opacity: 0;
+      transform: translateX(0);
+    }
+    1% {
+      opacity: var(--meteor-opacity);
+    }
+    7% {
+      opacity: 0;
+      transform: translateX(var(--meteor-travel));
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(var(--meteor-travel));
+    }
+  }
+  @media (max-width: 600px) {
+    .meteors {
+      --meteor-length: 64px;
+      --meteor-opacity: 0.5;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .meteors {
+      display: none;
+    }
+    .meteors__streak {
+      animation: none;
+    }
+  }
+</style>
