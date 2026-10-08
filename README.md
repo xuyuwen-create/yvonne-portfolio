@@ -147,3 +147,5 @@ npm run format:check  # 只检查格式
 头像监听范围由 `.home__stage` 上的 `--tracking-left`、`--tracking-top`、`--tracking-width`、`--tracking-height` 控制，桌面和手机分别设置，不影响菜单布局。监听区域是无点击拦截的透明参考框，仅在区域内更新方向；越界取消待更新帧并回正。
 
 背景流星由 `src/components/MeteorBackdrop.astro` 管理，纯 CSS、固定三个装饰元素，约每 7 秒出现一颗，每颗划过约 1.5 秒。`--meteor-cycle` 控制循环间隔，`--meteor-length` / `--meteor-travel` 控制尾光长度与距离，`--meteor-opacity` / `--meteor-color` 控制亮度和颜色。移动端缩短尾光，减少动画模式关闭；不监听鼠标、不阻挡点击。
+
+手机端人像支持点击空白区域和滑动跟随：触点按视窗位置映射到现有 15 帧，继续使用原有分档、迟滞及 requestAnimationFrame。松手后 `tracking.touchResetDelay`（默认 900ms）回正，取消手势、离开首页或失焦立即回正。导航及其他交互控件不触发跟随，不拦截原生点击或滚动，减少动画模式下关闭。

@@ -5,6 +5,7 @@ const tracking = {
   hysteresis: 0.025,
   frontColumn: 2,
   frontRow: 1,
+  touchResetDelay: 900,
 };
 
 export function selectBand(
@@ -38,12 +39,12 @@ document.querySelectorAll<HTMLImageElement>('[data-tracking-portrait]').forEach(
   let row = tracking.frontRow;
   let point: { x: number; y: number } | null = null;
   let frame = 0;
-  let listening = false;
+  let touchPointer: number | null = null;
+  let touchResetTimer = 0;
 
   function enabled() {
     return (
       ready &&
-      finePointer.matches &&
       !reducedMotion.matches &&
       !document.hidden &&
       document.hasFocus() &&
@@ -70,7 +71,7 @@ document.querySelectorAll<HTMLImageElement>('[data-tracking-portrait]').forEach(
   }
 
   function onPointerMove(event: PointerEvent) {
-    if (event.pointerType !== 'mouse' || !enabled()) return;
+    if (event.pointerType !== 'mouse' || !finePointer.matches || !enabled()) return;
     const bounds = areaBounds;
     if (
       !bounds ||
@@ -92,6 +93,9 @@ document.querySelectorAll<HTMLImageElement>('[data-tracking-portrait]').forEach(
   }
 
   function reset() {
+    window.clearTimeout(touchResetTimer);
+    touchResetTimer = 0;
+    touchPointer = null;
     cancelAnimationFrame(frame);
     frame = 0;
     point = null;
@@ -103,27 +107,72 @@ document.querySelectorAll<HTMLImageElement>('[data-tracking-portrait]').forEach(
   function sync() {
     stopListening();
     areaBounds = area?.getBoundingClientRect();
-    listening = enabled() && !!scene?.matches(':hover');
+    const listening = enabled() && finePointer.matches && !!scene?.matches(':hover');
     if (listening) scene?.addEventListener('pointermove', onPointerMove, { passive: true });
   }
 
   function stopListening() {
     scene?.removeEventListener('pointermove', onPointerMove);
-    listening = false;
     reset();
   }
 
   scene?.addEventListener('pointerenter', (event) => {
-    if (event.pointerType !== 'mouse' || !enabled()) return;
-    listening = true;
+    if (event.pointerType !== 'mouse' || !finePointer.matches || !enabled()) return;
     areaBounds = area?.getBoundingClientRect();
     scene.addEventListener('pointermove', onPointerMove, { passive: true });
     onPointerMove(event);
   });
-  scene?.addEventListener('pointerleave', stopListening);
-  document.documentElement.addEventListener('pointerleave', stopListening);
+  // 触摸使用屏幕坐标；被动监听，不截获点击或原生滚动。
+  function trackTouch(event: PointerEvent) {
+    point = {
+      x: Math.max(0, Math.min(1, event.clientX / window.innerWidth)),
+      y: Math.max(0, Math.min(1, event.clientY / window.innerHeight)),
+    };
+    if (!frame) frame = requestAnimationFrame(update);
+  }
+  scene?.addEventListener(
+    'pointerdown',
+    (event) => {
+      if (event.pointerType !== 'touch' || !event.isPrimary || !enabled()) return;
+      if ((event.target as Element).closest('button, a, input, select, textarea, [role="button"]'))
+        return;
+      window.clearTimeout(touchResetTimer);
+      touchPointer = event.pointerId;
+      trackTouch(event);
+    },
+    { passive: true },
+  );
+  window.addEventListener(
+    'pointermove',
+    (event) => {
+      if (event.pointerId !== touchPointer || !enabled()) return;
+      trackTouch(event);
+    },
+    { passive: true },
+  );
+  window.addEventListener(
+    'pointerup',
+    (event) => {
+      if (event.pointerId !== touchPointer) return;
+      touchPointer = null;
+      touchResetTimer = window.setTimeout(reset, tracking.touchResetDelay);
+    },
+    { passive: true },
+  );
+  window.addEventListener(
+    'pointercancel',
+    (event) => {
+      if (event.pointerId === touchPointer) reset();
+    },
+    { passive: true },
+  );
+  const onMouseLeave = (event: PointerEvent) => {
+    if (event.pointerType === 'mouse') stopListening();
+  };
+  scene?.addEventListener('pointerleave', onMouseLeave);
+  document.documentElement.addEventListener('pointerleave', onMouseLeave);
   window.addEventListener('pointerout', (event) => {
-    if (!event.relatedTarget) stopListening();
+    if (event.pointerType === 'mouse' && !event.relatedTarget) stopListening();
   });
   window.addEventListener('blur', stopListening);
   window.addEventListener('focus', sync);
