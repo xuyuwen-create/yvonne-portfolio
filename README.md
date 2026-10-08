@@ -149,3 +149,7 @@ npm run format:check  # 只检查格式
 背景流星由 `src/components/MeteorBackdrop.astro` 管理，纯 CSS、固定三个装饰元素，约每 7 秒出现一颗，每颗划过约 1.5 秒。`--meteor-cycle` 控制循环间隔，`--meteor-length` / `--meteor-travel` 控制尾光长度与距离，`--meteor-opacity` / `--meteor-color` 控制亮度和颜色。移动端缩短尾光，减少动画模式关闭；不监听鼠标、不阻挡点击。
 
 手机端人像支持点击空白区域和滑动跟随：触点按视窗位置映射到现有 15 帧，继续使用原有分档、迟滞及 requestAnimationFrame。松手后 `tracking.touchResetDelay`（默认 900ms）回正，取消手势、离开首页或失焦立即回正。导航及其他交互控件不触发跟随，不拦截原生点击或滚动，减少动画模式下关闭。
+
+「好きなこと」は `src/components/InterestsScene.astro` の独立场景，用于后续添加照片与随手记录，目前仅显示日语空状态。首页 Blog 入口已开放，复用现有进入、返回动画与焦点恢复；暂未加入发布后台或示例投稿。
+
+「好きなこと」已预留 WordPress / ACF 构建时读取接口。未设置 `WP_SITE_URL` 时显示空状态。本地后台配置及 ACF 导入步骤见 [wordpress/README.md](wordpress/README.md)，当前尚未连接真实后台。

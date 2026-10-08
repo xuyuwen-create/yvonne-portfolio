@@ -1,0 +1,36 @@
+[
+  {
+    "key": "group_yvonne_interests",
+    "title": "好きなこと",
+    "fields": [
+      {
+        "key": "field_yvonne_interest_note",
+        "label": "ひとこと",
+        "name": "interest_note",
+        "type": "textarea",
+        "instructions": "好きなものや小さな発見を自由に記録してください。",
+        "required": 0,
+        "new_lines": ""
+      },
+      {
+        "key": "field_yvonne_interest_place",
+        "label": "場所",
+        "name": "interest_place",
+        "type": "text",
+        "instructions": "公開してもよい場所だけ入力してください。",
+        "required": 0
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "post_category",
+          "operator": "==",
+          "value": "category:interests"
+        }
+      ]
+    ],
+    "active": true,
+    "show_in_rest": 1
+  }
+]

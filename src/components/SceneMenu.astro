@@ -41,8 +41,8 @@ const entries = [
       type="button"
       style={`--jelly-default: url('${withBase(`/images/jelly-buttons/${id}-default.webp`)}'); --jelly-hover: url('${withBase(`/images/jelly-buttons/${id}-hover.webp`)}'); --jelly-active: url('${withBase(`/images/jelly-buttons/${id}-active.webp`)}')`}
       data-scene={id}
-      aria-label={id !== 'projects' ? `${name}（準備中）` : name}
-      aria-controls={id === 'projects' ? 'projects-scene' : 'pending-scene'}
+      aria-label={!['projects', 'interests'].includes(id) ? `${name}（準備中）` : name}
+      aria-controls={['projects', 'interests'].includes(id) ? `${id}-scene` : 'pending-scene'}
     >
       <span class="scene-menu__content" aria-hidden="true">
         <span class="scene-menu__label">{label}</span>
@@ -235,7 +235,7 @@ const entries = [
   .scene-menu__number {
     display: none;
   }
-  .scene-menu__entry:not(.scene-menu__entry--projects)::after {
+  .scene-menu__entry:not(.scene-menu__entry--projects):not(.scene-menu__entry--interests)::after {
     content: '準備中';
     position: absolute;
     top: calc(100% + var(--menu-caption-gap) + 1.5em + 4px);
@@ -249,8 +249,12 @@ const entries = [
     color: var(--color-muted);
     letter-spacing: 0.05em;
   }
-  .scene-menu__entry:not(.scene-menu__entry--projects):hover::after,
-  .scene-menu__entry:not(.scene-menu__entry--projects):focus-visible::after {
+  .scene-menu__entry:not(.scene-menu__entry--projects):not(
+      .scene-menu__entry--interests
+    ):hover::after,
+  .scene-menu__entry:not(.scene-menu__entry--projects):not(
+      .scene-menu__entry--interests
+    ):focus-visible::after {
     opacity: 1;
   }
   /* 最窄手机也保留同一排，缩小这三个入口，避免盒子相互重叠。 */

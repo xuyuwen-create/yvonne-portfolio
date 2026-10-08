@@ -1,12 +1,14 @@
 const home = document.querySelector<HTMLElement>('#home-scene');
 const projects = document.querySelector<HTMLElement>('#projects-scene');
+const interests = document.querySelector<HTMLElement>('#interests-scene');
+const interestsTitle = document.querySelector<HTMLElement>('#interests-title');
 const pending = document.querySelector<HTMLElement>('#pending-scene');
 const menuButtons = document.querySelectorAll<HTMLButtonElement>('[data-scene]');
 const backButtons = document.querySelectorAll<HTMLButtonElement>('[data-back-home]');
 const projectTitle = document.querySelector<HTMLElement>('#projects-title');
 const pendingTitle = document.querySelector<HTMLElement>('#pending-title');
 
-if (home && projects && pending && projectTitle && pendingTitle) {
+if (home && projects && pending && interests && interestsTitle && projectTitle && pendingTitle) {
   let switching = false;
   let activeScene = projects;
   let returnButton: HTMLButtonElement | null = null;
@@ -58,7 +60,9 @@ if (home && projects && pending && projectTitle && pendingTitle) {
       const focusTarget = entering
         ? activeScene === projects
           ? projectTitle!
-          : pendingTitle!
+          : activeScene === interests
+            ? interestsTitle!
+            : pendingTitle!
         : returnButton;
       focusTarget?.focus({ preventScroll: true });
       switching = false;
@@ -68,7 +72,12 @@ if (home && projects && pending && projectTitle && pendingTitle) {
   menuButtons.forEach((button) => {
     button.addEventListener('click', () => {
       if (switching) return;
-      activeScene = button.dataset.scene === 'projects' ? projects! : pending!;
+      activeScene =
+        button.dataset.scene === 'projects'
+          ? projects!
+          : button.dataset.scene === 'interests'
+            ? interests!
+            : pending!;
       returnButton = button;
       void switchScene(true);
     });
