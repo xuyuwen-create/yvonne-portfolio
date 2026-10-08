@@ -149,3 +149,5 @@ npm run format:check  # 只检查格式
 背景流星由 `src/components/MeteorBackdrop.astro` 管理，纯 CSS、固定三个装饰元素，约每 7 秒出现一颗，每颗划过约 1.5 秒。`--meteor-cycle` 控制循环间隔，`--meteor-length` / `--meteor-travel` 控制尾光长度与距离，`--meteor-opacity` / `--meteor-color` 控制亮度和颜色。移动端缩短尾光，减少动画模式关闭；不监听鼠标、不阻挡点击。
 
 手机端人像支持点击空白区域和滑动跟随：触点按视窗位置映射到现有 15 帧，继续使用原有分档、迟滞及 requestAnimationFrame。松手后 `tracking.touchResetDelay`（默认 900ms）回正，取消手势、离开首页或失焦立即回正。导航及其他交互控件不触发跟随，不拦截原生点击或滚动，减少动画模式下关闭。
+
+制作实绩封面图片渲染已注释，统一显示「スクリーンショット未掲載」。项目标题与介绍中的客户、品牌名称已改为行业称呼；原始素材文件及项目外链仍保留，此变更不等于移除公开资源或完全匿名化。
