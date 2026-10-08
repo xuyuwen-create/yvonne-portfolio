@@ -1,3 +1,4 @@
+import publishedPosts from '../data/interests.json' with { type: 'json' };
 type WordPressPost = {
   id: number;
   title: { rendered: string };
@@ -37,7 +38,11 @@ function plainText(value: unknown): string {
 
 export async function getInterestPosts(): Promise<InterestPost[]> {
   const site = import.meta.env.WP_SITE_URL?.trim();
-  if (!site) return [];
+  // 本地实时练习；正式构建只使用已确认公开的静态快照。
+  return import.meta.env.DEV && site ? fetchInterestPosts(site) : publishedPosts;
+}
+
+export async function fetchInterestPosts(site: string): Promise<InterestPost[]> {
   const base = new URL(`${site.replace(/\/$/, '')}/`);
   if (!['http:', 'https:'].includes(base.protocol))
     throw new Error('WP_SITE_URL must use HTTP(S).');

@@ -153,3 +153,5 @@ npm run format:check  # 只检查格式
 「好きなこと」は `src/components/InterestsScene.astro` の独立场景，用于后续添加照片与随手记录，目前仅显示日语空状态。首页 Blog 入口已开放，复用现有进入、返回动画与焦点恢复；暂未加入发布后台或示例投稿。
 
 「好きなこと」已预留 WordPress / ACF 构建时读取接口。未设置 `WP_SITE_URL` 时显示空状态。本地后台配置及 ACF 导入步骤见 [wordpress/README.md](wordpress/README.md)，当前尚未连接真实后台。
+
+Blog 发布现支持静态导出：`npm run blog:export -- 13` 从本地 WordPress 读取指定已发布文章，保存到 `src/data/interests.json`。开发模式仍实时读取 WordPress，正式构建只读快照，GitHub Pages 不依赖 Local。导出全部所需 ID 才会保留多篇；当前仅支持无特色图片文章。详见 `wordpress/README.md`。

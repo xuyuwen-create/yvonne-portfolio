@@ -1,0 +1,9 @@
+[
+  {
+    "id": 13,
+    "title": "GitHub Pagesでポートフォリオを公開しました",
+    "note": "Astroで制作したポートフォリオを、GitHub Pagesで公開しました。\r\n\r\n最初の設定では少し戸惑いましたが、一度つながると、変更をGitHubにpushするだけで自動的にビルド・公開されるので、とても便利です。\r\n\r\n少し直して、公開して、実際に見てみる。この流れが手軽になったことで、サイトを少しずつ育てていくのが楽しくなりました。\r\n\r\n今はWordPressとACFも勉強中です。このブログも、WordPressで書いた内容をAstroで表示する仕組みを試しながら作っています。\r\n\r\n参考記事：\r\nGitHub公式ブログ「GitHub for Beginners: Getting started with GitHub Pages」\r\n\r\nGitHub Pagesでサイトを公開する基本的な流れが紹介されています。これから試してみたい方はこちらもどうぞ。\r\n\r\nhttps://github.blog/developer-skills/github/github-for-beginners-getting-started-with-github-pages/",
+    "place": "",
+    "alt": ""
+  }
+]
