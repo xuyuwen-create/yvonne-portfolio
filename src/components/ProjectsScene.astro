@@ -8,6 +8,9 @@ type Project = {
   title: string;
   description: string;
   responsibilities: string[];
+  industry?: string;
+  coverTitle?: string;
+  coverLabel?: string;
   client?: string;
   year?: string;
   role?: string;
@@ -186,6 +189,69 @@ const categories = [
     ] as Project[],
   },
   {
+    id: 'maintenance-operations',
+    name: 'Webサイト更新・運用',
+    description:
+      '企業サイトの継続的な更新・改修を担当。既存の構成や運用ルールに沿って対応しました。',
+    projects: [
+      {
+        title: 'KiSS Cosmetics',
+        client: 'KiSS（化粧品ブランド）',
+        industry: '化粧品',
+        year: '',
+        role: 'Frontend Maintenance / Website Operations',
+        kind: '商業案件 / Website Maintenance & Operations',
+        team: '',
+        description:
+          '化粧品ブランド「KiSS」の公式Webサイトにおいて、継続的な更新・運用業務を担当しました。\n\n既存サイトの構成やデザインルールに沿って、コンテンツの更新やページ改修に対応しました。',
+        responsibilities: [
+          'Webサイトの継続的な更新・運用',
+          'コンテンツ更新',
+          '既存ページの修正・改修',
+        ],
+        url: 'https://kiss-cosmetics.com/',
+        linkLabel: '公式サイトを見る',
+        abstractCover: true,
+        coverTitle: 'KiSS',
+        coverLabel: '化粧品 / WEBSITE OPERATIONS',
+      },
+      {
+        title: '通信・ケーブルテレビ事業者｜Webサイト運用',
+        client: '',
+        industry: '通信・ケーブルテレビ',
+        year: '',
+        role: 'Frontend Maintenance / Website Operations',
+        kind: '商業案件 / Website Maintenance & Operations',
+        team: '',
+        description:
+          '通信・ケーブルテレビ事業者のWebサイトにおいて、継続的な更新・運用業務を担当しました。\n\n既存サイトの構成や運用ルールに沿って、各種Webページの更新・修正に対応しました。',
+        responsibilities: [
+          '大規模Webサイトの継続的な更新・運用',
+          '既存ページの更新・修正',
+          'サイト運用ルールに沿った作業',
+        ],
+        abstractCover: true,
+        coverTitle: '通信・ケーブルテレビ',
+        coverLabel: '通信・ケーブルテレビ / WEBSITE OPERATIONS',
+      },
+      {
+        title: 'ケーブルテレビ事業者｜Webサイト運用',
+        client: '',
+        industry: 'ケーブルテレビ',
+        year: '',
+        role: 'Frontend Maintenance / Website Operations',
+        kind: '商業案件 / Website Maintenance & Operations',
+        team: '',
+        description:
+          'ケーブルテレビ事業者のWebサイトにおいて、継続的な更新・運用業務を担当しました。\n\n既存サイトの運用ルールに沿って、Webページやコンテンツの更新・修正に継続的に対応しました。',
+        responsibilities: ['Webサイトの継続的な更新・運用', 'コンテンツ更新', '既存ページの修正'],
+        abstractCover: true,
+        coverTitle: 'ケーブルテレビ',
+        coverLabel: 'ケーブルテレビ / WEBSITE OPERATIONS',
+      },
+    ] as Project[],
+  },
+  {
     id: 'independent',
     name: '自主制作',
     description: '自分で企画し、制作したウェブサイトです。',
@@ -294,14 +360,24 @@ const categories = [
                 -->
                 {project.abstractCover ? (
                   <div class="project-card__cover-type" aria-hidden="true">
-                    <span>CAMPAIGN WEBSITE / 2026</span>
-                    <strong>
-                      WACOAL
-                      <br />
-                      WEB Limited
-                    </strong>
-                    <span class="project-card__cover-season">2026SS</span>
-                    <span>FRONTEND IMPLEMENTATION</span>
+                    <span>{project.coverLabel ?? 'CAMPAIGN WEBSITE / 2026'}</span>
+                    {project.coverTitle ? (
+                      <strong>{project.coverTitle}</strong>
+                    ) : (
+                      <strong>
+                        WACOAL
+                        <br />
+                        WEB Limited
+                      </strong>
+                    )}
+                    {project.coverTitle ? (
+                      <span>MAINTENANCE / FRONTEND</span>
+                    ) : (
+                      <>
+                        <span class="project-card__cover-season">2026SS</span>
+                        <span>FRONTEND IMPLEMENTATION</span>
+                      </>
+                    )}
                   </div>
                 ) : (
                   <span>スクリーンショット未掲載</span>
@@ -313,6 +389,12 @@ const categories = [
                 {project.role && <p class="project-card__role">{project.role}</p>}
                 <p class="project-card__description">{project.description}</p>
                 <dl class="project-card__details">
+                  {project.industry && (
+                    <>
+                      <dt>業種</dt>
+                      <dd>{project.industry}</dd>
+                    </>
+                  )}
                   {project.client && (
                     <>
                       <dt>クライアント</dt>

@@ -155,3 +155,7 @@ npm run format:check  # 只检查格式
 ファッション・ライフスタイル类别新增 WACOAL WEB Limited 2026SS，显示客户、年份、主前端角色、个人职责与团队协作说明。封面仅为本地 HTML 排版和 CSS 抽象渐变，外链指向 EVOWORX 官方制作实绩；未使用外站图片或技术栈推测。原有项目保持行业称呼和截图未掲載状态。
 
 项目介绍统一使用 `role`（角色）、`kind`（类型）、`client`（客户）、`year`（年份）、`team`（制作体制）及数组形式的 `responsibilities`（职责）。未确认信息为空字符串，页面不会显示空字段；可直接在 `ProjectsScene.astro` 对应项目中补充。仅 WACOAL WEB Limited 项目已确认主前端角色，其他项目未推定为主负责人。
+
+制作实绩新增「Webサイト更新・運用」类别，包含 KiSS Cosmetics、通信・ケーブルテレビ事業者、ケーブルテレビ事業者三个持续运用项目，沿用现有项目卡片和分页。`industry` 为行业，`coverTitle` / `coverLabel` 为 HTML 原创文字封面；客户素材未引用，技术栈、年份、团队细节未推测。现有制作类别和自主制作保持不变，当前没有独立 Interaction Lab 分类。
+
+新增的两个通信类运用项目使用行业称呼，客户名称及对应官网链接不展示；KiSS 项目保持原样。
