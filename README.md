@@ -150,8 +150,17 @@ npm run format:check  # 只检查格式
 
 手机端人像支持点击空白区域和滑动跟随：触点按视窗位置映射到现有 15 帧，继续使用原有分档、迟滞及 requestAnimationFrame。松手后 `tracking.touchResetDelay`（默认 900ms）回正，取消手势、离开首页或失焦立即回正。导航及其他交互控件不触发跟随，不拦截原生点击或滚动，减少动画模式下关闭。
 
-「好きなこと」は `src/components/InterestsScene.astro` の独立场景，用于后续添加照片与随手记录，目前仅显示日语空状态。首页 Blog 入口已开放，复用现有进入、返回动画与焦点恢复；暂未加入发布后台或示例投稿。
+「好きなこと」は `src/components/InterestsScene.astro` の独立场景，用于后续添加照片与随手记录，展示导出的 WordPress 记录，无投稿时显示日语空状态。首页 Blog 入口已开放，复用现有进入、返回动画与焦点恢复；内容在本地 WordPress 编辑。
 
-「好きなこと」已预留 WordPress / ACF 构建时读取接口。未设置 `WP_SITE_URL` 时显示空状态。本地后台配置及 ACF 导入步骤见 [wordpress/README.md](wordpress/README.md)，当前尚未连接真实后台。
+「好きなこと」已接通本地 WordPress / ACF，线上读取已确认公开的静态快照。本地后台配置及 ACF 导入步骤见 [wordpress/README.md](wordpress/README.md)。
 
 Blog 发布现支持静态导出：`npm run blog:export -- 13` 从本地 WordPress 读取指定已发布文章，保存到 `src/data/interests.json`。开发模式仍实时读取 WordPress，正式构建只读快照，GitHub Pages 不依赖 Local。导出全部所需 ID 才会保留多篇；当前仅支持无特色图片文章。详见 `wordpress/README.md`。
+制作实绩封面图片渲染已注释，统一显示「スクリーンショット未掲載」。项目标题与介绍中的客户、品牌名称已改为行业称呼；原始素材文件及项目外链仍保留，此变更不等于移除公开资源或完全匿名化。
+
+ファッション・ライフスタイル类别新增 WACOAL WEB Limited 2026SS，显示客户、年份、主前端角色、个人职责与团队协作说明。封面仅为本地 HTML 排版和 CSS 抽象渐变，外链指向 EVOWORX 官方制作实绩；未使用外站图片或技术栈推测。原有项目保持行业称呼和截图未掲載状态。
+
+项目介绍统一使用 `role`（角色）、`kind`（类型）、`client`（客户）、`year`（年份）、`team`（制作体制）及数组形式的 `responsibilities`（职责）。未确认信息为空字符串，页面不会显示空字段；可直接在 `ProjectsScene.astro` 对应项目中补充。仅 WACOAL WEB Limited 项目已确认主前端角色，其他项目未推定为主负责人。
+
+制作实绩新增「Webサイト更新・運用」类别，包含 KiSS Cosmetics、通信・ケーブルテレビ事業者、ケーブルテレビ事業者三个持续运用项目，沿用现有项目卡片和分页。`industry` 为行业，`coverTitle` / `coverLabel` 为 HTML 原创文字封面；客户素材未引用，技术栈、年份、团队细节未推测。现有制作类别和自主制作保持不变，当前没有独立 Interaction Lab 分类。
+
+新增的两个通信类运用项目使用行业称呼，客户名称及对应官网链接不展示；KiSS 项目保持原样。
