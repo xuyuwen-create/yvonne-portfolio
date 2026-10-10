@@ -1,0 +1,180 @@
+---
+const timeline = [
+  {
+    period: '20XX.XX – 20XX.XX',
+    title: '項目タイトル（学校・会社名など）',
+    note: 'ここに経歴の説明が入ります。あとで実際の内容に差し替えます。',
+  },
+  {
+    period: '20XX.XX – 20XX.XX',
+    title: '項目タイトル（学校・会社名など）',
+    note: 'ここに経歴の説明が入ります。あとで実際の内容に差し替えます。',
+  },
+  {
+    period: '20XX.XX – 20XX.XX',
+    title: '項目タイトル（学校・会社名など）',
+    note: 'ここに経歴の説明が入ります。あとで実際の内容に差し替えます。',
+  },
+  {
+    period: '20XX.XX – 現在',
+    title: '項目タイトル（学校・会社名など）',
+    note: 'ここに経歴の説明が入ります。あとで実際の内容に差し替えます。',
+  },
+];
+---
+
+<section
+  id="experience-scene"
+  class="experience scene"
+  aria-labelledby="experience-title"
+  hidden
+  inert
+>
+  <div class="experience__content">
+    <button class="experience__back" type="button" data-back-home>
+      ← ホームへ
+    </button>
+    <p class="experience__eyebrow">これまでの歩み</p>
+    <h2 id="experience-title" tabindex="-1">
+      個人経歴
+    </h2>
+    <p class="experience__intro">
+      学び、仕事、挑戦の軌跡を時系列でご紹介します。内容は少しずつ更新していきます。
+    </p>
+    <ol class="experience__timeline">
+      {timeline.map((item) => (
+        <li class="experience__item">
+          <p class="experience__period">{item.period}</p>
+          <h3 class="experience__title">{item.title}</h3>
+          <p class="experience__note">{item.note}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .experience {
+    min-height: 0;
+    overflow: auto;
+    padding-block: var(--space-md);
+    margin-bottom: calc(var(--page-padding) + var(--footer-height));
+  }
+  .experience__content {
+    width: min(100%, var(--stage-width));
+    margin: auto;
+  }
+  .experience__back {
+    min-height: 44px;
+    padding: var(--space-sm) 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-accent);
+    font: inherit;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  .experience__back:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  .experience__eyebrow {
+    margin-top: var(--space-lg);
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    letter-spacing: 0.12em;
+  }
+  #experience-title {
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.4;
+  }
+  #experience-title:focus {
+    outline: none;
+  }
+  .experience__intro {
+    color: var(--color-muted);
+    font-size: 1rem;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+  }
+  .experience__timeline {
+    position: relative;
+    margin-top: var(--space-lg);
+    padding-left: var(--space-md);
+    list-style: none;
+    border-left: 1px solid var(--color-border);
+  }
+  .experience__item {
+    position: relative;
+    padding-bottom: var(--space-lg);
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 520ms var(--scene-easing),
+      transform 520ms var(--scene-easing);
+  }
+  .experience__item:last-child {
+    padding-bottom: 0;
+  }
+  .experience__item::before {
+    content: '';
+    position: absolute;
+    top: 0.4em;
+    left: calc(-1 * var(--space-md) - 5px);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+  .experience__item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .experience__period {
+    color: var(--color-accent);
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+  }
+  .experience__title {
+    margin: var(--space-sm) 0 0;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+  .experience__note {
+    margin-top: var(--space-sm);
+    color: var(--color-muted);
+    font-size: 1rem;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .experience__item {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const items = document.querySelectorAll<HTMLElement>('#experience-scene .experience__item');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (reducedMotion.matches || !('IntersectionObserver' in window)) {
+    items.forEach((item) => item.classList.add('is-visible'));
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -10% 0px' },
+    );
+    items.forEach((item) => observer.observe(item));
+  }
+</script>

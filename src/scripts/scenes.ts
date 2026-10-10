@@ -1,4 +1,6 @@
 const home = document.querySelector<HTMLElement>('#home-scene');
+const experience = document.querySelector<HTMLElement>('#experience-scene');
+const experienceTitle = document.querySelector<HTMLElement>('#experience-title');
 const projects = document.querySelector<HTMLElement>('#projects-scene');
 const interests = document.querySelector<HTMLElement>('#interests-scene');
 const interestsTitle = document.querySelector<HTMLElement>('#interests-title');
@@ -8,7 +10,17 @@ const backButtons = document.querySelectorAll<HTMLButtonElement>('[data-back-hom
 const projectTitle = document.querySelector<HTMLElement>('#projects-title');
 const pendingTitle = document.querySelector<HTMLElement>('#pending-title');
 
-if (home && projects && pending && interests && interestsTitle && projectTitle && pendingTitle) {
+if (
+  home &&
+  experience &&
+  experienceTitle &&
+  projects &&
+  pending &&
+  interests &&
+  interestsTitle &&
+  projectTitle &&
+  pendingTitle
+) {
   let switching = false;
   let activeScene = projects;
   let returnButton: HTMLButtonElement | null = null;
@@ -58,11 +70,13 @@ if (home && projects && pending && interests && interestsTitle && projectTitle &
       incoming.inert = false;
       animations.forEach((animation) => animation.cancel());
       const focusTarget = entering
-        ? activeScene === projects
-          ? projectTitle!
-          : activeScene === interests
-            ? interestsTitle!
-            : pendingTitle!
+        ? activeScene === experience
+          ? experienceTitle!
+          : activeScene === projects
+            ? projectTitle!
+            : activeScene === interests
+              ? interestsTitle!
+              : pendingTitle!
         : returnButton;
       focusTarget?.focus({ preventScroll: true });
       switching = false;
@@ -73,11 +87,13 @@ if (home && projects && pending && interests && interestsTitle && projectTitle &
     button.addEventListener('click', () => {
       if (switching) return;
       activeScene =
-        button.dataset.scene === 'projects'
-          ? projects!
-          : button.dataset.scene === 'interests'
-            ? interests!
-            : pending!;
+        button.dataset.scene === 'experience'
+          ? experience!
+          : button.dataset.scene === 'projects'
+            ? projects!
+            : button.dataset.scene === 'interests'
+              ? interests!
+              : pending!;
       returnButton = button;
       void switchScene(true);
     });
