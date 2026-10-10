@@ -1,0 +1,146 @@
+---
+const skillGroups = [
+  {
+    title: 'フロントエンド実装',
+    description: 'WebサイトやLPのコーディング、レスポンシブ対応を行います。',
+    tools: ['HTML', 'CSS / Sass', 'JavaScript', 'TypeScript'],
+  },
+  {
+    title: 'アニメーション・インタラクション',
+    description: 'KVアニメーションやスライダーなど、ページに合わせた動きを実装します。',
+    tools: ['GSAP', 'Swiper', 'jQuery'],
+  },
+  {
+    title: '制作環境',
+    description: 'プロジェクトで使用している制作環境に合わせて実装を進めます。',
+    tools: ['Vite', 'Gulp', 'Astro', 'Git / GitHub', 'GitHub Pages'],
+  },
+  {
+    title: 'Webサイトの更新・運用',
+    description:
+      '既存サイトの構成や運用ルールに沿って、コンテンツ更新やページの修正・改修に対応します。',
+    tools: [],
+  },
+];
+---
+
+<section id="skills-scene" class="skills scene" aria-labelledby="skills-title" hidden inert>
+  <div class="skills__content">
+    <button class="skills__back" type="button" data-back-home>
+      ← ホームへ
+    </button>
+    <p class="skills__eyebrow">実装・運用・学び</p>
+    <h2 id="skills-title" tabindex="-1">
+      できること
+    </h2>
+    <p class="skills__intro">制作や運用で使ってきた技術と、現在学んでいることをご紹介します。</p>
+    <div class="skills__groups">
+      {skillGroups.map((group) => (
+        <section class="skills__group">
+          <h3>{group.title}</h3>
+          <p>{group.description}</p>
+          {group.tools.length > 0 && (
+            <ul class="skills__tools">
+              {group.tools.map((tool) => (
+                <li>{tool}</li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ))}
+      <section class="skills__group skills__group--learning">
+        <p class="skills__status">学習・実践中</p>
+        <h3>WordPress / Advanced Custom Fields（ACF）</h3>
+        <p>
+          WordPressでの制作経験があり、現在はACFによるコンテンツ管理を学んでいます。このサイトのブログでは、WordPressの投稿とACFのフィールドをAPIで読み取り、Astroで表示する仕組みを実践しています。
+        </p>
+      </section>
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills {
+    min-height: 0;
+    overflow: auto;
+    padding-block: var(--space-md);
+    margin-bottom: calc(var(--page-padding) + var(--footer-height));
+  }
+  .skills__content {
+    width: min(100%, var(--stage-width));
+    margin: auto;
+  }
+  .skills__back {
+    min-height: 44px;
+    padding: var(--space-sm) 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-accent);
+    font: inherit;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  .skills__back:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  .skills__eyebrow {
+    margin-top: var(--space-lg);
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    letter-spacing: 0.12em;
+  }
+  h2 {
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.4;
+  }
+  h2:focus {
+    outline: none;
+  }
+  .skills__intro,
+  .skills__group > p {
+    color: var(--color-muted);
+    font-size: 1rem;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+  }
+  .skills__groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+  .skills__group {
+    min-width: 0;
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-md);
+  }
+  h3 {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+  .skills__tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-md);
+    padding: 0;
+    list-style: none;
+    color: var(--color-accent);
+    font-size: 0.875rem;
+    line-height: 1.8;
+  }
+  .skills__group--learning {
+    grid-column: 1 / -1;
+  }
+  .skills__group .skills__status {
+    color: var(--color-accent);
+    font-size: 0.875rem;
+  }
+  @media (max-width: 600px) {
+    .skills__groups {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

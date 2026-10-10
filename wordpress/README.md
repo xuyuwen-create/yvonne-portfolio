@@ -25,6 +25,6 @@
 
 此次只导出 ID 13 的 GitHub Pages 正式文章，没有测试文章。快照会随仓库公开；`.env`、账号密码与完整 API 响应不会提交。当前导出器只支持无特色图片的文章；有图时会报错，需另行准备媒体导出，避免发布无法访问的本地图片。
 
-未配置本地 WordPress 时，开发页也读取快照。开发模式配置了地址但连接失败时会报错；正式构建不访问 WordPress。内容按纯文本展示，记录中的网址暂时不自动转换为链接。
+未配置本地 WordPress 时，开发页也读取快照。开发模式配置了地址但连接失败时会打印提示并回退到已发布快照，不阻断其他场景；正式构建不访问 WordPress。内容按纯文本展示，记录中的网址暂时不自动转换为链接。
 
 参考：[ACF REST API](https://www.advancedcustomfields.com/resources/wp-rest-api-integration/)、[WordPress Embedding](https://developer.wordpress.org/rest-api/using-the-rest-api/linking-and-embedding/)。

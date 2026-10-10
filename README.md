@@ -164,3 +164,7 @@ Blog 发布现支持静态导出：`npm run blog:export -- 13` 从本地 WordPre
 制作实绩新增「Webサイト更新・運用」类别，包含 KiSS Cosmetics、通信・ケーブルテレビ事業者、ケーブルテレビ事業者三个持续运用项目，沿用现有项目卡片和分页。`industry` 为行业，`coverTitle` / `coverLabel` 为 HTML 原创文字封面；客户素材未引用，技术栈、年份、团队细节未推测。现有制作类别和自主制作保持不变，当前没有独立 Interaction Lab 分类。
 
 新增的两个通信类运用项目使用行业称呼，客户名称及对应官网链接不展示；KiSS 项目保持原样。
+
+首页入口的准备中状态统一由 `SceneMenu.astro` 的 `openScenes` 管理。仅未开放入口渲染 `data-pending="true"` 并显示伪元素提示；About（experience）、Blog（interests）、Works（projects）已开放。
+
+「できること」は `SkillsScene.astro` の `skillGroups` で技術と説明を管理。既存実绩に基づく実装・動き・制作环境・运用能力を掲載し、WordPress/ACF は学習・実践中として区別。入口 skills 已开放，沿用现有切页与焦点恢复，不显示熟练度评分。

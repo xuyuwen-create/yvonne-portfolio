@@ -1,3 +1,5 @@
+const skills = document.querySelector<HTMLElement>('#skills-scene');
+const skillsTitle = document.querySelector<HTMLElement>('#skills-title');
 const home = document.querySelector<HTMLElement>('#home-scene');
 const experience = document.querySelector<HTMLElement>('#experience-scene');
 const experienceTitle = document.querySelector<HTMLElement>('#experience-title');
@@ -12,6 +14,8 @@ const pendingTitle = document.querySelector<HTMLElement>('#pending-title');
 
 if (
   home &&
+  skills &&
+  skillsTitle &&
   experience &&
   experienceTitle &&
   projects &&
@@ -76,7 +80,9 @@ if (
             ? projectTitle!
             : activeScene === interests
               ? interestsTitle!
-              : pendingTitle!
+              : activeScene === skills
+                ? skillsTitle!
+                : pendingTitle!
         : returnButton;
       focusTarget?.focus({ preventScroll: true });
       switching = false;
@@ -93,7 +99,9 @@ if (
             ? projects!
             : button.dataset.scene === 'interests'
               ? interests!
-              : pending!;
+              : button.dataset.scene === 'skills'
+                ? skills!
+                : pending!;
       returnButton = button;
       void switchScene(true);
     });

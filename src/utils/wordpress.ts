@@ -39,7 +39,16 @@ function plainText(value: unknown): string {
 export async function getInterestPosts(): Promise<InterestPost[]> {
   const site = import.meta.env.WP_SITE_URL?.trim();
   // 本地实时练习；正式构建只使用已确认公开的静态快照。
-  return import.meta.env.DEV && site ? fetchInterestPosts(site) : publishedPosts;
+  if (!import.meta.env.DEV || !site) return publishedPosts;
+  try {
+    return await fetchInterestPosts(site);
+  } catch (error) {
+    console.warn(
+      '[Blog] 本地 WordPress 暂不可用，改用已发布的静态数据。需要实时预览时请启动 Local。',
+      error instanceof Error ? error.message : error,
+    );
+    return publishedPosts;
+  }
 }
 
 export async function fetchInterestPosts(site: string): Promise<InterestPost[]> {
