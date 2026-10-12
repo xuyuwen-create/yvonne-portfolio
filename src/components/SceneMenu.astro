@@ -4,19 +4,19 @@ const openScenes = ['experience', 'projects', 'interests', 'skills'];
 const entries = [
   {
     id: 'experience',
-    name: '個人経歴',
+    // name: '個人経歴',
     number: '01',
     label: 'About',
   },
   {
     id: 'skills',
-    name: 'できること',
+    // name: 'できること',
     number: '02',
     label: 'Skills',
   },
   {
     id: 'interests',
-    name: '好きなこと',
+    // name: '好きなこと',
     number: '03',
     label: 'Blog',
   },
@@ -28,7 +28,7 @@ const entries = [
   },
   {
     id: 'misc',
-    name: 'あれこれ',
+    // name: 'あれこれ',
     number: '05',
     label: 'More',
   },
@@ -43,7 +43,7 @@ const entries = [
       style={`--jelly-default: url('${withBase(`/images/jelly-buttons/${id}-default.webp`)}'); --jelly-hover: url('${withBase(`/images/jelly-buttons/${id}-hover.webp`)}'); --jelly-active: url('${withBase(`/images/jelly-buttons/${id}-active.webp`)}')`}
       data-scene={id}
       data-pending={!openScenes.includes(id) ? 'true' : undefined}
-      aria-label={!openScenes.includes(id) ? `${name}（準備中）` : name}
+      aria-label={!openScenes.includes(id) ? `${name ?? label}（準備中）` : (name ?? label)}
       aria-controls={openScenes.includes(id) ? `${id}-scene` : 'pending-scene'}
     >
       <span class="scene-menu__content" aria-hidden="true">

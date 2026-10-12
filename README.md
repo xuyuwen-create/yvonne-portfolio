@@ -168,3 +168,15 @@ Blog 发布现支持静态导出：`npm run blog:export -- 13` 从本地 WordPre
 首页入口的准备中状态统一由 `SceneMenu.astro` 的 `openScenes` 管理。仅未开放入口渲染 `data-pending="true"` 并显示伪元素提示；About（experience）、Blog（interests）、Works（projects）已开放。
 
 「できること」は `SkillsScene.astro` の `skillGroups` で技術と説明を管理。既存実绩に基づく実装・動き・制作环境・运用能力を掲載し、WordPress/ACF は学習・実践中として区別。入口 skills 已开放，沿用现有切页与焦点恢复，不显示熟练度评分。
+
+Skills 的「学習・試作」集中展示 React 的 sandbox 小型 Demo，以及 WordPress/ACF 博客实践。WordPress 既有制作经验与当前 ACF 学习分别说明，不将 React 标为商业项目经验。
+
+Skills にデザインツール组新增 Photoshop / Illustrator，依据已确认的 Web 制作学习与设计稿制作经历，不附加熟练度或商业设计职责。
+
+Skills 的语言能力组包含日语（已确认 JLPT N1）、英语（英语授课和修士论文经历）、中文与广东话，不推定母语或未经确认的语言等级。
+
+英语能力补充用户确认的 IELTS 6.5、TOEIC 810 分，不添加未确认的考试日期或分项成绩。
+
+Works 入口按「仕事の実績」「自主制作」分组，工作内分为「新規サイト・特設ページ制作」「Webサイト更新・運用」。原行业数据保留在 `sourceCategories`，展示用 `categories` 汇总，项目卡片与分页机制复用，新增制作项目自动合并到开发组。
+
+新规制作组追加匿名クリスマス特集ページ，职责为整页编码、响应式、Splide 滑块及原生 JavaScript 锚点展开，年份与团队信息留空，沿用截图未掲載占位。

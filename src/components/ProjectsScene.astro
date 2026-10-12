@@ -29,7 +29,7 @@ type Project = {
 function availableScreenshot(path: string) {
   return existsSync(resolve(process.cwd(), 'public', path.replace(/^\//, ''))) ? path : undefined;
 }
-const categories = [
+const sourceCategories = [
   {
     id: 'telecom',
     name: '通信キャリアクライアント',
@@ -71,6 +71,24 @@ const categories = [
     description: 'ファッションや暮らしに関わる商品の特設ページ制作。',
     projects: [
       {
+        title: 'インナーウェア｜クリスマス特集ページ',
+        client: '',
+        year: '',
+        role: 'フロントエンド実装',
+        kind: '商業案件 / 特設ページ',
+        team: '',
+        description:
+          'クリスマス向けのインナーウェアを紹介する特集ページです。ページ全体のコーディング、レスポンシブ対応、スライダー実装を担当しました。また、ボタンをクリックすると追加のアンカーリンクが展開される機能を、ネイティブJavaScriptで実装しました。',
+        responsibilities: [
+          'ページ全体のコーディング',
+          'レスポンシブ対応',
+          'スライダー実装',
+          'アンカーリンクの開閉機能の実装',
+        ],
+        technologies: 'HTML／CSS／JavaScript／Splide',
+        url: 'https://store.wacoal.jp/topics/feature/christmaslingerie.html',
+      },
+      {
         title: 'WACOAL WEB Limited 2026SS',
         client: '株式会社ワコール',
         year: '2026',
@@ -92,7 +110,7 @@ const categories = [
       {
         title: 'アイウェア｜商品紹介 特設ページ',
         client: '',
-        year: '',
+        year: '2026',
         role: 'フロントエンド実装',
         kind: '商業案件 / 特設ページ',
         team: '',
@@ -107,7 +125,7 @@ const categories = [
       {
         title: 'インナーウェア｜カスタム商品 特設ページ',
         client: '',
-        year: '',
+        year: '2026',
         role: 'コーディング',
         kind: '商業案件 / 特設ページ',
         team: '',
@@ -121,7 +139,7 @@ const categories = [
       },
       {
         title: 'インナーウェア｜ブランド紹介ページ',
-        client: '',
+        client: '2026',
         year: '',
         role: 'コーディング',
         kind: '商業案件 / ブランド紹介ページ',
@@ -137,7 +155,7 @@ const categories = [
       {
         title: 'インナーウェア｜マタニティアイテムランキング',
         client: '',
-        year: '',
+        year: '2026',
         role: 'コーディング',
         kind: '商業案件 / コンテンツページ',
         team: '',
@@ -152,7 +170,7 @@ const categories = [
       {
         title: 'アパレルEC｜ポイントバックキャンペーン LP',
         client: '',
-        year: '',
+        year: '2026',
         role: 'フロントエンド実装',
         kind: '商業案件 / キャンペーンサイト',
         team: '',
@@ -280,6 +298,26 @@ const categories = [
     ] as Project[],
   },
 ];
+// 行业分类保留为源数据；展示按工作类型分组。
+const categories = [
+  {
+    id: 'website-development',
+    name: '新規サイト・特設ページ制作',
+    description: 'Webサイト・LP・キャンペーンページのフロントエンド実装をご紹介します。',
+    projects: sourceCategories
+      .filter((category) => !['maintenance-operations', 'independent'].includes(category.id))
+      .flatMap((category) => category.projects),
+  },
+  sourceCategories.find((category) => category.id === 'maintenance-operations')!,
+  sourceCategories.find((category) => category.id === 'independent')!,
+];
+const workGroups = [
+  {
+    title: '仕事の実績',
+    categories: categories.filter((category) => category.id !== 'independent'),
+  },
+  { title: '自主制作', categories: categories.filter((category) => category.id === 'independent') },
+];
 ---
 
 <section id="projects-scene" class="projects scene" aria-labelledby="projects-title" hidden inert>
@@ -292,28 +330,35 @@ const categories = [
       制作実績
     </h2>
     <div data-category-list>
-      {categories.map((category, index) => (
-        <button
-          class="projects__category"
-          type="button"
-          data-category={category.id}
-          aria-controls={`category-${category.id}`}
-        >
-          <span class="projects__category-number" aria-hidden="true">
-            {String(index + 1).padStart(2, '0')}
-          </span>
-          <span class="projects__category-name">{category.name}</span>
-          <span class="projects__category-description">{category.description}</span>
-          <span class="projects__category-arrow" aria-hidden="true">
-            ↗
-          </span>
-        </button>
+      {workGroups.map((group) => (
+        <section class="projects__work-group">
+          <h3 class="projects__group-heading">{group.title}</h3>
+          {group.categories.map((category, index) => (
+            <button
+              class="projects__category"
+              type="button"
+              data-category={category.id}
+              aria-controls={`category-${category.id}`}
+            >
+              <span class="projects__category-number" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span class="projects__category-name">
+                {category.id === 'independent' ? '自主制作の作品を見る' : category.name}
+              </span>
+              <span class="projects__category-description">{category.description}</span>
+              <span class="projects__category-arrow" aria-hidden="true">
+                ↗
+              </span>
+            </button>
+          ))}
+        </section>
       ))}
     </div>
     {categories.map((category) => (
       <div id={`category-${category.id}`} data-category-panel={category.id} hidden>
         <button class="projects__back" type="button" data-back-category>
-          ← カテゴリ一覧へ
+          ← 実績一覧へ
         </button>
         <h3 class="projects__category-title" tabindex="-1">
           {category.name}
@@ -553,6 +598,16 @@ const categories = [
 </script>
 
 <style>
+  .projects__work-group + .projects__work-group {
+    margin-top: var(--space-lg);
+  }
+  .projects__group-heading {
+    margin: var(--space-md) 0;
+    color: var(--color-accent);
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
   .project-card__visual--abstract {
     background:
       radial-gradient(ellipse at 10% 15%, #8e75b329, transparent 65%),
