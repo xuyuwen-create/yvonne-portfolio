@@ -5,12 +5,15 @@ import { withBase } from '../utils/paths';
 
 // 未确认的客户、年份和制作体制使用空字符串，补充后自动显示。
 type Project = {
+  id?: string;
   title: string;
   description: string;
   responsibilities: string[];
   industry?: string;
   coverTitle?: string;
   coverLabel?: string;
+  coverSeason?: string;
+  coverFooter?: string;
   client?: string;
   year?: string;
   role?: string;
@@ -32,155 +35,215 @@ function availableScreenshot(path: string) {
 const sourceCategories = [
   {
     id: 'telecom',
-    name: '通信キャリアクライアント',
+    name: '通信サービス',
     description:
-      '通信キャリアのサービス紹介LPやコンテンツページを制作。コーディングからレスポンシブ対応、アニメーション実装まで担当しました。',
+      '通信事業者のサービス紹介LPやコンテンツページを制作しました。コーディングからレスポンシブ対応、アニメーションの実装まで担当しました。',
     projects: [
       {
+        id: 'open-support',
         title: '通信サービス｜開業支援サービス LP',
         client: '',
         year: '2026',
         role: 'フロントエンド実装',
-        kind: '商業案件 / ランディングページ',
+        kind: 'クライアントワーク / ランディングページ',
         team: '',
         description:
-          '開業支援サービスを紹介するLP。ページ全体のコーディング、レスポンシブ対応、GSAPを使用したアニメーション実装を担当しました。',
-        responsibilities: ['コーディング', 'レスポンシブ対応', 'アニメーション実装'],
+          '開業支援サービスを紹介するLPです。ページ全体のコーディング、レスポンシブ対応、GSAPを使用したアニメーションの実装を担当しました。',
+        responsibilities: ['コーディング', 'レスポンシブ対応', 'アニメーションの実装'],
+
         technologies: 'HTML／Sass／JavaScript／Vite／GSAP',
         url: 'https://www.itscom.co.jp/lp/open_support.html',
         screenshot: availableScreenshot('/images/projects/itscom-open-support.webp'),
+        abstractCover: true,
+        coverFooter: 'FRONTEND / RESPONSIVE / ANIMATION',
+        coverTitle: '開業支援サービス LP',
+        coverLabel: '通信サービス / LANDING PAGE / 2026',
       },
       {
+        id: 'smartphone-report',
         title: '通信サービス｜スマホ教室レポート',
         client: '',
         year: '2023',
         role: 'フロントエンド実装',
-        kind: '商業案件 / コンテンツページ',
+        kind: 'クライアントワーク / コンテンツページ',
         team: '',
         description:
-          'スマホ教室の内容や雰囲気を伝えるレポートページ。ページ全体のコーディング、レスポンシブ対応し、実装を担当しました。',
-        responsibilities: ['コーディング', 'レスポンシブ対応', 'アニメーション実装'],
+          'スマホ教室の内容や雰囲気を伝えるレポートページです。ページ全体のコーディング、レスポンシブ対応、アニメーションの実装を担当しました。',
+        responsibilities: ['コーディング', 'レスポンシブ対応', 'アニメーションの実装'],
         technologies: 'HTML／Sass／JavaScript／Gulp',
         url: 'https://www.itscom.co.jp/service/mobile/lecture/smartphone-school-report.html',
+        abstractCover: true,
+        coverFooter: 'FRONTEND / RESPONSIVE',
+        coverTitle: 'スマホ教室レポート',
+        coverLabel: '通信サービス / CONTENT PAGE / 2023',
       },
     ] as Project[],
   },
   {
     id: 'fashion-lifestyle',
     name: 'ファッション・ライフスタイル',
-    description: 'ファッションや暮らしに関わる商品の特設ページ制作。',
+    description: 'ファッションや暮らしに関わる商品の特設ページを制作しました。',
     projects: [
       {
-        title: 'インナーウェア｜クリスマス特集ページ',
-        client: '',
-        year: '',
+        id: 'custom-products',
+        title: 'WACOAL｜カスタム商品 特設ページ',
+        client: '株式会社ワコール',
+        year: '2026',
         role: 'フロントエンド実装',
-        kind: '商業案件 / 特設ページ',
+        kind: 'クライアントワーク / 特設ページ',
         team: '',
         description:
-          'クリスマス向けのインナーウェアを紹介する特集ページです。ページ全体のコーディング、レスポンシブ対応、スライダー実装を担当しました。また、ボタンをクリックすると追加のアンカーリンクが展開される機能を、ネイティブJavaScriptで実装しました。',
+          'カスタムブラの組み合わせや商品を紹介する特設ページです。ページのコーディングとレスポンシブ対応に加え、ページ冒頭やスライダーのアニメーション、スクロールに連動するアニメーションを実装しました。',
         responsibilities: [
-          'ページ全体のコーディング',
+          'コーディング',
+          'ページ冒頭のアニメーション実装',
           'レスポンシブ対応',
-          'スライダー実装',
-          'アンカーリンクの開閉機能の実装',
+          'スライダーのアニメーション実装',
+          'スクロールに連動するアニメーションの実装',
         ],
-        technologies: 'HTML／CSS／JavaScript／Splide',
-        url: 'https://store.wacoal.jp/topics/feature/christmaslingerie.html',
+        technologies: 'HTML／CSS／JavaScript（Swiper.js／GSAP）／Vite',
+        url: 'https://store.wacoal.jp/brand/unenanacool/topics/unenanacool_mycustom.html',
+        screenshot: availableScreenshot('/images/projects/unenanacool-mycustom.webp'),
+        imageAlt: '制作ページの紹介画像',
+        abstractCover: true,
+        coverFooter: 'FRONTEND / RESPONSIVE / ANIMATION',
+        coverTitle: 'カスタム商品 特設ページ',
+        coverLabel: 'インナーウェア / SPECIAL PAGE / 2026',
       },
       {
+        id: 'wacoal-web-limited',
         title: 'WACOAL WEB Limited 2026SS',
         client: '株式会社ワコール',
         year: '2026',
         role: 'Main Frontend Developer（メインフロントエンド担当）',
-        kind: '商業案件 / キャンペーンサイト',
+        kind: 'クライアントワーク / キャンペーンサイト',
         description:
-          '株式会社ワコールの「WACOAL WEB Limited 2026SS」特設サイトにおいて、フロントエンドのメイン実装を担当しました。\n\nページ全体のコーディングに加え、キービジュアル（KV）アニメーションの主要部分を実装しました。',
+          '株式会社ワコールの「WACOAL WEB Limited 2026SS」特設サイトにおいて、フロントエンド実装の主担当を務めました。\n\nページ全体のコーディングに加え、キービジュアル（KV）アニメーションの主要部分を実装しました。',
         responsibilities: [
           'ページ全体のフロントエンド実装',
           'KVアニメーションの主要部分の実装',
           'レスポンシブ対応',
           '他のフロントエンド担当者との連携・最終調整',
         ],
-        team: 'チーム制作。フロントエンドのメイン実装を担当。',
+        team: 'チーム制作。フロントエンド実装の主担当を務めました。',
         url: 'https://www.evoworx.co.jp/works/wacoal-web-limited-2026ss/',
         linkLabel: 'View Official Case Study',
         abstractCover: true,
+        coverLabel: 'ファッション / CAMPAIGN WEBSITE / 2026',
+        coverSeason: '2026SS',
+        coverFooter: 'FRONTEND IMPLEMENTATION',
       },
       {
+        id: 'brand-introduction',
+        title: 'インナーウェア｜ブランド紹介ページ',
+        client: '',
+        year: '2025',
+        role: 'フロントエンド実装',
+        kind: 'クライアントワーク / ブランド紹介ページ',
+        team: '',
+        description:
+          'インナーウェアの商品を紹介するブランドページです。ページのコーディングに加え、各セクションでスクロールに連動するアニメーションを実装しました。',
+        responsibilities: ['コーディング', '各セクションのスクロール連動アニメーションの実装'],
+        technologies: 'HTML／CSS／JavaScript／Vite',
+        url: 'https://store.wacoal.jp/brand/gococi/topics/gococi.html',
+        screenshot: availableScreenshot('/images/projects/wacoal-gococi.webp'),
+        imageAlt: '制作ページの紹介画像',
+        abstractCover: true,
+        coverFooter: 'FRONTEND / SCROLL ANIMATION',
+        coverTitle: 'ブランド紹介ページ',
+        coverLabel: 'インナーウェア / BRAND PAGE / 2025',
+      },
+      {
+        id: 'christmas-feature',
+        title: 'インナーウェア｜クリスマス特集ページ',
+        client: '',
+        year: '2025',
+        role: 'フロントエンド実装',
+        kind: 'クライアントワーク / 特設ページ',
+        team: '',
+        description:
+          'クリスマス向けのインナーウェアを紹介する特集ページです。ページ全体のコーディング、レスポンシブ対応、スライダーの実装を担当しました。',
+        responsibilities: [
+          'ページ全体のコーディング',
+          'レスポンシブ対応',
+          'スライダーの実装',
+          'アンカーリンク一覧の開閉機能の実装',
+        ],
+        abstractCover: true,
+        coverFooter: 'FRONTEND / SLIDER / INTERACTION',
+        coverTitle: 'クリスマス特集',
+        coverLabel: 'インナーウェア / FEATURE PAGE / 2025',
+        technologies: 'HTML／CSS／JavaScript／Splide',
+        url: 'https://store.wacoal.jp/topics/feature/christmaslingerie.html',
+      },
+      {
+        id: 'eyewear-products',
         title: 'アイウェア｜商品紹介 特設ページ',
         client: '',
         year: '2026',
         role: 'フロントエンド実装',
-        kind: '商業案件 / 特設ページ',
+        kind: 'クライアントワーク / 特設ページ',
         team: '',
         description:
-          'メガネのフレームやレンズを紹介する特設ページです。ページ全体のコーディングを担当し、複数のスライダーを実装しました。',
-        responsibilities: ['ページ全体のコーディング', 'スライダー実装'],
-        technologies: 'HTML／CSS（Sass）／JavaScript（jQuery）',
+          'メガネのフレームやレンズを紹介する特設ページです。ページ全体のコーディングとレスポンシブ対応を担当し、複数のスライダーを実装しました。制作工程に、AIを活用したコードチェックも取り入れました。',
+        responsibilities: ['ページ全体のコーディング', 'レスポンシブ対応', 'スライダーの実装'],
+        technologies: 'HTML／CSS（Sass）／JavaScript（jQuery）／Gulp（ビルド環境）',
         url: 'https://www.zoff.co.jp/shop/contents/beautyprep.aspx',
         screenshot: availableScreenshot('/images/projects/zoff-beautyprep.webp'),
         imageAlt: '制作ページの紹介画像',
+        abstractCover: true,
+        coverFooter: 'FRONTEND / RESPONSIVE / SLIDER',
+        coverTitle: 'アイウェア 商品紹介',
+        coverLabel: 'アイウェア / SPECIAL PAGE / 2026',
       },
       {
-        title: 'インナーウェア｜カスタム商品 特設ページ',
-        client: '',
-        year: '2026',
-        role: 'コーディング',
-        kind: '商業案件 / 特設ページ',
-        team: '',
-        description:
-          'カスタムブラの組み合わせや商品を紹介する特設ページ。ページのコーディングを担当しました。',
-        responsibilities: ['コーディング'],
-        technologies: 'HTML／CSS／JavaScript（Swiper.js／GSAP）／Vite／',
-        url: 'https://store.wacoal.jp/brand/unenanacool/topics/unenanacool_mycustom.html',
-        screenshot: availableScreenshot('/images/projects/unenanacool-mycustom.webp'),
-        imageAlt: '制作ページの紹介画像',
-      },
-      {
-        title: 'インナーウェア｜ブランド紹介ページ',
-        client: '2026',
-        year: '',
-        role: 'コーディング',
-        kind: '商業案件 / ブランド紹介ページ',
-        team: '',
-        description:
-          'インナーウェアの商品を紹介するブランドページ。ページのコーディングを担当しました。',
-        responsibilities: ['コーディング'],
-        technologies: 'HTML／CSS／JavaScript／Vite／',
-        url: 'https://store.wacoal.jp/brand/gococi/topics/gococi.html',
-        screenshot: availableScreenshot('/images/projects/wacoal-gococi.webp'),
-        imageAlt: '制作ページの紹介画像',
-      },
-      {
+        id: 'maternity-ranking',
         title: 'インナーウェア｜マタニティアイテムランキング',
         client: '',
         year: '2026',
-        role: 'コーディング',
-        kind: '商業案件 / コンテンツページ',
+        role: 'フロントエンド実装',
+        kind: 'クライアントワーク / コンテンツページ',
         team: '',
         description:
-          'マタニティ商品のランキングを紹介するページ。ページのコーディングを担当しました。',
-        responsibilities: ['コーディング'],
-        technologies: 'HTML／CSS／JavaScript／Vite／',
+          'マタニティ商品のランキングを紹介するページです。構成が共通する複数のセクションを、再利用できるコンポーネントとして実装しました。コーディングに加え、UIアニメーションの実装とレスポンシブ対応も担当しました。',
+        responsibilities: [
+          'コーディング',
+          '共通セクションのコンポーネント化',
+          'UIアニメーションの実装',
+          'レスポンシブ対応',
+        ],
+        technologies: 'HTML／CSS／JavaScript／Vite',
         url: 'https://store.wacoal.jp/topics/brand/maternity_ranking.html',
         screenshot: availableScreenshot('/images/projects/wacoal-maternity-ranking.webp'),
         imageAlt: '制作ページの紹介画像',
+        abstractCover: true,
+        coverFooter: 'COMPONENTS / UI ANIMATION / RESPONSIVE',
+        coverTitle: 'マタニティ ランキング',
+        coverLabel: 'インナーウェア / CONTENT PAGE / 2026',
       },
       {
+        id: 'pointback-campaign',
         title: 'アパレルEC｜ポイントバックキャンペーン LP',
         client: '',
         year: '2026',
         role: 'フロントエンド実装',
-        kind: '商業案件 / キャンペーンサイト',
+        kind: 'クライアントワーク / キャンペーンサイト',
         team: '',
         description:
-          'アパレルECサイトのポイントバックキャンペーンを紹介するLPです。キャンペーン概要や参加方法、注意事項を掲載し、ページ全体のコーディングを担当しました。',
-        responsibilities: ['ページ全体のコーディング'],
-        technologies: 'HTML／CSS／JavaScript／Vite／',
+          'アパレルECサイトのポイントバックキャンペーンを紹介するLPです。キャンペーン概要や参加方法、注意事項を掲載し、ページ全体のコーディング、レスポンシブ対応、UIアニメーションの実装を担当しました。',
+        responsibilities: [
+          'ページ全体のコーディング',
+          'レスポンシブ対応',
+          'UIアニメーションの実装',
+        ],
+        technologies: 'HTML／CSS／JavaScript／Vite',
         url: 'https://store.wacoal.jp/topics/campaign/pointback.html',
         screenshot: availableScreenshot('/images/projects/wacoal-pointback.webp'),
         imageAlt: '制作ページの紹介画像',
+        abstractCover: true,
+        coverFooter: 'FRONTEND / RESPONSIVE / UI ANIMATION',
+        coverTitle: 'ポイントバック キャンペーン',
+        coverLabel: 'アパレルEC / CAMPAIGN LP / 2026',
       },
     ] as Project[],
   },
@@ -190,19 +253,24 @@ const sourceCategories = [
     description: '愛犬と泊まれる宿泊施設を紹介する特集LPです。',
     projects: [
       {
+        id: 'pet-travel-lp',
         title: 'ペット・旅行｜愛犬と泊まれる宿 特集LP',
         client: '',
-        year: '',
-        role: '主要部分のフロントエンド実装',
-        kind: '商業案件 / 特集LP',
-        team: 'チーム制作。施設紹介コンポーネントを別のメンバーと分担して制作しました。',
+        year: '2026',
+        role: 'フロントエンド実装（主要部分）',
+        kind: 'クライアントワーク / 特集LP',
+        team: 'チーム制作。施設紹介のコンポーネントは、他のメンバーと分担して実装しました。',
         description:
-          '愛犬と泊まれる宿泊施設を紹介する特集LPです。実装を主に担当し、施設紹介コンポーネントは別のメンバーと分担して制作しました。後半は不具合修正や、デザイナーから追加されたインタラクションの実装にも対応しました。',
+          '愛犬と泊まれる宿泊施設を紹介する特集LPです。主要部分の実装を担当し、施設紹介のコンポーネントは、他のメンバーと分担して実装しました。制作の後半には、不具合の修正や、デザイナーから追加で依頼されたインタラクションの実装にも対応しました。',
         responsibilities: ['主要部分のコーディング', '不具合修正', '追加インタラクションの実装'],
-        technologies: 'HTML／CSS／JavaScript（Swiper.js）／Vite／',
+        technologies: 'HTML／CSS／JavaScript（Swiper.js）／Vite',
         url: 'https://wankonowa.com/lp/wanwanparadise/',
         screenshot: availableScreenshot('/images/projects/wanwanparadise.webp'),
         imageAlt: '制作ページの紹介画像',
+        abstractCover: true,
+        coverFooter: 'FRONTEND / FIXES / INTERACTION',
+        coverTitle: '愛犬と泊まれる宿 特集LP',
+        coverLabel: 'ペット・旅行 / FEATURE LP / 2026',
       },
     ] as Project[],
   },
@@ -210,26 +278,28 @@ const sourceCategories = [
     id: 'maintenance-operations',
     name: 'Webサイト更新・運用',
     description:
-      '企業サイトの継続的な更新・改修を担当。既存の構成や運用ルールに沿って対応しました。',
+      '企業サイトや自社メディアの更新・運用に継続して携わりました。既存の構成や運用ルールに沿った改修に加え、ご要望に応じたカスタマイズにも対応しています。',
     projects: [
       {
         title: 'KiSS Cosmetics',
         client: 'KiSS（化粧品ブランド）',
         industry: '化粧品',
-        year: '',
-        role: 'Frontend Maintenance / Website Operations',
-        kind: '商業案件 / Website Maintenance & Operations',
+        year: '2023～2026',
+        role: 'Webサイトの更新・改修',
+        kind: 'クライアントワーク / Webサイト更新・運用',
         team: '',
         description:
-          '化粧品ブランド「KiSS」の公式Webサイトにおいて、継続的な更新・運用業務を担当しました。\n\n既存サイトの構成やデザインルールに沿って、コンテンツの更新やページ改修に対応しました。',
+          '化粧品ブランド「KiSS」の公式Webサイトにおいて、継続的な更新・運用業務を担当しました。\n\n既存サイトの構成やデザインルールに沿って、コンテンツの更新やページの改修に対応しました。',
         responsibilities: [
           'Webサイトの継続的な更新・運用',
-          'コンテンツ更新',
+          'コンテンツの更新',
           '既存ページの修正・改修',
         ],
+        technologies: 'Astro／TypeScript／HTML／Sass／GitHub',
         url: 'https://kiss-cosmetics.com/',
         linkLabel: '公式サイトを見る',
         abstractCover: true,
+        coverFooter: 'MAINTENANCE / FRONTEND',
         coverTitle: 'KiSS',
         coverLabel: '化粧品 / WEBSITE OPERATIONS',
       },
@@ -237,18 +307,24 @@ const sourceCategories = [
         title: '通信・ケーブルテレビ事業者｜Webサイト運用',
         client: '',
         industry: '通信・ケーブルテレビ',
-        year: '',
-        role: 'Frontend Maintenance / Website Operations',
-        kind: '商業案件 / Website Maintenance & Operations',
+        year: '2023～2026',
+        role: 'Webサイトの更新・改修',
+        kind: 'クライアントワーク / Webサイト更新・運用',
         team: '',
         description:
-          '通信・ケーブルテレビ事業者のWebサイトにおいて、継続的な更新・運用業務を担当しました。\n\n既存サイトの構成や運用ルールに沿って、各種Webページの更新・修正に対応しました。',
+          '通信・ケーブルテレビ事業者のWebサイトにおいて、継続的な更新・運用に加え、キャンペーンLPやサービス紹介LP、料金プランの案内ページの新規制作・改修を担当しました。\n\nお試し利用の申し込み、サービスへの加入、セットプランの契約、プラン変更、修理の依頼、端末付きスマホプランの申し込みなど、各種申し込み・問い合わせフォームの制作・改修にも対応しました。入力画面と確認画面で手続きを進め、完了後に確認メールが届く流れのフォームです。既存サイトの構成や運用ルールに沿った更新のほか、メールマガジンの制作も担当しました。',
         responsibilities: [
-          '大規模Webサイトの継続的な更新・運用',
-          '既存ページの更新・修正',
-          'サイト運用ルールに沿った作業',
+          'Webサイトの継続的な更新・運用',
+          'キャンペーンLP・サービス紹介LPの新規制作',
+          '料金プラン・サービス案内ページの制作・改修',
+          'サービスの申し込み・加入、セット契約、プラン変更に関するフォームの制作・改修',
+          '修理依頼や端末付きスマホプランの申し込みフォームの制作・改修',
+          'メールマガジンの制作',
         ],
+        technologies:
+          'HTML／CSS（Sass）／JavaScript／Gulp／Vite（後期の一部案件）／WebRelease（公開・更新）',
         abstractCover: true,
+        coverFooter: 'MAINTENANCE / FRONTEND',
         coverTitle: '通信・ケーブルテレビ',
         coverLabel: '通信・ケーブルテレビ / WEBSITE OPERATIONS',
       },
@@ -256,16 +332,48 @@ const sourceCategories = [
         title: 'ケーブルテレビ事業者｜Webサイト運用',
         client: '',
         industry: 'ケーブルテレビ',
-        year: '',
-        role: 'Frontend Maintenance / Website Operations',
-        kind: '商業案件 / Website Maintenance & Operations',
+        year: '2023～2026',
+        role: 'Webサイトの更新・改修',
+        kind: 'クライアントワーク / Webサイト更新・運用',
         team: '',
         description:
-          'ケーブルテレビ事業者のWebサイトにおいて、継続的な更新・運用業務を担当しました。\n\n既存サイトの運用ルールに沿って、Webページやコンテンツの更新・修正に継続的に対応しました。',
-        responsibilities: ['Webサイトの継続的な更新・運用', 'コンテンツ更新', '既存ページの修正'],
+          'ケーブルテレビ事業者のWebサイトにおいて、継続的な更新・運用に加え、キャンペーンLPやサービス紹介LP、料金プランの案内ページの新規制作・改修を担当しました。\n\nお試し利用の申し込み、サービスへの加入、セットプランの契約、プラン変更、修理の依頼、端末付きスマホプランの申し込みなど、各種申し込み・問い合わせフォームの制作・改修にも対応しました。入力画面と確認画面で手続きを進め、完了後に確認メールが届く流れのフォームです。既存サイトの構成や運用ルールに沿った更新のほか、メールマガジンの制作も担当しました。',
+        responsibilities: [
+          'Webサイトの継続的な更新・運用',
+          'キャンペーンLP・サービス紹介LPの新規制作',
+          '料金プラン・サービス案内ページの制作・改修',
+          'サービスの申し込み・加入、セット契約、プラン変更に関するフォームの制作・改修',
+          '修理依頼や端末付きスマホプランの申し込みフォームの制作・改修',
+          'メールマガジンの制作',
+        ],
+        technologies: 'HTML／CSS（Sass）／JavaScript／Gulp／WordPress（公開・更新）',
         abstractCover: true,
+        coverFooter: 'MAINTENANCE / FRONTEND',
         coverTitle: 'ケーブルテレビ',
         coverLabel: 'ケーブルテレビ / WEBSITE OPERATIONS',
+      },
+      {
+        title: '自社の愛犬家向けメディア｜CMS更新',
+        client: '',
+        industry: 'ペット・メディア',
+        year: '2025～2026',
+        role: 'コンテンツの更新・CMS運用',
+        kind: '自社メディア / Webサイト更新・運用',
+        team: '',
+        description:
+          '自社の愛犬家向けメディアで、CMS（MT）を使った記事の更新を担当しました。ライターの原稿に記載された情報を確認したうえで、CMSに記事を入力・登録しました。記事の内容に合わせてHTML・CSSを一部調整し、表示を整える作業にも対応しました。',
+        responsibilities: [
+          '原稿に記載された情報の確認',
+          'CMSへの記事の入力・登録',
+          'HTML・CSSの一部調整',
+        ],
+        technologies: 'MT（CMS）／HTML／CSS',
+        url: 'https://wankonowa.com/',
+        linkLabel: '公式サイトを見る',
+        abstractCover: true,
+        coverTitle: '愛犬家向けメディア',
+        coverLabel: '自社メディア / CMS OPERATIONS',
+        coverFooter: 'CONTENT CHECK / CMS / HTML & CSS',
       },
     ] as Project[],
   },
@@ -277,36 +385,63 @@ const sourceCategories = [
       {
         title: 'パーソナルポートフォリオサイト',
         client: '',
-        year: '',
+        year: '2026',
         role: '企画・ビジュアルディレクション・フロントエンド実装',
         kind: '自主制作 / ポートフォリオサイト',
         team: '',
         description:
-          '制作実績やこれまでの歩みを紹介する、自主制作のポートフォリオサイトです。水彩・切り絵風の人物イラストとモノクロのアイコンを組み合わせ、クリックで各画面を切り替える構成にしました。マウスに合わせて人物の顔や視線が動くインタラクションも実装しています。',
+          '制作実績、これまでの歩み、スキル、日々の記録を紹介する自主制作のポートフォリオサイトです。宇宙をイメージした深い色合いの背景に、AIで生成した人物素材とゼリーのような質感の半透明ボタンを組み合わせました。クリックで画面を切り替える構成にし、マウスの位置やスマートフォンでのタッチ・スワイプに応じて、人物の向きが変わるインタラクションを実装しています。',
         responsibilities: ['企画', 'ビジュアルディレクション', 'フロントエンド実装'],
-        technologies: 'Astro／HTML／CSS／JavaScript／TypeScript',
+        abstractCover: true,
+        coverFooter: 'PLANNING / VISUAL DIRECTION / FRONTEND',
+        coverTitle: 'YVONNE Portfolio',
+        coverLabel: '自主制作 / PORTFOLIO / 2026',
+        technologies:
+          'Astro／HTML／CSS／JavaScript／TypeScript／WordPress／ACF／GitHub Actions／GitHub Pages',
         points: [
-          '人物イラストとアイコンの質感を統一したビジュアル',
-          'クリックによる全画面の切り替え',
-          '顔と視線がマウスに追従するインタラクション',
-          'カテゴリー別に整理した制作実績',
+          '宇宙をイメージした背景と、透明感のあるボタンを組み合わせたビジュアル',
+          'クリックによる画面切り替えと初回表示時のアニメーション',
+          'マウスやタッチ操作に応じて15枚の人物画像を切り替えるインタラクション',
+          '仕事の実績と自主制作を分け、制作・運用それぞれの担当内容を紹介',
+          'WordPress・ACFで管理した投稿を静的データに書き出して掲載',
+          'GitHub Actionsによる静的ビルドとGitHub Pagesへの公開',
+          '画面サイズに応じたレイアウトと、「動きを減らす」設定への対応',
         ],
         process:
-          'Codexを活用して実装を進め、画像生成AIで制作した素材を使用しています。構成や表現の方向性を決め、動作確認と調整を行いました。',
+          '構成やビジュアルの方向性を決め、Codexを活用しながら実装・動作確認・調整を進めています。人物やボタンには画像生成AIで制作した素材を使用しています。ブログはローカルのWordPressとACFで管理し、公開する投稿を書き出してAstroの静的サイトに組み込んでいます。',
         screenshot: availableScreenshot('/images/projects/personal-portfolio.webp'),
       },
     ] as Project[],
   },
 ];
+// 调整此数组即可改变新规制作项目的展示顺序；未列出的新增项目排在末尾。
+const developmentOrder = [
+  'wacoal-web-limited',
+  'custom-products',
+  'maternity-ranking',
+  'pet-travel-lp',
+  'open-support',
+  'brand-introduction',
+  'christmas-feature',
+  'eyewear-products',
+  'pointback-campaign',
+  'smartphone-report',
+];
+const developmentRanks = new Map(developmentOrder.map((id, index) => [id, index]));
 // 行业分类保留为源数据；展示按工作类型分组。
 const categories = [
   {
     id: 'website-development',
-    name: '新規サイト・特設ページ制作',
+    name: 'Webサイト・特設ページの新規制作',
     description: 'Webサイト・LP・キャンペーンページのフロントエンド実装をご紹介します。',
     projects: sourceCategories
       .filter((category) => !['maintenance-operations', 'independent'].includes(category.id))
-      .flatMap((category) => category.projects),
+      .flatMap((category) => category.projects)
+      .sort(
+        (a, b) =>
+          (developmentRanks.get(a.id ?? '') ?? developmentOrder.length) -
+          (developmentRanks.get(b.id ?? '') ?? developmentOrder.length),
+      ),
   },
   sourceCategories.find((category) => category.id === 'maintenance-operations')!,
   sourceCategories.find((category) => category.id === 'independent')!,
@@ -325,7 +460,7 @@ const workGroups = [
     <button class="projects__back" type="button" data-back-home>
       ← ホームへ
     </button>
-    <p class="projects__eyebrow">コーディング実績 一部</p>
+    <p class="projects__eyebrow">制作・運用実績の一部</p>
     <h2 id="projects-title" tabindex="-1">
       制作実績
     </h2>
@@ -344,7 +479,7 @@ const workGroups = [
                 {String(index + 1).padStart(2, '0')}
               </span>
               <span class="projects__category-name">
-                {category.id === 'independent' ? '自主制作の作品を見る' : category.name}
+                {category.id === 'independent' ? 'ポートフォリオサイト' : category.name}
               </span>
               <span class="projects__category-description">{category.description}</span>
               <span class="projects__category-arrow" aria-hidden="true">
@@ -391,24 +526,26 @@ const workGroups = [
                 -->
                 {project.abstractCover ? (
                   <div class="project-card__cover-type" aria-hidden="true">
-                    <span>{project.coverLabel ?? 'CAMPAIGN WEBSITE / 2026'}</span>
+                    <span>{project.coverLabel ?? project.kind ?? '制作実績'}</span>
                     {project.coverTitle ? (
                       <strong>{project.coverTitle}</strong>
                     ) : (
                       <strong>
-                        WACOAL
-                        <br />
-                        WEB Limited
+                        {project.title === 'WACOAL WEB Limited 2026SS' ? (
+                          <>
+                            WACOAL
+                            <br />
+                            WEB Limited
+                          </>
+                        ) : (
+                          project.title
+                        )}
                       </strong>
                     )}
-                    {project.coverTitle ? (
-                      <span>MAINTENANCE / FRONTEND</span>
-                    ) : (
-                      <>
-                        <span class="project-card__cover-season">2026SS</span>
-                        <span>FRONTEND IMPLEMENTATION</span>
-                      </>
+                    {project.coverSeason && (
+                      <span class="project-card__cover-season">{project.coverSeason}</span>
                     )}
+                    {project.coverFooter && <span>{project.coverFooter}</span>}
                   </div>
                 ) : (
                   <span>スクリーンショット未掲載</span>

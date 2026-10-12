@@ -2,34 +2,36 @@
 const skillGroups = [
   {
     title: 'フロントエンド実装',
-    description: 'WebサイトやLPのコーディング、レスポンシブ対応を行います。',
+    description: 'WebサイトやLPのコーディングを行い、画面サイズに応じたレイアウトを実装します。',
     tools: ['HTML', 'CSS / Sass', 'JavaScript', 'TypeScript'],
   },
   {
     title: 'アニメーション・インタラクション',
-    description: 'KVアニメーションやスライダーなど、ページに合わせた動きを実装します。',
+    description:
+      'キービジュアルのアニメーションやスライダーなど、ページの内容やデザインに合わせた動きを実装します。',
     tools: ['GSAP', 'Swiper', 'jQuery など'],
   },
   {
     title: 'デザインツール',
-    description: 'Web制作の学習で、デザインカンプ制作にPhotoshop・Illustratorを使用しました。',
+    description:
+      'Web制作を学ぶ中で、Photoshop・Illustratorを使ってWebサイトのデザインを制作しました。',
     tools: ['Figma', 'Adobe XD', 'Adobe Photoshop', 'Adobe Illustrator'],
   },
   {
-    title: '制作環境',
-    description: 'プロジェクトで使用している制作環境に合わせて実装を進めます。',
+    title: '開発環境・ツール',
+    description: 'プロジェクトごとの開発環境やツールに合わせて、実装を進めます。',
     tools: ['Node.js', 'Vite', 'Gulp', 'Astro', 'Git / GitHub', 'GitHub Pages'],
   },
   {
     title: '言語・コミュニケーション',
     description:
-      '日本語能力試験（JLPT）N1に合格しています。英語はIELTS 6.5、TOEIC 810点を取得しています。大学院では主に英語で授業を受け、修士論文も英語で執筆しました。中国語・広東語にも対応できます。',
+      '日本語能力試験（JLPT）N1に合格しています。英語はIELTSで6.5、TOEICで810点を取得しています。大学院では主に英語で授業を受け、修士論文も英語で執筆しました。中国語・広東語でもコミュニケーションができます。',
     tools: ['日本語（JLPT N1）', '英語（IELTS 6.5 / TOEIC 810）', '中国語', '広東語'],
   },
   {
     title: 'Webサイトの更新・運用',
     description:
-      '既存サイトの構成や運用ルールに沿って、コンテンツ更新やページの修正・改修に対応します。',
+      '既存サイトの構成や運用ルールに沿って、コンテンツの更新やページの修正・改修を行います。',
     tools: [],
   },
 ];
@@ -44,7 +46,9 @@ const skillGroups = [
     <h2 id="skills-title" tabindex="-1">
       できること
     </h2>
-    <p class="skills__intro">制作や運用で使ってきた技術と、現在学んでいることをご紹介します。</p>
+    <p class="skills__intro">
+      Web制作やサイト運用で培ったスキルと、現在取り組んでいることをご紹介します。
+    </p>
     <div class="skills__groups">
       {skillGroups.map((group) => (
         <section class="skills__group">
@@ -63,11 +67,11 @@ const skillGroups = [
         <p class="skills__status">学習・試作</p>
         <h3>React / WordPress / ACF</h3>
         <p>
-          Reactはサンドボックス環境で小さなデモを制作し、コンポーネントの基本的な使い方を試しました。
+          Reactはサンドボックス環境で小さなデモを制作し、コンポーネントの基本的な使い方を学びました。
         </p>
         <p>
           WordPressでの制作経験があり、現在はAdvanced Custom
-          Fields（ACF）によるコンテンツ管理を学んでいます。このサイトのブログでは、WordPressの投稿とACFのフィールドをAPIで読み取り、Astroで表示・静的公開する仕組みを実践しています。
+          Fields（ACF）によるコンテンツ管理を学んでいます。このサイトのブログでは、WordPressの投稿とACFのフィールドをAPIで読み取り、取得した内容を静的データに書き出して、Astroで表示・公開する仕組みを試しています。
         </p>
         <ul class="skills__tools">
           <li>React</li>

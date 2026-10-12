@@ -2,7 +2,7 @@
   {
     "id": 13,
     "title": "GitHub Pagesでポートフォリオを公開しました",
-    "note": "Astroで制作したポートフォリオを、GitHub Pagesで公開しました。\r\n\r\n最初の設定では少し戸惑いましたが、一度つながると、変更をGitHubにpushするだけで自動的にビルド・公開されるので、とても便利です。\r\n\r\n少し直して、公開して、実際に見てみる。この流れが手軽になったことで、サイトを少しずつ育てていくのが楽しくなりました。\r\n\r\n今はWordPressとACFも勉強中です。このブログも、WordPressで書いた内容をAstroで表示する仕組みを試しながら作っています。\r\n\r\n参考記事：\r\nGitHub公式ブログ「GitHub for Beginners: Getting started with GitHub Pages」\r\n\r\nGitHub Pagesでサイトを公開する基本的な流れが紹介されています。これから試してみたい方はこちらもどうぞ。\r\n\r\nhttps://github.blog/developer-skills/github/github-for-beginners-getting-started-with-github-pages/",
+    "note": "Astroで制作したポートフォリオを、GitHub Pagesで公開しました。\r\nGitHub Actionsでビルドから公開までを自動化し、変更をpushするとサイトに反映される構成にしています。更新のたびに手動でアップロードする必要がなく、実装と確認に集中できるのが便利です。\r\nこのサイトでは、実務での経験を整理するとともに、気になった技術や表現を試しています。実装・公開・確認を繰り返しながら、使い勝手や見せ方を少しずつ調整しています。\r\n現在は、これまでのWordPress制作経験をもとに、ACFを使ったコンテンツ管理とAstroとの連携にも取り組んでいます。このブログでは、WordPressで作成した記事を静的データとして書き出し、Astroで表示する構成を試しています。\r\n参考記事：\r\nGitHub公式ブログ「GitHub for Beginners: Getting started with GitHub Pages」\r\nGitHub Pagesの公開手順については、こちらの記事も参考になります。\r\nhttps://github.blog/developer-skills/github/github-for-beginners-getting-started-with-github-pages/",
     "place": "",
     "alt": ""
   }
