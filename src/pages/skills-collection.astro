@@ -1,0 +1,111 @@
+---
+import SkillCollection from '../components/SkillCollection.astro';
+import { withBase } from '../utils/paths';
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="小さなコレクションをめぐりながら、Yvonneのできることをご紹介します。"
+    />
+    <title>Little Collection｜Yvonne</title>
+  </head>
+  <body>
+    <header class="collection-nav">
+      <h1>Little Collection</h1>
+      <button type="button" data-intro-control hidden>
+        イントロをスキップ
+      </button>
+    </header>
+    <main data-collection-page>
+      <SkillCollection />
+    </main>
+    <p class="intro-status" role="status" data-intro-status></p>
+    <noscript>
+      <p class="fallback">
+        スキルの紹介は<a href={withBase('/#skills-scene')}>文字版</a>でご覧いただけます。
+      </p>
+    </noscript>
+    <script>
+      import '../scripts/collectionEntrance';
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  html {
+    color-scheme: light;
+    background: #edf0f4;
+  }
+  body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    color: #27384f;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  .collection-nav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px clamp(16px, 4vw, 64px);
+    min-height: 72px;
+  }
+  .collection-nav h1 {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+  }
+  .collection-nav button {
+    color: inherit;
+    font: inherit;
+    font-size: 0.875rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    border: 0;
+    border-bottom: 1px solid #27384f35;
+    background: transparent;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .collection-nav [hidden] {
+    display: none;
+  }
+  .collection-nav :focus-visible {
+    outline: 2px solid #574b90;
+    outline-offset: 4px;
+  }
+  .intro-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .fallback {
+    padding: 16px;
+    text-align: center;
+  }
+  @media (max-width: 600px) {
+    .collection-nav {
+      flex-wrap: wrap;
+    }
+    .collection-nav h1 {
+      display: none;
+    }
+  }
+</style>

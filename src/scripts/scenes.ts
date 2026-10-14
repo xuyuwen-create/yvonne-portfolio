@@ -109,4 +109,15 @@ if (
   backButtons.forEach((button) => {
     button.addEventListener('click', () => void switchScene(false));
   });
+  // Return from the standalone collection directly to the text skills scene.
+  if (location.hash === '#skills-scene') {
+    home.hidden = true;
+    home.inert = true;
+    skills.hidden = false;
+    skills.inert = false;
+    activeScene = skills;
+    returnButton = document.querySelector<HTMLButtonElement>('[data-scene="skills"]');
+    delete document.documentElement.dataset.homeEntrance;
+    skillsTitle.focus({ preventScroll: true });
+  }
 }

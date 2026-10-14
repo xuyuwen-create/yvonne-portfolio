@@ -1,0 +1,386 @@
+---
+import { skillGroups } from '../data/skills';
+import { withBase } from '../utils/paths';
+// Each object has its own image and independently adjustable width/height.
+const items = [
+  {
+    name: 'エッフェル塔',
+    skill: 5,
+    src: 'eiffel-tower',
+    x: 30,
+    y: 18,
+    width: 28,
+    height: 52,
+    angle: -8,
+  },
+  { name: '望遠鏡', skill: 7, src: 'telescope', x: 62, y: 20, width: 32, height: 30, angle: 8 },
+  { name: 'カメラ', skill: 2, src: 'camera', x: 28, y: 57, width: 23, height: 19, angle: -9 },
+  { name: 'レコード', skill: 1, src: 'record', x: 48, y: 43, width: 22, height: 22, angle: 8 },
+  { name: '携帯電話', skill: 3, src: 'phone', x: 67, y: 45, width: 15, height: 24, angle: 8 },
+  { name: '本', skill: 6, src: 'book', x: 78, y: 54, width: 18, height: 22, angle: 12 },
+  { name: 'クッキー', skill: 0, src: 'cookie', x: 30, y: 76, width: 13, height: 13, angle: -12 },
+  {
+    name: 'カップケーキ',
+    skill: 1,
+    src: 'cupcake',
+    x: 50,
+    y: 70,
+    width: 16,
+    height: 20,
+    angle: -4,
+  },
+  { name: 'マカロン', skill: 0, src: 'macaron', x: 69, y: 76, width: 14, height: 13, angle: 14 },
+  {
+    name: '怪獣',
+    skill: 4,
+    src: 'godzilla-overhead',
+    x: 85,
+    y: 8,
+    width: 22,
+    height: 22,
+    angle: -98,
+  },
+];
+---
+
+<div id="skills-collection" class="collection">
+  <div class="collection__heading">
+    <span>MY LITTLE COLLECTION</span>
+    <p id="collection-hint">気になるものを選んで、スキルをのぞいてみてください。</p>
+  </div>
+  <div class="collection__layout">
+    <div
+      class="collection__stage"
+      role="group"
+      aria-label="スキルのコレクション"
+      aria-describedby="collection-hint"
+    >
+      <span class="collection__tin" aria-hidden="true"></span>
+      <span class="collection__lid" aria-hidden="true"></span>
+      <div class="collection__contents">
+        {items.map((item, index) => (
+          <button
+            class="collection__item"
+            type="button"
+            data-collection-skill={item.skill}
+            data-monster={item.src === 'godzilla-overhead' ? true : undefined}
+            aria-label={`${item.name}：${skillGroups[item.skill].title}`}
+            aria-pressed="false"
+            aria-controls="collection-detail"
+            style={`--x:${item.x}%;--y:${item.y}%;--width:${item.width}%;--height:${item.height}%;--angle:${item.angle}deg;--layer:${index + 2}`}
+          >
+            <img
+              class="collection__cutout"
+              src={withBase(`/images/skills/${item.src}.png`)}
+              alt=""
+              loading="eager"
+              decoding="async"
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+    <aside id="collection-detail" class="collection__detail" aria-label="選択したスキル" hidden>
+      <div data-collection-empty>
+        <span class="collection__number">OPEN A LITTLE POSSIBILITY</span>
+        <h3>
+          好きなものから、
+          <br />
+          できることへ。
+        </h3>
+        <p>缶の中のアイテムや、そばにいる怪獣を選ぶと、ここにスキルの紹介が表示されます。</p>
+      </div>
+      {skillGroups.map((group, index) => (
+        <section data-collection-panel={index} hidden>
+          <span class="collection__number">SKILL / {String(index + 1).padStart(2, '0')}</span>
+          <h3 tabindex="-1">{group.title}</h3>
+          <p>{group.description}</p>
+          {group.detail && <p>{group.detail}</p>}
+          <ul>
+            {group.tools.map((tool) => (
+              <li>{tool}</li>
+            ))}
+          </ul>
+        </section>
+      ))}
+      <button class="collection__close" type="button" data-collection-close hidden>
+        閉じる ×
+      </button>
+    </aside>
+  </div>
+</div>
+
+<script>
+  const collection = document.querySelector<HTMLElement>('#skills-collection');
+  if (collection) {
+    const items = Array.from(
+      collection.querySelectorAll<HTMLButtonElement>('[data-collection-skill]'),
+    );
+    const panels = Array.from(collection.querySelectorAll<HTMLElement>('[data-collection-panel]'));
+    const empty = collection.querySelector<HTMLElement>('[data-collection-empty]')!;
+    const close = collection.querySelector<HTMLButtonElement>('[data-collection-close]')!;
+    const detail = collection.querySelector<HTMLElement>('#collection-detail')!;
+    let selected: HTMLButtonElement | undefined;
+    const reset = (restoreFocus = true) => {
+      panels.forEach((panel) => (panel.hidden = true));
+      items.forEach((item) => item.setAttribute('aria-pressed', 'false'));
+      empty.hidden = false;
+      close.hidden = true;
+      detail.hidden = true;
+      if (restoreFocus) selected?.focus({ preventScroll: true });
+      selected = undefined;
+    };
+    items.forEach((item) =>
+      item.addEventListener('click', () => {
+        selected = item;
+        detail.hidden = false;
+        items.forEach((other) => other.setAttribute('aria-pressed', String(other === item)));
+        panels.forEach(
+          (panel) =>
+            (panel.hidden = panel.dataset.collectionPanel !== item.dataset.collectionSkill),
+        );
+        empty.hidden = true;
+        close.hidden = false;
+        const heading = panels.find((panel) => !panel.hidden)?.querySelector<HTMLElement>('h3');
+        heading?.focus({ preventScroll: true });
+      }),
+    );
+    close.addEventListener('click', () => reset());
+    collection.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && selected) {
+        event.preventDefault();
+        event.stopPropagation();
+        reset();
+      }
+    });
+  }
+</script>
+
+<style>
+  .collection {
+    --ink: #27384f;
+    --paper: #edf0f4;
+    color: var(--ink);
+    background: var(--paper);
+    --stage-size: min(100svh, 100vw);
+    --tin-size: 90%;
+    position: relative;
+    min-height: 100svh;
+    overflow: clip;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .collection__detail[hidden],
+  .collection[hidden],
+  [data-collection-panel][hidden],
+  [data-collection-empty][hidden],
+  .collection__close[hidden] {
+    display: none;
+  }
+  .collection__heading {
+    position: absolute;
+    bottom: 12px;
+    left: 16px;
+    right: 16px;
+    text-align: center;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .collection__heading > span,
+  .collection__number {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+  }
+  .collection__heading p {
+    font-size: 0.875rem;
+    margin-bottom: 0;
+    line-height: 1.7;
+  }
+  .collection__layout {
+    display: grid;
+    min-height: 100svh;
+    place-items: center;
+  }
+  .collection__stage {
+    position: relative;
+    width: var(--stage-size);
+    aspect-ratio: 1 / 1;
+    isolation: isolate;
+    min-width: 0;
+  }
+  .collection__contents {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+  .collection__item {
+    position: absolute;
+    width: var(--width);
+    height: var(--height);
+    left: var(--x);
+    top: var(--y);
+    transform: translateX(-50%) rotate(var(--angle));
+    z-index: var(--layer);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .collection__cutout {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(2px 5px 2px #16283e35);
+    transition:
+      transform 220ms ease,
+      filter 220ms ease;
+  }
+  .collection__item[aria-pressed='true'],
+  .collection__item:focus-visible {
+    z-index: 30;
+  }
+  .collection__item[aria-pressed='true'] .collection__cutout {
+    transform: translateY(-8px) rotate(-3deg);
+    filter: drop-shadow(3px 9px 3px #16283e40);
+  }
+  .collection__item:focus-visible {
+    outline: 2px dashed #574b90;
+    outline-offset: 5px;
+    border-radius: 4px;
+  }
+  @media (hover: hover) {
+    .collection__item:hover {
+      z-index: 29;
+    }
+    .collection__item:hover .collection__cutout {
+      transform: translateY(-7px) rotate(-3deg);
+    }
+  }
+  .collection__detail {
+    position: fixed;
+    z-index: 50;
+    right: clamp(16px, 3vw, 48px);
+    top: 100px;
+    width: min(380px, calc(100vw - 32px));
+    max-height: calc(100svh - 124px);
+    overflow: auto;
+    box-sizing: border-box;
+    border: 1px solid #283a502a;
+    background: #fffdf7;
+    box-shadow: 0 12px 36px #24304520;
+    padding: 24px;
+  }
+  .collection__detail h3 {
+    font-size: clamp(1.2rem, 2vw, 1.7rem);
+    line-height: 1.5;
+    margin: 16px 0;
+  }
+  .collection__detail h3:focus {
+    outline: none;
+  }
+  .collection__detail p {
+    font-size: 1rem;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+  }
+  .collection__detail ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    list-style: none;
+    gap: 8px 12px;
+    font-size: 0.875rem;
+  }
+  .collection__close {
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: 0.875rem;
+    min-height: 44px;
+    cursor: pointer;
+    margin-top: 16px;
+  }
+  .collection__close:focus-visible {
+    outline: 2px solid #574b90;
+    outline-offset: 4px;
+  }
+  @media (max-width: 760px) {
+    .collection__layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+    .collection__detail {
+      top: auto;
+      bottom: 16px;
+      max-height: 55svh;
+      padding: 20px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .collection__cutout {
+      transition: none;
+    }
+    .collection__item[aria-pressed='true'] .collection__cutout,
+    .collection__item:hover .collection__cutout {
+      transform: none;
+    }
+  }
+  .collection__tin,
+  .collection__lid {
+    position: absolute;
+    width: var(--tin-size);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    left: 5%;
+    top: 5%;
+    pointer-events: none;
+  }
+  .collection__tin {
+    z-index: 0;
+    background:
+      repeating-radial-gradient(circle at 42% 38%, transparent 0 3px, #6b645008 3px 4px),
+      radial-gradient(
+        circle,
+        #f1e9d6 0 60%,
+        #c9c5b8 61% 63%,
+        #e8e7df 64% 65%,
+        #647fa5 66% 68%,
+        #a8b9cb 69% 70%,
+        #355a89 71%
+      );
+    box-shadow:
+      0 8px 10px #23395826,
+      inset 0 0 0 2px #e5e7eb;
+  }
+  .collection__lid {
+    z-index: -1;
+    background:
+      repeating-radial-gradient(ellipse at 34% 39%, transparent 0 6px, #fffaf014 6px 7px),
+      radial-gradient(
+        circle,
+        #7196bf 0 56%,
+        #4873a1 57% 60%,
+        #c7d3dd 61% 62%,
+        #668db5 63% 67%,
+        #e4e6df 68% 69%,
+        #385f8a 70%
+      );
+    box-shadow:
+      0 5px 8px #23395825,
+      inset 0 0 0 2px #e5e7eb;
+    transform: translate(-23%, -32%) rotate(24deg) scale(0.78);
+    transform-origin: 30% 35%;
+  }
+  .collection[data-phase='loading'] .collection__lid {
+    z-index: 40;
+    transform: none;
+  }
+  .collection[data-phase='loading'] .collection__item {
+    visibility: hidden;
+  }
+</style>

@@ -1,46 +1,6 @@
 ---
-const skillGroups = [
-  {
-    title: 'フロントエンド実装',
-    description: 'WebサイトやLPのコーディングを行い、画面サイズに応じたレイアウトを実装します。',
-    tools: ['HTML', 'CSS / Sass', 'JavaScript', 'TypeScript'],
-  },
-  {
-    title: 'アニメーション・インタラクション',
-    description:
-      'キービジュアルのアニメーションやスライダーなど、ページの内容やデザインに合わせた動きを実装します。',
-    tools: ['GSAP', 'Swiper', 'jQuery など'],
-  },
-  {
-    title: 'デザインツール',
-    description:
-      'Web制作を学ぶ中で、Photoshop・Illustratorを使ってWebサイトのデザインを制作しました。',
-    tools: ['Figma', 'Adobe XD', 'Adobe Photoshop', 'Adobe Illustrator'],
-  },
-  {
-    title: '開発環境・ツール',
-    description: 'プロジェクトごとの開発環境やツールに合わせて、実装を進めます。',
-    tools: ['Node.js', 'Vite', 'Gulp', 'Astro', 'Git / GitHub', 'GitHub Pages'],
-  },
-  {
-    title: 'AIツールの活用',
-    description:
-      'Codex・Claude Code・GitHub Copilotを、実装の補助やコードレビューに活用しています。要件や作業手順を整理したプロンプトを作成し、開発を効率よく進める工夫もしています。AIの提案をそのまま採用せず、内容を確認し、動作検証と調整を行っています。',
-    tools: ['Codex', 'Claude Code', 'GitHub Copilot'],
-  },
-  {
-    title: '言語・コミュニケーション',
-    description:
-      '日本語能力試験（JLPT）N1に合格しています。英語はIELTSで6.5、TOEICで810点を取得しています。大学院では主に英語で授業を受け、修士論文も英語で執筆しました。日本語と英語で技術ブログの記事を執筆した経験もあります。中国語・広東語でもコミュニケーションができます。',
-    tools: ['日本語（JLPT N1）', '英語（IELTS 6.5 / TOEIC 810）', '中国語', '広東語'],
-  },
-  {
-    title: 'Webサイトの更新・運用',
-    description:
-      '既存サイトの構成や運用ルールに沿って、コンテンツの更新やページの修正・改修を行います。',
-    tools: [],
-  },
-];
+import { skillGroups } from '../data/skills';
+import { withBase } from '../utils/paths';
 ---
 
 <section id="skills-scene" class="skills scene" aria-labelledby="skills-title" hidden inert>
@@ -55,11 +15,28 @@ const skillGroups = [
     <p class="skills__intro">
       Web制作やサイト運用で培ったスキルと、現在取り組んでいることをご紹介します。
     </p>
-    <div class="skills__groups">
+    <div class="skills__switch">
+      <a
+        href={withBase('/skills-collection/')}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="コレクションを開く（新しいタブで開きます）"
+      >
+        コレクションを開く ↗
+      </a>
+    </div>
+    <div id="skills-text" class="skills__groups">
       {skillGroups.map((group) => (
-        <section class="skills__group">
-          <h3>{group.title}</h3>
+        <section
+          class:list={[
+            'skills__group',
+            { 'skills__group--learning': group.title === '学習・試作' },
+          ]}
+        >
+          {group.title === '学習・試作' && <p class="skills__status">学習・試作</p>}
+          <h3>{group.title === '学習・試作' ? 'React / WordPress / ACF' : group.title}</h3>
           <p>{group.description}</p>
+          {group.detail && <p>{group.detail}</p>}
           {group.tools.length > 0 && (
             <ul class="skills__tools">
               {group.tools.map((tool) => (
@@ -69,27 +46,42 @@ const skillGroups = [
           )}
         </section>
       ))}
-      <section class="skills__group skills__group--learning">
-        <p class="skills__status">学習・試作</p>
-        <h3>React / WordPress / ACF</h3>
-        <p>
-          Reactはサンドボックス環境で小さなデモを制作し、コンポーネントの基本的な使い方を学びました。
-        </p>
-        <p>
-          WordPressでの制作経験があり、現在はAdvanced Custom
-          Fields（ACF）によるコンテンツ管理を学んでいます。このサイトのブログでは、WordPressの投稿とACFのフィールドをAPIで読み取り、取得した内容を静的データに書き出して、Astroで表示・公開する仕組みを試しています。
-        </p>
-        <ul class="skills__tools">
-          <li>React</li>
-          <li>WordPress</li>
-          <li>Advanced Custom Fields（ACF）</li>
-        </ul>
-      </section>
     </div>
   </div>
 </section>
 
 <style>
+  .skills__switch {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 24px;
+  }
+  .skills__switch[hidden],
+  .skills__groups[hidden] {
+    display: none;
+  }
+  .skills__switch a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font: inherit;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    min-height: 44px;
+  }
+  .skills__switch a[aria-pressed='true'] {
+    background: #e2e6f2;
+    color: #242c44;
+  }
+  .skills__switch a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
   .skills {
     min-height: 0;
     overflow: auto;
